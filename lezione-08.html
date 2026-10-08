@@ -1,0 +1,543 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Futurismo · Italiano</title>
+<style>:root{
+  --bg:#fbf9f4; --surface:#ffffff; --surface2:#f3efe6; --text:#1f1d1a; --muted:#5d584f; --line:#e2dccf;
+  --accent:#8c1d2f; --accent-soft:#f6e6e8; --focus:#2457a6;
+  --def:#2457a6; --def-bg:#ebf1fb;
+  --rule:#6a3d9e; --rule-bg:#f2ecfa;
+  --ex:#1d7149; --ex-bg:#e7f4ec;
+  --warn:#8f5300; --warn-bg:#fcf1dc;
+  --deep:#0d6871; --deep-bg:#e3f2f3;
+  --note:#b42318; --note-bg:#fdebe8;
+  --ana:#4f4f86; --ana-bg:#ececf6;
+  --ok:#1d7149; --ok-bg:#e2f3e9; --ko:#b42318; --ko-bg:#fbe5e2;
+  --radius:12px;
+  --serif:"Iowan Old Style","Palatino Linotype",Palatino,"Book Antiqua",Georgia,serif;
+  --sans:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#131418; --surface:#1b1d23; --surface2:#23262e; --text:#ecebe6; --muted:#aaa59c; --line:#32353e;
+    --accent:#f2a7b1; --accent-soft:#3a2329; --focus:#8ab4f8;
+    --def:#8ab4f8; --def-bg:#18253a;
+    --rule:#c7a6f2; --rule-bg:#271e37;
+    --ex:#7fd4a6; --ex-bg:#152a20;
+    --warn:#f5c26b; --warn-bg:#2d2414;
+    --deep:#79d0d8; --deep-bg:#132a2d;
+    --note:#ff9b8f; --note-bg:#331a18;
+    --ana:#b4b4ee; --ana-bg:#22223a;
+    --ok:#7fd4a6; --ok-bg:#15301f; --ko:#ff9b8f; --ko-bg:#3a1b18;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#131418; --surface:#1b1d23; --surface2:#23262e; --text:#ecebe6; --muted:#aaa59c; --line:#32353e;
+  --accent:#f2a7b1; --accent-soft:#3a2329; --focus:#8ab4f8;
+  --def:#8ab4f8; --def-bg:#18253a;
+  --rule:#c7a6f2; --rule-bg:#271e37;
+  --ex:#7fd4a6; --ex-bg:#152a20;
+  --warn:#f5c26b; --warn-bg:#2d2414;
+  --deep:#79d0d8; --deep-bg:#132a2d;
+  --note:#ff9b8f; --note-bg:#331a18;
+  --ana:#b4b4ee; --ana-bg:#22223a;
+  --ok:#7fd4a6; --ok-bg:#15301f; --ko:#ff9b8f; --ko-bg:#3a1b18;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth;scroll-padding-top:72px}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--sans);font-size:18px;line-height:1.7}
+a{color:var(--accent);text-underline-offset:3px}
+a:focus-visible,button:focus-visible,summary:focus-visible,.v.has-note:focus-visible,input:focus-visible{outline:3px solid var(--focus);outline-offset:2px;border-radius:6px}
+img{max-width:100%}
+
+/* header */
+.top{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:10px;padding:10px 16px;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.top .home{font-family:var(--serif);font-weight:700;font-size:1.05rem;color:var(--text);text-decoration:none;white-space:nowrap}
+.top .home span{color:var(--accent)}
+.top .lnum{color:var(--muted);font-size:.85rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.top .sp{flex:1}
+.top button{font:inherit;font-size:.9rem;background:var(--surface);color:var(--text);border:1px solid var(--line);border-radius:999px;padding:6px 12px;cursor:pointer;min-height:38px}
+.top button:hover{border-color:var(--accent)}
+#tocBtn{display:none}
+
+/* layout */
+.layout{display:grid;grid-template-columns:270px minmax(0,1fr);gap:40px;max-width:1180px;margin:0 auto;padding:0 24px}
+.toc{position:sticky;top:64px;align-self:start;max-height:calc(100vh - 80px);overflow:auto;padding:24px 0 24px}
+.toc .tt{font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:0 0 8px}
+.toc ol{list-style:none;margin:0;padding:0;border-left:2px solid var(--line)}
+.toc li a{display:block;padding:5px 12px;margin-left:-2px;border-left:2px solid transparent;color:var(--muted);text-decoration:none;font-size:.93rem;line-height:1.35}
+.toc li a:hover{color:var(--text)}
+.toc li a.active{color:var(--accent);border-left-color:var(--accent);font-weight:600}
+.toc .tnav{margin-top:20px;display:flex;flex-direction:column;gap:6px;font-size:.88rem}
+.toc .tnav a{text-decoration:none}
+main{min-width:0;max-width:780px;padding:28px 0 80px}
+
+/* type */
+h1,h2,h3,h4{font-family:var(--serif);line-height:1.25;text-wrap:balance}
+h1{font-size:2.3rem;margin:.2em 0 .25em}
+.kicker{font-size:.8rem;letter-spacing:.09em;text-transform:uppercase;color:var(--accent);font-weight:700;margin:0}
+.sub{color:var(--muted);font-size:1.08rem;margin:0 0 1.2em}
+h2{font-size:1.6rem;margin:2.2em 0 .6em;padding-top:.6em;border-top:1px solid var(--line)}
+h3{font-size:1.25rem;margin:1.7em 0 .5em}
+h4{font-size:1.05rem;margin:0 0 .4em}
+p{margin:.7em 0}
+ul,ol{padding-left:1.3em}
+li{margin:.25em 0}
+strong{font-weight:650}
+.muted{color:var(--muted)}
+.small{font-size:.9rem}
+blockquote{margin:1em 0;padding:.6em 1em;border-left:3px solid var(--accent);background:var(--surface2);border-radius:0 8px 8px 0;font-family:var(--serif);font-size:1.05rem}
+blockquote cite{display:block;font-size:.85rem;color:var(--muted);font-style:normal;margin-top:.3em;font-family:var(--sans)}
+code,kbd{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.9em;background:var(--surface2);padding:1px 5px;border-radius:5px}
+hr{border:0;border-top:1px solid var(--line);margin:2em 0}
+
+/* boxes */
+.box{position:relative;margin:1.2em 0;padding:14px 16px 12px;border-radius:var(--radius);border:1px solid var(--line);border-left:5px solid var(--c);background:var(--b)}
+.box::before{content:attr(data-k);display:inline-block;font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;font-weight:700;color:var(--c);margin-bottom:4px}
+.box>:first-child{margin-top:0}
+.box>:last-child{margin-bottom:0}
+.box h4{color:var(--text)}
+.box.def{--c:var(--def);--b:var(--def-bg)}
+.box.rule{--c:var(--rule);--b:var(--rule-bg)}
+.box.ex{--c:var(--ex);--b:var(--ex-bg)}
+.box.warn{--c:var(--warn);--b:var(--warn-bg)}
+.box.deep{--c:var(--deep);--b:var(--deep-bg)}
+.box.note{--c:var(--note);--b:var(--note-bg)}
+.box.ana{--c:var(--ana);--b:var(--ana-bg)}
+.box.def::before{content:"Definizione"}
+.box.rule::before{content:"Concetto chiave"}
+.box.ex::before{content:"Esempio svolto"}
+.box.warn::before{content:"Attenzione"}
+.box.deep::before{content:"Approfondimento (non negli appunti)"}
+.box.note::before{content:"Nota sul materiale"}
+.box.ana::before{content:"Analogia"}
+
+/* tables */
+.tw{overflow-x:auto;margin:1em 0;border:1px solid var(--line);border-radius:var(--radius)}
+table{border-collapse:collapse;width:100%;font-size:.95rem;min-width:520px}
+th,td{padding:9px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+th{background:var(--surface2);font-weight:650}
+tr:last-child td{border-bottom:0}
+
+/* chains / steps */
+.chain{list-style:none;padding:0;margin:1em 0;counter-reset:c}
+.chain li{position:relative;padding:10px 14px 10px 46px;margin:0 0 10px;background:var(--surface);border:1px solid var(--line);border-radius:10px}
+.chain li::before{counter-increment:c;content:counter(c);position:absolute;left:12px;top:10px;width:24px;height:24px;border-radius:50%;background:var(--accent);color:var(--bg);font-size:.8rem;font-weight:700;display:grid;place-items:center}
+.chain li:not(:last-child)::after{content:"↓";position:absolute;left:18px;bottom:-17px;color:var(--muted);font-size:.85rem}
+.kv{display:grid;grid-template-columns:max-content 1fr;gap:6px 14px;margin:.8em 0}
+.kv dt{font-weight:650}
+.kv dd{margin:0}
+@media (max-width:560px){.kv{grid-template-columns:1fr}.kv dd{margin-bottom:6px}}
+
+/* poem */
+.poem{margin:1.3em 0;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:14px 14px 14px 6px}
+.poem .ph{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 12px;padding:0 4px 8px 10px;border-bottom:1px solid var(--line);margin-bottom:8px}
+.poem .ph b{font-family:var(--serif);font-size:1.12rem}
+.poem .ph span{color:var(--muted);font-size:.85rem}
+.poem .ph button{margin-left:auto;font:inherit;font-size:.82rem;background:var(--surface2);color:var(--text);border:1px solid var(--line);border-radius:999px;padding:4px 10px;cursor:pointer;min-height:34px}
+.poem .hint{font-size:.82rem;color:var(--muted);padding:0 10px 6px}
+.v{display:grid;grid-template-columns:2.4em 1fr;font-family:var(--serif);font-size:1.08rem;line-height:1.55;padding:1px 4px;border-radius:6px}
+.v .n{color:var(--muted);font-family:var(--sans);font-size:.72rem;text-align:right;padding-right:10px;padding-top:.35em;user-select:none}
+.v.has-note{cursor:pointer}
+.v.has-note .t{text-decoration:underline dotted var(--accent);text-underline-offset:4px;text-decoration-thickness:1.5px}
+.v.has-note:hover{background:var(--accent-soft)}
+.v.open{background:var(--accent-soft)}
+.vnote{margin:4px 4px 8px 2.4em;padding:8px 12px;font-size:.93rem;line-height:1.55;background:var(--surface2);border-left:3px solid var(--accent);border-radius:0 8px 8px 0}
+.vgap{height:.9em}
+
+/* interactive questions */
+.ex-block{margin:1.2em 0;padding:14px 16px;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius)}
+.ex-block .lvl{display:inline-block;font-size:.7rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:1px 8px;margin-bottom:6px}
+.qu .q{font-weight:600;margin:.2em 0 .6em}
+.opts{display:flex;flex-direction:column;gap:8px}
+.vf .opts{flex-direction:row}
+.vf .opts .opt{flex:1;text-align:center}
+.opt{font:inherit;font-size:.97rem;text-align:left;background:var(--surface2);color:var(--text);border:1px solid var(--line);border-radius:10px;padding:10px 14px;cursor:pointer;min-height:46px;line-height:1.4}
+.opt:hover:not(:disabled){border-color:var(--accent)}
+.opt:disabled{cursor:default;opacity:.92}
+.opt.ok{background:var(--ok-bg);border-color:var(--ok);color:var(--text)}
+.opt.ok::after{content:"  ✓";color:var(--ok);font-weight:700}
+.opt.ko{background:var(--ko-bg);border-color:var(--ko)}
+.opt.ko::after{content:"  ✗";color:var(--ko);font-weight:700}
+.why{margin-top:10px;padding:10px 12px;border-radius:8px;background:var(--surface2);font-size:.95rem}
+.why .verdict{font-weight:700}
+.qu.right .verdict{color:var(--ok)}
+.qu.wrong .verdict{color:var(--ko)}
+.retry{font:inherit;font-size:.82rem;margin-top:8px;background:none;border:0;color:var(--accent);cursor:pointer;padding:4px 0;text-decoration:underline}
+.scorebar{position:sticky;bottom:10px;z-index:5;margin:1em auto;width:max-content;max-width:100%;padding:6px 14px;border-radius:999px;background:var(--surface);border:1px solid var(--line);box-shadow:0 4px 18px rgba(0,0,0,.12);font-size:.85rem;text-align:center}
+
+/* classify */
+.classify{margin:1.2em 0;padding:14px 16px;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius)}
+.cl-item{padding:10px 0;border-top:1px dashed var(--line)}
+.cl-item:first-of-type{border-top:0}
+.cl-item .q{font-weight:500}
+.cl-item .opts{flex-direction:row;flex-wrap:wrap}
+.cl-item .opt{flex:1 1 140px;text-align:center;font-size:.9rem;padding:8px 10px;min-height:42px}
+
+/* solutions */
+details.sol{margin:.8em 0 .2em}
+details.sol summary{display:inline-flex;align-items:center;gap:6px;cursor:pointer;list-style:none;font-weight:600;font-size:.92rem;color:var(--accent);background:var(--accent-soft);border-radius:999px;padding:7px 14px;min-height:40px}
+details.sol summary::-webkit-details-marker{display:none}
+details.sol summary::before{content:"▸"}
+details.sol[open] summary::before{content:"▾"}
+details.sol[open] summary .lab::after{content:" (nascondi)";font-weight:400}
+details.sol .solbody{margin-top:10px;padding:12px 14px;border:1px solid var(--line);border-radius:10px;background:var(--surface2)}
+details.sol .solbody>:first-child{margin-top:0}
+details.sol .solbody>:last-child{margin-bottom:0}
+
+/* pager */
+.pager{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:3em}
+.pager a{display:block;padding:12px 14px;border:1px solid var(--line);border-radius:var(--radius);background:var(--surface);text-decoration:none;color:var(--text);min-height:64px}
+.pager a small{display:block;color:var(--muted);font-size:.78rem;text-transform:uppercase;letter-spacing:.06em}
+.pager a.next{text-align:right;grid-column:2}
+.pager a:hover{border-color:var(--accent)}
+
+/* summary list */
+.recap{list-style:none;padding:0}
+.recap li{padding:8px 0 8px 28px;position:relative;border-bottom:1px solid var(--line)}
+.recap li::before{content:"✦";position:absolute;left:4px;color:var(--accent)}
+
+/* index page */
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px;margin:1em 0}
+.card{display:block;padding:14px 16px;border:1px solid var(--line);border-radius:var(--radius);background:var(--surface);text-decoration:none;color:var(--text)}
+.card:hover{border-color:var(--accent)}
+.card .cn{font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);font-weight:700}
+.card .ct{font-family:var(--serif);font-size:1.15rem;font-weight:700;line-height:1.25;margin:2px 0 4px}
+.card .cs{font-size:.88rem;color:var(--muted);line-height:1.45}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:.8em 0}
+.chip{font:inherit;font-size:.85rem;background:var(--surface);color:var(--text);border:1px solid var(--line);border-radius:999px;padding:5px 12px;cursor:pointer;min-height:36px}
+.chip.on{background:var(--accent);color:var(--bg);border-color:var(--accent)}
+.tl{list-style:none;padding:0;margin:1em 0;border-left:2px solid var(--line)}
+.tl li{position:relative;padding:6px 0 10px 18px}
+.tl li::before{content:"";position:absolute;left:-7px;top:14px;width:12px;height:12px;border-radius:50%;background:var(--bg);border:2px solid var(--accent)}
+.tl .y{font-weight:700;font-variant-numeric:tabular-nums;margin-right:8px}
+.tl .who{font-size:.75rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-left:6px}
+.tl li[hidden]{display:none}
+.flow{display:flex;flex-direction:column;align-items:stretch;gap:0;margin:1.2em 0}
+.flow .node{padding:12px 14px;border:1px solid var(--line);border-radius:var(--radius);background:var(--surface)}
+.flow .node b{font-family:var(--serif);font-size:1.05rem}
+.flow .node .meta{display:block;color:var(--muted);font-size:.85rem}
+.flow .arrow{align-self:center;color:var(--muted);font-size:.85rem;padding:4px 0;text-align:center}
+.flow .row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media (max-width:560px){.flow .row{grid-template-columns:1fr}}
+details.theme{border:1px solid var(--line);border-radius:var(--radius);background:var(--surface);margin:.6em 0;padding:0 14px}
+details.theme summary{cursor:pointer;padding:12px 0;font-weight:650;font-family:var(--serif);font-size:1.05rem}
+details.theme[open]{padding-bottom:10px}
+.gloss-search{width:100%;font:inherit;padding:10px 14px;border-radius:10px;border:1px solid var(--line);background:var(--surface);color:var(--text);margin:.6em 0}
+dl.gloss{margin:0}
+dl.gloss>div{padding:8px 0;border-bottom:1px solid var(--line)}
+dl.gloss dt{font-weight:700}
+dl.gloss dd{margin:2px 0 0}
+dl.gloss>div[hidden]{display:none}
+
+/* responsive */
+@media (max-width:1000px){
+  .layout{grid-template-columns:minmax(0,1fr);padding:0 16px;gap:0}
+  #tocBtn{display:inline-block}
+  .toc{display:none;position:fixed;top:59px;left:0;right:0;max-height:calc(100vh - 59px);background:var(--bg);border-bottom:1px solid var(--line);padding:16px 20px 20px;z-index:15;box-shadow:0 10px 30px rgba(0,0,0,.15)}
+  .toc.open{display:block}
+  main{padding-top:16px}
+}
+@media (max-width:560px){
+  body{font-size:17px}
+  h1{font-size:1.85rem}
+  h2{font-size:1.4rem}
+  .top{padding:8px 12px}
+  .top .lnum{display:none}
+  .pager{grid-template-columns:1fr}
+  .pager a.next{grid-column:1}
+  .v{grid-template-columns:2em 1fr;font-size:1.02rem}
+  .vnote{margin-left:1.4em}
+  .vf .opts{flex-direction:column}
+}
+@media print{.top,.toc,.pager,.scorebar{display:none}.layout{display:block}details.sol{display:block}}
+</style>
+</head>
+<body>
+<header class="top">
+  <a class="home" href="index.html">Italiano<span>·</span>Lezioni</a>
+  <span class="lnum">Lezione 8 · Futurismo</span>
+  <span class="sp"></span>
+  <button type="button" id="tocBtn" aria-controls="toc" aria-expanded="false">☰ Sezioni</button>
+  <button type="button" id="themeBtn">Tema</button>
+</header>
+<div class="layout">
+  <nav class="toc" id="toc" aria-label="Sezioni della pagina">
+    <p class="tt">In questa pagina</p>
+    <ol><li><a href="#intuizione">Intuizione</a></li><li><a href="#contesto">Il contesto: primo Novecento (1900-1918)</a></li><li><a href="#caratteri">Il Futurismo: caratteri fondamentali</a></li><li><a href="#manifesto">Il Manifesto del Futurismo (1909): che cosa scrivere</a></li><li><a href="#tecnico">Il Manifesto tecnico della letteratura futurista (1912): come scrivere</a></li><li><a href="#esempio">Esempio svolto: riscrivere «alla futurista»</a></li><li><a href="#confronti">Futurismo e gli altri</a></li><li><a href="#analogie">Analogie</a></li><li><a href="#ragionamento">Come costruire una risposta argomentata</a></li><li><a href="#errori">Errori comuni e trabocchetti</a></li><li><a href="#riepilogo">Riepilogo</a></li><li><a href="#esercizi">Esercizi di verifica</a></li><li><a href="#collegamenti">Collegamenti</a></li></ol>
+    <div class="tnav"><a href="index.html">⌂ Indice generale</a><a href="lezione-07.html">← Pascoli</a><a href="lezione-09.html">Svevo →</a></div>
+  </nav>
+  <main>
+    <p class="kicker">Lezione 8 di 13</p>
+    <h1>Futurismo</h1>
+    <p class="sub">Il Manifesto del 1909 e il Manifesto tecnico del 1912</p>
+    <h2 id="intuizione">Intuizione</h2>
+<p>I decadenti reagivano alla modernità chiudendosi o ribellandosi. I futuristi fanno l'opposto: la <b>abbracciano</b> e la portano all'estremo. Amano la velocità, le macchine, la folla, il rumore, la guerra.</p>
+<p>Il passato è un peso morto da cancellare, e con lui musei, accademie e biblioteche. Anche la lingua deve diventare veloce: niente aggettivi, niente punteggiatura, verbi all'infinito, parole «in libertà». Il Futurismo è la prima grande <b>avanguardia</b> italiana, e ha due testi fondativi: il Manifesto del 1909 (<b>che cosa</b> scrivere) e il Manifesto tecnico del 1912 (<b>come</b> scrivere).</p>
+
+<h2 id="contesto">Il contesto: primo Novecento (1900-1918)</h2>
+<div class="tw"><table>
+<tr><th>Ambito</th><th>Che cosa succede</th></tr>
+<tr><td>Storia</td><td>Sistema di alleanze (Triplice Intesa e Triplice Alleanza), scoppio della Prima guerra mondiale. Italia divisa tra Nord industrializzato e Sud arretrato. Entrata in guerra nel 1915, spinta dagli <b>interventisti</b>.</td></tr>
+<tr><td>Cultura</td><td><b>Belle Époque</b>: la seconda rivoluzione industriale porta benessere e fiducia nella tecnica.</td></tr>
+<tr><td>Letteratura</td><td>Le <b>avanguardie storiche</b>, tra cui il Futurismo.</td></tr>
+</table></div>
+<div class="box def"><h4>Avanguardia</h4><p>Termine militare: il reparto che marcia davanti all'esercito. In arte indica un gruppo che rompe con la tradizione, si presenta con un <b>manifesto</b> programmatico e vuole cambiare non solo l'arte ma la vita.</p></div>
+
+<h2 id="caratteri">Il Futurismo: caratteri fondamentali</h2>
+<p>Fondato da <b>Filippo Tommaso Marinetti</b> con la pubblicazione del <b>Manifesto del Futurismo</b> nel <b>1909</b>.</p>
+<ol class="chain">
+<li><b>Rottura col passato</b>: lo sguardo è rivolto al futuro e l'obiettivo è cancellare il passato.</li>
+<li><b>Dinamismo, velocità, vitalità</b> sono i valori in cui si identificano. Per questo sono <b>ostili alla borghesia</b>, che considerano statica e interessata solo al proprio utile.</li>
+<li><b>Interventismo</b>: favorevoli all'ingresso dell'Italia in guerra (Marinetti si arruola). La guerra è definita «<b>sola igiene del mondo</b>», la soluzione ai mali e ai disordini.</li>
+<li><b>Fascismo</b>: sono favorevoli alla sua ascesa. Marinetti firma il manifesto degli intellettuali fascisti.</li>
+<li><b>Simbolo</b>: la <b>macchina da corsa</b>, che rappresenta tutto ciò in cui credono.</li>
+</ol>
+<div class="box deep"><h4>Dove e quando</h4><p>Il manifesto uscì in francese sulla prima pagina del quotidiano parigino <i>Le Figaro</i>, il 20 febbraio 1909. Una scelta da avanguardia: puntare subito su Parigi, la capitale della cultura europea.</p></div>
+
+<h2 id="manifesto">Il Manifesto del Futurismo (1909): che cosa scrivere</h2>
+<p>È strutturato in <b>11 punti</b>, come comandamenti. Dà la linea ideologica, cioè <b>che cosa</b> deve cantare la letteratura. Gli appunti ne evidenziano tre:</p>
+<div class="tw"><table>
+<tr><th>Punto</th><th>Contenuto</th></tr>
+<tr><td><b>9</b></td><td>Glorificare la <b>guerra</b>, il militarismo e il <b>patriottismo</b>, come in D'Annunzio, che porterà a esaltare il fascismo. A questo si unisce il <b>disprezzo della donna</b>.</td></tr>
+<tr><td><b>10</b></td><td>Distruggere <b>musei</b>, biblioteche, accademie. Combattere il moralismo e il <b>femminismo</b>. Attenzione alla sfumatura: non dicono di distruggere il passato in sé, ma <b>ciò che lo contiene e lo conserva</b>. Il museo è l'emblema.</td></tr>
+<tr><td><b>11</b></td><td>Cantare le folle, il lavoro, le macchine e i mezzi veloci: treni, piroscafi, aerei.</td></tr>
+</table></div>
+<div class="box deep"><h4>Il punto più citato in assoluto</h4><p>Il punto 4 dice che il mondo si è arricchito di una bellezza nuova, la <b>velocità</b>: un'automobile da corsa è più bella della <b>Vittoria di Samotracia</b>, la celebre statua greca. È il modo più efficace per spiegare la rottura con il passato, e gli appunti lo riassumono nel simbolo della macchina da corsa.</p></div>
+<h3>La conclusione del manifesto: musei = cimiteri</h3>
+<ol class="chain">
+<li>I musei sono <b>cimiteri</b>. Si può andarci una volta all'anno, come si va al cimitero.</li>
+<li>Andare al museo significa <b>sprecare energie</b> per un'urna funeraria, invece di spenderle per creare e guardare al futuro.</li>
+<li>Per gli artisti frequentare musei e accademie è dannoso, come i genitori che impediscono ai figli dotati di esprimersi.</li>
+<li>Al passato possono guardare solo il <b>malato</b> e il <b>prigioniero</b>, che ne hanno bisogno per sopravvivere.</li>
+<li>Conclusione: incitamento a <b>distruggere i musei</b>.</li>
+</ol>
+
+<h2 id="tecnico">Il Manifesto tecnico della letteratura futurista (1912): come scrivere</h2>
+<p>Altri 11 punti, ma questa volta su <b>come</b> si deve scrivere.</p>
+<div class="tw"><table>
+<tr><th>Punto</th><th>Regola</th><th>Perché</th></tr>
+<tr><td>1</td><td><b>Distruggere la sintassi</b>, disponendo i sostantivi a caso</td><td>La sintassi è un ordine logico che rallenta.</td></tr>
+<tr><td>2</td><td>Usare il <b>verbo all'infinito</b></td><td>Il lettore, con la sua fantasia, dà senso al testo senza vincoli imposti dal poeta.</td></tr>
+<tr><td>3</td><td><b>Abolire l'aggettivo</b></td><td>È un contorno che ferma e rallenta.</td></tr>
+<tr><td>4</td><td><b>Abolire l'avverbio</b></td><td>Stesso motivo dell'aggettivo.</td></tr>
+<tr><td>5</td><td>Usare l'<b>analogia</b> per velocizzare i confronti</td><td>Accostare due immagini lontane senza perdere tempo in «come».</td></tr>
+<tr><td>6</td><td><b>Abolire la punteggiatura</b></td><td>È inutile.</td></tr>
+<tr><td>7</td><td>Un'analogia nuova, più originale e meno comprensibile al primo colpo</td><td>Le analogie già usate non bastano.</td></tr>
+<tr><td>8</td><td>Nessuna categoria di immagini privilegiata</td><td>Tutto si rapporta alla materia, tutto si può usare.</td></tr>
+<tr><td>9</td><td>Catene di analogie</td><td>Tutta la realtà si può collegare per analogia, anche tra elementi diversissimi.</td></tr>
+<tr><td>10</td><td>Il <b>massimo disordine</b></td><td>Nessun ordine prestabilito per costruire le analogie.</td></tr>
+<tr><td>11</td><td><b>Distruggere l'«io»</b> e la psicologia, sostituiti dalla <b>materia</b></td><td>L'io non interessa più, è esaurito.</td></tr>
+</table></div>
+<div class="box deep"><h4>Il «doppio» del sostantivo</h4><p>Il punto 5 chiede che ogni sostantivo abbia il suo «doppio», cioè un altro sostantivo a cui è legato per analogia, unito con un trattino e senza congiunzioni. Gli esempi di Marinetti: <b>uomo-torpediniera</b>, <b>donna-golfo</b>, <b>folla-risacca</b>.</p></div>
+<h3>Tre elementi nuovi da introdurre in letteratura</h3>
+<ul>
+<li><b>Rumore</b>: manifestazione del dinamismo degli oggetti.</li>
+<li><b>Peso</b>: facoltà di volo degli oggetti.</li>
+<li><b>Odore</b>: negli appunti la definizione è rimasta vuota.</li>
+</ul>
+<div class="box deep"><h4>La definizione mancante</h4><p>Nel manifesto l'<b>odore</b> è definito come la «facoltà di sparpagliamento» degli oggetti.</p></div>
+<p><b>Mezzi grafici</b>: maiuscolo, grassetto, stampatello, onomatopee, sinestesie, impaginazione libera. La pagina diventa un'immagine.</p>
+<div class="box deep"><h4>Il nome di questa scrittura</h4><p>Il risultato si chiama <b>«parole in libertà»</b>. L'esempio più famoso è <i>Zang Tumb Tumb</i> di Marinetti (1914), sull'assedio di Adrianopoli: onomatopee di cannoni e mitragliatrici, caratteri tipografici di grandezze diverse.</p></div>
+
+<h2 id="esempio">Esempio svolto: riscrivere «alla futurista»</h2>
+<div class="box ex"><h4>Frase di partenza</h4><p>«La grande automobile rossa corre velocemente sulla strada bagnata, e il suo motore fa un rumore assordante.»</p>
+<ol>
+<li><b>Abolisci aggettivi e avverbi</b> (punti 3-4): spariscono grande, rossa, velocemente, bagnata, assordante.</li>
+<li><b>Verbo all'infinito</b> (punto 2): «corre» diventa «correre».</li>
+<li><b>Sostantivo doppio per analogia</b> (punto 5): automobile-proiettile, strada-specchio.</li>
+<li><b>Niente punteggiatura né congiunzioni</b> (punto 6).</li>
+<li><b>Rumore come onomatopea</b>, in maiuscolo.</li>
+</ol>
+<p><b>Risultato</b>: «automobile-proiettile correre strada-specchio motore VRRRRUUUM»</p>
+<p>Il senso c'è ancora, ma lo ricostruisce il lettore: proprio quello che chiede il punto 2.</p></div>
+
+<h2 id="confronti">Futurismo e gli altri</h2>
+<div class="tw"><table>
+<tr><th></th><th>Decadentismo</th><th>Futurismo</th></tr>
+<tr><td>Rapporto con la modernità</td><td>Rifiuto, ribellione, fuga nell'interiorità</td><td><b>Esaltazione</b>: macchine, velocità, città</td></tr>
+<tr><td>L'io</td><td>Centrale: l'inconscio, l'esteta</td><td><b>Da distruggere</b>, sostituito dalla materia</td></tr>
+<tr><td>Linguaggio</td><td>Musicale, analogico, raffinato</td><td>Analogico ma <b>violento</b>, senza sintassi, tipografico</td></tr>
+<tr><td>La borghesia</td><td>Ostile</td><td>Ostile, perché statica</td></tr>
+</table></div>
+<p>Con D'Annunzio i futuristi condividono il <b>patriottismo</b>, l'<b>interventismo</b> e, in <i>Maia</i>, l'entusiasmo per la modernità industriale.</p>
+
+<h2 id="analogie">Analogie</h2>
+<div class="box ana"><h4>Il Manifesto tecnico come scrivere solo per messaggi vocali tagliati e notifiche</h4><p>Niente frasi complete, solo parole chiave, emoji-onomatopee e maiuscole per gridare. Il destinatario ricostruisce il senso da solo.</p><p><b>Dove l'analogia non regge</b>: nelle notifiche la brevità serve all'efficienza. Per i futuristi è un programma estetico e ideologico: rompere l'io e l'ordine borghese.</p></div>
+
+<h2 id="ragionamento">Come costruire una risposta argomentata</h2>
+<div class="box ex"><h4>Domanda: «Perché per i futuristi i musei sono cimiteri?»</h4>
+<p><b>Tesi.</b> I musei conservano il passato, e per i futuristi conservare il passato significa sprecare le energie che servono a creare il futuro.</p>
+<p><b>Argomento.</b> Il Futurismo vuole una rottura netta con il passato e si identifica nella velocità e nel dinamismo. Il museo è il luogo statico per eccellenza. Ci si va una volta all'anno, come al cimitero. Per un artista frequentarlo è dannoso come per un figlio dotato avere genitori che lo frenano. Solo il malato e il prigioniero hanno bisogno del passato.</p>
+<p><b>Precisazione.</b> Non vogliono «distruggere il passato» in astratto, ma ciò che lo contiene: musei, biblioteche, accademie.</p>
+<p><b>Collegamento.</b> L'opposto di D'Annunzio in <i>Elettra</i>, dove il passato glorioso è la base del futuro.</p></div>
+
+<h2 id="errori">Errori comuni e trabocchetti</h2>
+<div class="box warn"><ul>
+<li><b>Invertire i due manifesti.</b> 1909 = <b>che cosa</b> (ideologia). 1912 = <b>come</b> (tecnica).</li>
+<li><b>«I futuristi sono come i decadenti.»</b> No: i decadenti rifiutano la modernità, i futuristi la esaltano.</li>
+<li><b>«Distruggere il passato»</b> senza sfumature. Meglio «distruggere ciò che conserva il passato».</li>
+<li><b>Dimenticare guerra e disprezzo della donna</b> (punto 9): sono parte integrante dell'ideologia, non dettagli.</li>
+<li><b>Analogia futurista = similitudine.</b> No: niente «come», i due termini sono accostati direttamente (uomo-torpediniera).</li>
+</ul></div>
+
+<h2 id="riepilogo">Riepilogo</h2>
+<ul class="recap">
+<li>Contesto: Belle Époque, seconda rivoluzione industriale, interventismo, avanguardie storiche.</li>
+<li>Marinetti, Manifesto del 1909 (11 punti, che cosa): velocità, guerra «igiene del mondo», patriottismo, disprezzo della donna, distruggere i musei.</li>
+<li>Manifesto tecnico del 1912 (11 punti, come): niente sintassi, verbi all'infinito, niente aggettivi, avverbi e punteggiatura, analogia, distruzione dell'io. Rumore, peso, odore. Mezzi grafici.</li>
+<li>Rapporto con la politica: interventismo e adesione al fascismo.</li>
+</ul>
+
+<h2 id="esercizi">Esercizi di verifica</h2>
+<div class="scored">
+<div class="ex-block qu mcq" data-ans="1"><span class="lvl">Livello 1 · crocetta</span><p class="q">Chi fonda il Futurismo e con quale testo?</p><div class="opts"><button type="button" class="opt">D'Annunzio, con le <i>Laudi</i></button><button type="button" class="opt">Marinetti, con il Manifesto del Futurismo del 1909</button><button type="button" class="opt">Marinetti, con il Manifesto tecnico del 1909</button><button type="button" class="opt">Ungaretti, con <i>L'Allegria</i></button></div><div class="why" hidden><span class="verdict"></span>Il manifesto fondativo è del 1909. Il Manifesto tecnico della letteratura futurista è del 1912.</div><button type="button" class="retry" hidden>Riprova</button></div>
+<div class="ex-block qu vf" data-ans="1"><span class="lvl">Livello 1 · vero o falso</span><p class="q">Il Manifesto tecnico del 1912 stabilisce che cosa la letteratura deve cantare, mentre quello del 1909 spiega come scrivere.</p><div class="opts"><button type="button" class="opt">Vero</button><button type="button" class="opt">Falso</button></div><div class="why" hidden><span class="verdict"></span>È il contrario: 1909 = contenuti e ideologia, 1912 = tecnica di scrittura.</div><button type="button" class="retry" hidden>Riprova</button></div>
+<div class="ex-block qu mcq" data-ans="2"><span class="lvl">Livello 2 · crocetta</span><p class="q">Quale di queste regole NON appartiene al Manifesto tecnico?</p><div class="opts"><button type="button" class="opt">Usare il verbo all'infinito</button><button type="button" class="opt">Abolire la punteggiatura</button><button type="button" class="opt">Usare molti aggettivi per rendere le immagini più vivide</button><button type="button" class="opt">Distruggere l'«io» e la psicologia</button></div><div class="why" hidden><span class="verdict"></span>L'aggettivo va abolito perché rallenta, come l'avverbio.</div><button type="button" class="retry" hidden>Riprova</button></div>
+<div class="classify"><h4>Quale manifesto?</h4><p class="small muted">Per ogni elemento scegli la categoria giusta.</p><div class="cl-item qu" data-ans="0"><p class="q">La guerra «sola igiene del mondo»</p><div class="opts"><button type="button" class="opt">Manifesto 1909</button><button type="button" class="opt">Manifesto tecnico 1912</button></div><div class="why" hidden><span class="verdict"></span>Punto 9, ideologia.</div><button type="button" class="retry" hidden>Riprova</button></div><div class="cl-item qu" data-ans="1"><p class="q">Disporre i sostantivi a caso</p><div class="opts"><button type="button" class="opt">Manifesto 1909</button><button type="button" class="opt">Manifesto tecnico 1912</button></div><div class="why" hidden><span class="verdict"></span>Punto 1, distruggere la sintassi.</div><button type="button" class="retry" hidden>Riprova</button></div><div class="cl-item qu" data-ans="0"><p class="q">Distruggere musei e biblioteche</p><div class="opts"><button type="button" class="opt">Manifesto 1909</button><button type="button" class="opt">Manifesto tecnico 1912</button></div><div class="why" hidden><span class="verdict"></span>Punto 10.</div><button type="button" class="retry" hidden>Riprova</button></div><div class="cl-item qu" data-ans="1"><p class="q">Introdurre in letteratura rumore, peso e odore</p><div class="opts"><button type="button" class="opt">Manifesto 1909</button><button type="button" class="opt">Manifesto tecnico 1912</button></div><div class="why" hidden><span class="verdict"></span>I tre elementi nuovi.</div><button type="button" class="retry" hidden>Riprova</button></div><div class="cl-item qu" data-ans="1"><p class="q">Sostituire l'io con la materia</p><div class="opts"><button type="button" class="opt">Manifesto 1909</button><button type="button" class="opt">Manifesto tecnico 1912</button></div><div class="why" hidden><span class="verdict"></span>Punto 11.</div><button type="button" class="retry" hidden>Riprova</button></div><div class="cl-item qu" data-ans="0"><p class="q">Cantare treni, piroscafi e aerei</p><div class="opts"><button type="button" class="opt">Manifesto 1909</button><button type="button" class="opt">Manifesto tecnico 1912</button></div><div class="why" hidden><span class="verdict"></span>Punto 11 del primo manifesto.</div><button type="button" class="retry" hidden>Riprova</button></div></div>
+<div class="ex-block"><span class="lvl">Livello 3 · esercizio pratico</span>
+<p class="q"><b>Riscrivi in stile futurista questa frase, indicando quali regole del Manifesto tecnico applichi: «Il treno lungo attraversa lentamente la pianura silenziosa, mentre la folla saluta allegramente.»</b></p>
+<details class="sol"><summary><span class="lab">Mostra una soluzione possibile</span></summary><div class="solbody">
+<p><b>Una soluzione</b>: «treno-serpente attraversare pianura-tamburo folla-onda salutare TATATÀ FIIIIII»</p>
+<p><b>Regole applicate</b>:</p><ul><li>aboliti aggettivi e avverbi (lungo, lentamente, silenziosa, allegramente);</li><li>verbi all'infinito;</li><li>sostantivi doppi per analogia (treno-serpente, folla-onda);</li><li>niente punteggiatura né congiunzioni («mentre» sparisce);</li><li>rumore reso con onomatopee in maiuscolo.</li></ul><p>Altre soluzioni sono corrette se rispettano le stesse regole.</p>
+</div></details>
+</div>
+<div class="ex-block"><span class="lvl">Livello 4 · domanda aperta</span>
+<p class="q"><b>Confronta il rapporto con la modernità nel Decadentismo e nel Futurismo.</b></p>
+<details class="sol"><summary><span class="lab">Mostra risposta modello</span></summary><div class="solbody">
+<p><b>Decadentismo.</b> Nasce dalla crisi del positivismo e dal conflitto tra artista e società borghese. Davanti alla modernità l'artista si sente emarginato e reagisce ribellandosi: si chiude nell'interiorità e nell'inconscio, nell'estetismo, in un linguaggio oscuro ed elitario.</p>
+<p><b>Futurismo.</b> Pochi anni dopo, nell'entusiasmo della seconda rivoluzione industriale, fa l'opposto: esalta la modernità (velocità, macchine, folle, rumore) e rompe con il passato fino a voler distruggere i musei. Anche l'io, centrale per i decadenti, va distrutto e sostituito dalla materia.</p>
+<p><b>In comune.</b> L'ostilità verso la borghesia, giudicata statica, e l'uso dell'analogia. Ma per i futuristi l'analogia diventa violenta e veloce.</p>
+</div></details>
+</div>
+<div class="scorebar"></div>
+</div>
+
+<h2 id="collegamenti">Collegamenti</h2>
+<ul>
+<li><b>← D'Annunzio</b>: patriottismo, interventismo, celebrazione della modernità in <i>Maia</i>.</li>
+<li><b>← Verga</b>: per Verga il progresso schiaccia, per i futuristi salva. È il macrotema «progresso/trasformazione».</li>
+<li><b>→ Pirandello (lezione 10)</b>: gli appunti lo collocano «a metà tra decadentismo e futurismo».</li>
+<li><b>→ Ermetismo e Ungaretti (lezioni 11-12)</b>: anche loro aboliscono la punteggiatura e usano analogie, ma per scavare nell'io, non per distruggerlo. E la guerra non è «igiene», è orrore.</li>
+</ul>
+
+    <nav class="pager" aria-label="Lezioni"><a class="prev" href="lezione-07.html"><small>← Precedente</small>Pascoli</a><a class="next" href="lezione-09.html"><small>Successiva →</small>Svevo</a></nav>
+  </main>
+</div>
+<script>(function(){
+  var root=document.documentElement;
+  function getS(k){try{return localStorage.getItem(k)}catch(e){return null}}
+  function setS(k,v){try{localStorage.setItem(k,v)}catch(e){}}
+
+  /* tema */
+  var saved=getS('it-lezioni-theme');
+  if(saved==='dark'||saved==='light'){root.setAttribute('data-theme',saved)}
+  var tb=document.getElementById('themeBtn');
+  function curTheme(){
+    var t=root.getAttribute('data-theme');
+    if(t) return t;
+    return (window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches)?'dark':'light';
+  }
+  function label(){if(tb){tb.textContent=curTheme()==='dark'?'☀ Chiaro':'☾ Scuro'}}
+  if(tb){tb.addEventListener('click',function(){var n=curTheme()==='dark'?'light':'dark';root.setAttribute('data-theme',n);setS('it-lezioni-theme',n);label()});label()}
+
+  /* indice a scomparsa su telefono */
+  var tocBtn=document.getElementById('tocBtn'),toc=document.getElementById('toc');
+  if(tocBtn&&toc){
+    tocBtn.addEventListener('click',function(){var o=toc.classList.toggle('open');tocBtn.setAttribute('aria-expanded',o?'true':'false')});
+    toc.addEventListener('click',function(e){if(e.target.closest('a')){toc.classList.remove('open');tocBtn.setAttribute('aria-expanded','false')}});
+  }
+
+  /* evidenzia la sezione corrente */
+  var links=toc?Array.prototype.slice.call(toc.querySelectorAll('ol a')):[];
+  if(links.length&&'IntersectionObserver' in window){
+    var map={};links.forEach(function(a){map[a.getAttribute('href').slice(1)]=a});
+    var obs=new IntersectionObserver(function(es){
+      es.forEach(function(en){
+        if(en.isIntersecting){links.forEach(function(a){a.classList.remove('active')});var a=map[en.target.id];if(a)a.classList.add('active')}
+      });
+    },{rootMargin:'-70px 0px -70% 0px'});
+    document.querySelectorAll('main h2[id]').forEach(function(h){obs.observe(h)});
+  }
+
+  /* domande: scelta multipla, vero/falso, classificazione */
+  function updateScore(box){
+    if(!box) return;
+    var bar=box.querySelector('.scorebar'); if(!bar) return;
+    var all=box.querySelectorAll('.qu').length;
+    var done=box.querySelectorAll('.qu.done').length;
+    var ok=box.querySelectorAll('.qu.right').length;
+    bar.textContent=done?('Corrette: '+ok+' su '+done+' · '+all+' domande'):(all+' domande · rispondi per il punteggio');
+  }
+  document.querySelectorAll('.qu').forEach(function(q){
+    var ans=parseInt(q.getAttribute('data-ans'),10);
+    var btns=Array.prototype.slice.call(q.querySelectorAll('.opt'));
+    var why=q.querySelector('.why');
+    var verdict=why?why.querySelector('.verdict'):null;
+    var retry=q.querySelector('.retry');
+    btns.forEach(function(b,i){
+      b.addEventListener('click',function(){
+        if(q.classList.contains('done')) return;
+        q.classList.add('done');
+        btns.forEach(function(x,j){x.disabled=true;if(j===ans)x.classList.add('ok')});
+        if(i===ans){q.classList.add('right');if(verdict)verdict.textContent='Giusto. '}
+        else{b.classList.add('ko');q.classList.add('wrong');if(verdict)verdict.textContent='Sbagliato. '}
+        if(why) why.hidden=false;
+        if(retry) retry.hidden=false;
+        updateScore(q.closest('.scored'));
+      });
+    });
+    if(retry){retry.addEventListener('click',function(){
+      q.classList.remove('done','right','wrong');
+      btns.forEach(function(x){x.disabled=false;x.classList.remove('ok','ko')});
+      if(why) why.hidden=true; retry.hidden=true;
+      updateScore(q.closest('.scored'));
+    })}
+  });
+  document.querySelectorAll('.scored').forEach(updateScore);
+
+  /* versi annotati */
+  function toggleVerse(v,force){
+    var n=v.nextElementSibling;
+    if(!n||!n.classList.contains('vnote')) return;
+    var open=(typeof force==='boolean')?force:n.hidden;
+    n.hidden=!open; v.classList.toggle('open',open); v.setAttribute('aria-expanded',open?'true':'false');
+  }
+  document.querySelectorAll('.v.has-note').forEach(function(v){
+    v.addEventListener('click',function(){toggleVerse(v)});
+    v.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();toggleVerse(v)}});
+  });
+  document.querySelectorAll('.poem .allnotes').forEach(function(b){
+    b.addEventListener('click',function(){
+      var p=b.closest('.poem');var open=b.getAttribute('data-open')!=='1';
+      p.querySelectorAll('.v.has-note').forEach(function(v){toggleVerse(v,open)});
+      b.setAttribute('data-open',open?'1':'0');b.textContent=open?'Nascondi tutte le note':'Mostra tutte le note';
+    });
+  });
+
+  /* filtro cronologia */
+  document.querySelectorAll('[data-tl]').forEach(function(wrap){
+    var chips=wrap.querySelectorAll('.chip');var items=wrap.querySelectorAll('.tl li');
+    chips.forEach(function(c){c.addEventListener('click',function(){
+      chips.forEach(function(x){x.classList.remove('on');x.setAttribute('aria-pressed','false')});
+      c.classList.add('on');c.setAttribute('aria-pressed','true');
+      var f=c.getAttribute('data-f');
+      items.forEach(function(li){li.hidden=!(f==='all'||li.getAttribute('data-who')===f)});
+    })});
+  });
+
+  /* ricerca nel glossario */
+  var gs=document.getElementById('glossSearch');
+  if(gs){gs.addEventListener('input',function(){
+    var t=gs.value.trim().toLowerCase();
+    document.querySelectorAll('dl.gloss>div').forEach(function(d){d.hidden=t&&d.textContent.toLowerCase().indexOf(t)<0});
+  })}
+})();
+</script>
+</body>
+</html>

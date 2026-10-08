@@ -1,0 +1,598 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Montale · Italiano</title>
+<style>:root{
+  --bg:#fbf9f4; --surface:#ffffff; --surface2:#f3efe6; --text:#1f1d1a; --muted:#5d584f; --line:#e2dccf;
+  --accent:#8c1d2f; --accent-soft:#f6e6e8; --focus:#2457a6;
+  --def:#2457a6; --def-bg:#ebf1fb;
+  --rule:#6a3d9e; --rule-bg:#f2ecfa;
+  --ex:#1d7149; --ex-bg:#e7f4ec;
+  --warn:#8f5300; --warn-bg:#fcf1dc;
+  --deep:#0d6871; --deep-bg:#e3f2f3;
+  --note:#b42318; --note-bg:#fdebe8;
+  --ana:#4f4f86; --ana-bg:#ececf6;
+  --ok:#1d7149; --ok-bg:#e2f3e9; --ko:#b42318; --ko-bg:#fbe5e2;
+  --radius:12px;
+  --serif:"Iowan Old Style","Palatino Linotype",Palatino,"Book Antiqua",Georgia,serif;
+  --sans:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#131418; --surface:#1b1d23; --surface2:#23262e; --text:#ecebe6; --muted:#aaa59c; --line:#32353e;
+    --accent:#f2a7b1; --accent-soft:#3a2329; --focus:#8ab4f8;
+    --def:#8ab4f8; --def-bg:#18253a;
+    --rule:#c7a6f2; --rule-bg:#271e37;
+    --ex:#7fd4a6; --ex-bg:#152a20;
+    --warn:#f5c26b; --warn-bg:#2d2414;
+    --deep:#79d0d8; --deep-bg:#132a2d;
+    --note:#ff9b8f; --note-bg:#331a18;
+    --ana:#b4b4ee; --ana-bg:#22223a;
+    --ok:#7fd4a6; --ok-bg:#15301f; --ko:#ff9b8f; --ko-bg:#3a1b18;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#131418; --surface:#1b1d23; --surface2:#23262e; --text:#ecebe6; --muted:#aaa59c; --line:#32353e;
+  --accent:#f2a7b1; --accent-soft:#3a2329; --focus:#8ab4f8;
+  --def:#8ab4f8; --def-bg:#18253a;
+  --rule:#c7a6f2; --rule-bg:#271e37;
+  --ex:#7fd4a6; --ex-bg:#152a20;
+  --warn:#f5c26b; --warn-bg:#2d2414;
+  --deep:#79d0d8; --deep-bg:#132a2d;
+  --note:#ff9b8f; --note-bg:#331a18;
+  --ana:#b4b4ee; --ana-bg:#22223a;
+  --ok:#7fd4a6; --ok-bg:#15301f; --ko:#ff9b8f; --ko-bg:#3a1b18;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth;scroll-padding-top:72px}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--sans);font-size:18px;line-height:1.7}
+a{color:var(--accent);text-underline-offset:3px}
+a:focus-visible,button:focus-visible,summary:focus-visible,.v.has-note:focus-visible,input:focus-visible{outline:3px solid var(--focus);outline-offset:2px;border-radius:6px}
+img{max-width:100%}
+
+/* header */
+.top{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:10px;padding:10px 16px;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.top .home{font-family:var(--serif);font-weight:700;font-size:1.05rem;color:var(--text);text-decoration:none;white-space:nowrap}
+.top .home span{color:var(--accent)}
+.top .lnum{color:var(--muted);font-size:.85rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.top .sp{flex:1}
+.top button{font:inherit;font-size:.9rem;background:var(--surface);color:var(--text);border:1px solid var(--line);border-radius:999px;padding:6px 12px;cursor:pointer;min-height:38px}
+.top button:hover{border-color:var(--accent)}
+#tocBtn{display:none}
+
+/* layout */
+.layout{display:grid;grid-template-columns:270px minmax(0,1fr);gap:40px;max-width:1180px;margin:0 auto;padding:0 24px}
+.toc{position:sticky;top:64px;align-self:start;max-height:calc(100vh - 80px);overflow:auto;padding:24px 0 24px}
+.toc .tt{font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:0 0 8px}
+.toc ol{list-style:none;margin:0;padding:0;border-left:2px solid var(--line)}
+.toc li a{display:block;padding:5px 12px;margin-left:-2px;border-left:2px solid transparent;color:var(--muted);text-decoration:none;font-size:.93rem;line-height:1.35}
+.toc li a:hover{color:var(--text)}
+.toc li a.active{color:var(--accent);border-left-color:var(--accent);font-weight:600}
+.toc .tnav{margin-top:20px;display:flex;flex-direction:column;gap:6px;font-size:.88rem}
+.toc .tnav a{text-decoration:none}
+main{min-width:0;max-width:780px;padding:28px 0 80px}
+
+/* type */
+h1,h2,h3,h4{font-family:var(--serif);line-height:1.25;text-wrap:balance}
+h1{font-size:2.3rem;margin:.2em 0 .25em}
+.kicker{font-size:.8rem;letter-spacing:.09em;text-transform:uppercase;color:var(--accent);font-weight:700;margin:0}
+.sub{color:var(--muted);font-size:1.08rem;margin:0 0 1.2em}
+h2{font-size:1.6rem;margin:2.2em 0 .6em;padding-top:.6em;border-top:1px solid var(--line)}
+h3{font-size:1.25rem;margin:1.7em 0 .5em}
+h4{font-size:1.05rem;margin:0 0 .4em}
+p{margin:.7em 0}
+ul,ol{padding-left:1.3em}
+li{margin:.25em 0}
+strong{font-weight:650}
+.muted{color:var(--muted)}
+.small{font-size:.9rem}
+blockquote{margin:1em 0;padding:.6em 1em;border-left:3px solid var(--accent);background:var(--surface2);border-radius:0 8px 8px 0;font-family:var(--serif);font-size:1.05rem}
+blockquote cite{display:block;font-size:.85rem;color:var(--muted);font-style:normal;margin-top:.3em;font-family:var(--sans)}
+code,kbd{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.9em;background:var(--surface2);padding:1px 5px;border-radius:5px}
+hr{border:0;border-top:1px solid var(--line);margin:2em 0}
+
+/* boxes */
+.box{position:relative;margin:1.2em 0;padding:14px 16px 12px;border-radius:var(--radius);border:1px solid var(--line);border-left:5px solid var(--c);background:var(--b)}
+.box::before{content:attr(data-k);display:inline-block;font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;font-weight:700;color:var(--c);margin-bottom:4px}
+.box>:first-child{margin-top:0}
+.box>:last-child{margin-bottom:0}
+.box h4{color:var(--text)}
+.box.def{--c:var(--def);--b:var(--def-bg)}
+.box.rule{--c:var(--rule);--b:var(--rule-bg)}
+.box.ex{--c:var(--ex);--b:var(--ex-bg)}
+.box.warn{--c:var(--warn);--b:var(--warn-bg)}
+.box.deep{--c:var(--deep);--b:var(--deep-bg)}
+.box.note{--c:var(--note);--b:var(--note-bg)}
+.box.ana{--c:var(--ana);--b:var(--ana-bg)}
+.box.def::before{content:"Definizione"}
+.box.rule::before{content:"Concetto chiave"}
+.box.ex::before{content:"Esempio svolto"}
+.box.warn::before{content:"Attenzione"}
+.box.deep::before{content:"Approfondimento (non negli appunti)"}
+.box.note::before{content:"Nota sul materiale"}
+.box.ana::before{content:"Analogia"}
+
+/* tables */
+.tw{overflow-x:auto;margin:1em 0;border:1px solid var(--line);border-radius:var(--radius)}
+table{border-collapse:collapse;width:100%;font-size:.95rem;min-width:520px}
+th,td{padding:9px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+th{background:var(--surface2);font-weight:650}
+tr:last-child td{border-bottom:0}
+
+/* chains / steps */
+.chain{list-style:none;padding:0;margin:1em 0;counter-reset:c}
+.chain li{position:relative;padding:10px 14px 10px 46px;margin:0 0 10px;background:var(--surface);border:1px solid var(--line);border-radius:10px}
+.chain li::before{counter-increment:c;content:counter(c);position:absolute;left:12px;top:10px;width:24px;height:24px;border-radius:50%;background:var(--accent);color:var(--bg);font-size:.8rem;font-weight:700;display:grid;place-items:center}
+.chain li:not(:last-child)::after{content:"↓";position:absolute;left:18px;bottom:-17px;color:var(--muted);font-size:.85rem}
+.kv{display:grid;grid-template-columns:max-content 1fr;gap:6px 14px;margin:.8em 0}
+.kv dt{font-weight:650}
+.kv dd{margin:0}
+@media (max-width:560px){.kv{grid-template-columns:1fr}.kv dd{margin-bottom:6px}}
+
+/* poem */
+.poem{margin:1.3em 0;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:14px 14px 14px 6px}
+.poem .ph{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 12px;padding:0 4px 8px 10px;border-bottom:1px solid var(--line);margin-bottom:8px}
+.poem .ph b{font-family:var(--serif);font-size:1.12rem}
+.poem .ph span{color:var(--muted);font-size:.85rem}
+.poem .ph button{margin-left:auto;font:inherit;font-size:.82rem;background:var(--surface2);color:var(--text);border:1px solid var(--line);border-radius:999px;padding:4px 10px;cursor:pointer;min-height:34px}
+.poem .hint{font-size:.82rem;color:var(--muted);padding:0 10px 6px}
+.v{display:grid;grid-template-columns:2.4em 1fr;font-family:var(--serif);font-size:1.08rem;line-height:1.55;padding:1px 4px;border-radius:6px}
+.v .n{color:var(--muted);font-family:var(--sans);font-size:.72rem;text-align:right;padding-right:10px;padding-top:.35em;user-select:none}
+.v.has-note{cursor:pointer}
+.v.has-note .t{text-decoration:underline dotted var(--accent);text-underline-offset:4px;text-decoration-thickness:1.5px}
+.v.has-note:hover{background:var(--accent-soft)}
+.v.open{background:var(--accent-soft)}
+.vnote{margin:4px 4px 8px 2.4em;padding:8px 12px;font-size:.93rem;line-height:1.55;background:var(--surface2);border-left:3px solid var(--accent);border-radius:0 8px 8px 0}
+.vgap{height:.9em}
+
+/* interactive questions */
+.ex-block{margin:1.2em 0;padding:14px 16px;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius)}
+.ex-block .lvl{display:inline-block;font-size:.7rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:1px 8px;margin-bottom:6px}
+.qu .q{font-weight:600;margin:.2em 0 .6em}
+.opts{display:flex;flex-direction:column;gap:8px}
+.vf .opts{flex-direction:row}
+.vf .opts .opt{flex:1;text-align:center}
+.opt{font:inherit;font-size:.97rem;text-align:left;background:var(--surface2);color:var(--text);border:1px solid var(--line);border-radius:10px;padding:10px 14px;cursor:pointer;min-height:46px;line-height:1.4}
+.opt:hover:not(:disabled){border-color:var(--accent)}
+.opt:disabled{cursor:default;opacity:.92}
+.opt.ok{background:var(--ok-bg);border-color:var(--ok);color:var(--text)}
+.opt.ok::after{content:"  ✓";color:var(--ok);font-weight:700}
+.opt.ko{background:var(--ko-bg);border-color:var(--ko)}
+.opt.ko::after{content:"  ✗";color:var(--ko);font-weight:700}
+.why{margin-top:10px;padding:10px 12px;border-radius:8px;background:var(--surface2);font-size:.95rem}
+.why .verdict{font-weight:700}
+.qu.right .verdict{color:var(--ok)}
+.qu.wrong .verdict{color:var(--ko)}
+.retry{font:inherit;font-size:.82rem;margin-top:8px;background:none;border:0;color:var(--accent);cursor:pointer;padding:4px 0;text-decoration:underline}
+.scorebar{position:sticky;bottom:10px;z-index:5;margin:1em auto;width:max-content;max-width:100%;padding:6px 14px;border-radius:999px;background:var(--surface);border:1px solid var(--line);box-shadow:0 4px 18px rgba(0,0,0,.12);font-size:.85rem;text-align:center}
+
+/* classify */
+.classify{margin:1.2em 0;padding:14px 16px;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius)}
+.cl-item{padding:10px 0;border-top:1px dashed var(--line)}
+.cl-item:first-of-type{border-top:0}
+.cl-item .q{font-weight:500}
+.cl-item .opts{flex-direction:row;flex-wrap:wrap}
+.cl-item .opt{flex:1 1 140px;text-align:center;font-size:.9rem;padding:8px 10px;min-height:42px}
+
+/* solutions */
+details.sol{margin:.8em 0 .2em}
+details.sol summary{display:inline-flex;align-items:center;gap:6px;cursor:pointer;list-style:none;font-weight:600;font-size:.92rem;color:var(--accent);background:var(--accent-soft);border-radius:999px;padding:7px 14px;min-height:40px}
+details.sol summary::-webkit-details-marker{display:none}
+details.sol summary::before{content:"▸"}
+details.sol[open] summary::before{content:"▾"}
+details.sol[open] summary .lab::after{content:" (nascondi)";font-weight:400}
+details.sol .solbody{margin-top:10px;padding:12px 14px;border:1px solid var(--line);border-radius:10px;background:var(--surface2)}
+details.sol .solbody>:first-child{margin-top:0}
+details.sol .solbody>:last-child{margin-bottom:0}
+
+/* pager */
+.pager{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:3em}
+.pager a{display:block;padding:12px 14px;border:1px solid var(--line);border-radius:var(--radius);background:var(--surface);text-decoration:none;color:var(--text);min-height:64px}
+.pager a small{display:block;color:var(--muted);font-size:.78rem;text-transform:uppercase;letter-spacing:.06em}
+.pager a.next{text-align:right;grid-column:2}
+.pager a:hover{border-color:var(--accent)}
+
+/* summary list */
+.recap{list-style:none;padding:0}
+.recap li{padding:8px 0 8px 28px;position:relative;border-bottom:1px solid var(--line)}
+.recap li::before{content:"✦";position:absolute;left:4px;color:var(--accent)}
+
+/* index page */
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px;margin:1em 0}
+.card{display:block;padding:14px 16px;border:1px solid var(--line);border-radius:var(--radius);background:var(--surface);text-decoration:none;color:var(--text)}
+.card:hover{border-color:var(--accent)}
+.card .cn{font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);font-weight:700}
+.card .ct{font-family:var(--serif);font-size:1.15rem;font-weight:700;line-height:1.25;margin:2px 0 4px}
+.card .cs{font-size:.88rem;color:var(--muted);line-height:1.45}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:.8em 0}
+.chip{font:inherit;font-size:.85rem;background:var(--surface);color:var(--text);border:1px solid var(--line);border-radius:999px;padding:5px 12px;cursor:pointer;min-height:36px}
+.chip.on{background:var(--accent);color:var(--bg);border-color:var(--accent)}
+.tl{list-style:none;padding:0;margin:1em 0;border-left:2px solid var(--line)}
+.tl li{position:relative;padding:6px 0 10px 18px}
+.tl li::before{content:"";position:absolute;left:-7px;top:14px;width:12px;height:12px;border-radius:50%;background:var(--bg);border:2px solid var(--accent)}
+.tl .y{font-weight:700;font-variant-numeric:tabular-nums;margin-right:8px}
+.tl .who{font-size:.75rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-left:6px}
+.tl li[hidden]{display:none}
+.flow{display:flex;flex-direction:column;align-items:stretch;gap:0;margin:1.2em 0}
+.flow .node{padding:12px 14px;border:1px solid var(--line);border-radius:var(--radius);background:var(--surface)}
+.flow .node b{font-family:var(--serif);font-size:1.05rem}
+.flow .node .meta{display:block;color:var(--muted);font-size:.85rem}
+.flow .arrow{align-self:center;color:var(--muted);font-size:.85rem;padding:4px 0;text-align:center}
+.flow .row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media (max-width:560px){.flow .row{grid-template-columns:1fr}}
+details.theme{border:1px solid var(--line);border-radius:var(--radius);background:var(--surface);margin:.6em 0;padding:0 14px}
+details.theme summary{cursor:pointer;padding:12px 0;font-weight:650;font-family:var(--serif);font-size:1.05rem}
+details.theme[open]{padding-bottom:10px}
+.gloss-search{width:100%;font:inherit;padding:10px 14px;border-radius:10px;border:1px solid var(--line);background:var(--surface);color:var(--text);margin:.6em 0}
+dl.gloss{margin:0}
+dl.gloss>div{padding:8px 0;border-bottom:1px solid var(--line)}
+dl.gloss dt{font-weight:700}
+dl.gloss dd{margin:2px 0 0}
+dl.gloss>div[hidden]{display:none}
+
+/* responsive */
+@media (max-width:1000px){
+  .layout{grid-template-columns:minmax(0,1fr);padding:0 16px;gap:0}
+  #tocBtn{display:inline-block}
+  .toc{display:none;position:fixed;top:59px;left:0;right:0;max-height:calc(100vh - 59px);background:var(--bg);border-bottom:1px solid var(--line);padding:16px 20px 20px;z-index:15;box-shadow:0 10px 30px rgba(0,0,0,.15)}
+  .toc.open{display:block}
+  main{padding-top:16px}
+}
+@media (max-width:560px){
+  body{font-size:17px}
+  h1{font-size:1.85rem}
+  h2{font-size:1.4rem}
+  .top{padding:8px 12px}
+  .top .lnum{display:none}
+  .pager{grid-template-columns:1fr}
+  .pager a.next{grid-column:1}
+  .v{grid-template-columns:2em 1fr;font-size:1.02rem}
+  .vnote{margin-left:1.4em}
+  .vf .opts{flex-direction:column}
+}
+@media print{.top,.toc,.pager,.scorebar{display:none}.layout{display:block}details.sol{display:block}}
+</style>
+</head>
+<body>
+<header class="top">
+  <a class="home" href="index.html">Italiano<span>·</span>Lezioni</a>
+  <span class="lnum">Lezione 13 · Montale</span>
+  <span class="sp"></span>
+  <button type="button" id="tocBtn" aria-controls="toc" aria-expanded="false">☰ Sezioni</button>
+  <button type="button" id="themeBtn">Tema</button>
+</header>
+<div class="layout">
+  <nav class="toc" id="toc" aria-label="Sezioni della pagina">
+    <p class="tt">In questa pagina</p>
+    <ol><li><a href="#intuizione">Intuizione</a></li><li><a href="#vita">Vita e posizione</a></li><li><a href="#pensiero">Pensiero e poetica</a></li><li><a href="#ossi">Ossi di seppia (1925)</a></li><li><a href="#occasioni">Le occasioni (1939)</a></li><li><a href="#bufera">La bufera e altro (1956)</a></li><li><a href="#satura">Satura (1971)</a></li><li><a href="#analogie">Analogie</a></li><li><a href="#ragionamento">Come costruire una risposta argomentata</a></li><li><a href="#errori">Errori comuni e trabocchetti</a></li><li><a href="#riepilogo">Riepilogo</a></li><li><a href="#esercizi">Esercizi di verifica</a></li><li><a href="#collegamenti">Collegamenti</a></li></ol>
+    <div class="tnav"><a href="index.html">⌂ Indice generale</a><a href="lezione-12.html">← Ungaretti</a><a href="index.html">Indice generale →</a></div>
+  </nav>
+  <main>
+    <p class="kicker">Lezione 13 di 13</p>
+    <h1>Montale</h1>
+    <p class="sub">Correlativo oggettivo, dagli Ossi di seppia a Satura</p>
+    <div class="box note"><h4>Perimetro d'esame</h4><p>Argomento successivo alla riga «Fine Cosa da Studiare per Interrogazione» degli appunti: verifica se è in programma. La parte su <i>Xenia 1</i> negli appunti si interrompe a metà.</p></div>
+
+<h2 id="intuizione">Intuizione</h2>
+<p>Ungaretti credeva che la parola potesse illuminare il senso della vita. Montale no: la poesia può dire solo «ciò che non siamo, ciò che non vogliamo». Il senso dell'esistenza si intravede, se mai, negli <b>oggetti</b>: un ruscello strozzato, una foglia secca, un cavallo caduto.</p>
+<p>È il <b>correlativo oggettivo</b>: dare corpo a un'idea astratta, come il «male di vivere», con cose concrete. Ogni tanto c'è un <b>varco</b>, un attimo in cui la realtà sembra sul punto di rivelare il suo segreto. Ma la rivelazione non arriva quasi mai.</p>
+
+<h2 id="vita">Vita e posizione</h2>
+<dl class="kv">
+<dt>Vita</dt><dd><b>Genova, 1896</b> – <b>Milano, 1981</b>. Vive a lungo a <b>Firenze</b>. Genova conta: è la città del mare e degli ossi di seppia.</dd>
+<dt>Politica</dt><dd>Firma il <b>Manifesto degli intellettuali antifascisti</b> e resta antifascista per tutta la vita.</dd>
+<dt>Correnti</dt><dd>Non appartiene a nessuna corrente: è vicino all'Ermetismo, ma non è un ermetico.</dd>
+</dl>
+<div class="box deep"><h4>Dati utili</h4>
+<ul>
+<li>A Firenze dirige il Gabinetto <b>Vieusseux</b>, lo stesso frequentato da Leopardi, dal 1929 al 1938. Viene allontanato perché non iscritto al partito fascista.</li>
+<li>Riceve il <b>Premio Nobel</b> nel 1975.</li>
+<li>Nel 1925 è lui a lanciare il «caso Svevo».</li>
+</ul></div>
+
+<h2 id="pensiero">Pensiero e poetica</h2>
+<ol class="chain">
+<li><b>Obiettivo</b>: come gli ermetici, cercare il <b>senso profondo della vita</b>. Ma Ungaretti usava la <b>parola</b>, Montale usa gli <b>oggetti</b>: è il «poeta degli oggetti».</li>
+<li><b>Cosa trova</b>: la sofferenza umana, che chiama <b>«male di vivere»</b>.</li>
+<li><b>I momenti di felicità</b> si rivelano un <b>inganno dei sensi</b>.</li>
+<li><b>La poetica</b> che ne deriva è il <b>correlativo oggettivo</b>.</li>
+</ol>
+<div class="box def"><h4>Correlativo oggettivo</h4><p>Spiegare un <b>concetto astratto</b> attraverso <b>elementi concreti</b>, cioè oggetti. Non si dice «la vita è sofferenza»: si mostra un ruscello strozzato, una foglia accartocciata, un cavallo stramazzato. La poesia-emblema è <i>Spesso il male di vivere ho incontrato</i>.</p></div>
+<div class="box deep"><h4>Da dove viene l'espressione</h4><p>«Correlativo oggettivo» traduce un'espressione del poeta anglo-americano T. S. Eliot (<i>objective correlative</i>, 1919). Montale la fa propria.</p></div>
+
+<h2 id="ossi">Ossi di seppia (1925)</h2>
+<p>Gli ossi di seppia sono i residui dei molluschi che il mare lascia sulla spiaggia. Montale li conosceva bene dalla Liguria, ed è qui che conta Genova. Il titolo è già un correlativo oggettivo con due significati:</p>
+<div class="tw"><table>
+<tr><th>Ossi di seppia =</th><th>Significato</th></tr>
+<tr><td>L'esistenza</td><td>Una condizione umana <b>impoverita, prosciugata</b>, ridotta all'essenziale come un osso spolpato.</td></tr>
+<tr><td>La poesia</td><td>Uno <b>stile spoglio e scarno</b>, senza ornamenti. Montale si scaglia contro i poeti «ornati», D'Annunzio compreso.</td></tr>
+</table></div>
+<h3>Gli oggetti e i concetti ricorrenti</h3>
+<div class="tw"><table>
+<tr><th>Elemento</th><th>Valore in Montale</th></tr>
+<tr><td><b>Sole</b></td><td>Di solito simbolo di vita, qui è una <b>forza crudele</b> che prosciuga ogni forma di vita. L'<b>aridità</b>, tipica del paesaggio ligure, diventa la condizione esistenziale dell'uomo.</td></tr>
+<tr><td><b>Memoria</b></td><td><b>Valore negativo</b>, a differenza di Leopardi. Il ricordo non riporta il passato: lo <b>offusca</b>, perché non è nitido.</td></tr>
+<tr><td><b>Varco</b></td><td>La possibilità di superare il male di vivere e vivere più momenti di felicità. A Montale non è stato concesso, ma forse a qualcun altro sì.</td></tr>
+<tr><td><b>Indifferenza</b></td><td>La risposta per chi non trova il varco: un atteggiamento di <b>distacco stoico</b>.</td></tr>
+</table></div>
+<div class="box note"><h4>Due refusi negli appunti</h4><ul>
+<li>Gli appunti scrivono «atteggiamento di <b>storico</b> distacco». Si intende <b>stoico</b>: il distacco imperturbabile degli stoici, che non si lasciano toccare dal dolore.</li>
+<li>Nella parte sulle <i>Occasioni</i> si legge «per Montale la <b>smorfia</b> a differenza di Leopardi non ha valore positivo». Si intende la <b>memoria</b>.</li>
+</ul></div>
+
+<h3>I limoni</h3>
+<p>È considerato il componimento più importante di Montale: una dichiarazione di poetica in 4 strofe.</p>
+<div class="tw"><table>
+<tr><th>Strofa</th><th>Contenuto</th><th>Parole chiave</th></tr>
+<tr><td><b>1</b>: dichiarazione poetica</td><td>Si rivolge a un lettore ipotetico («Ascoltami»). Prende le distanze dai <b>«poeti laureati»</b>, che usano uno stile complesso e ornato, D'Annunzio in testa. Quei poeti si muovono tra piante dai nomi rari e ricercati. Montale invece ama una natura semplice: fossi, pozzanghere, anguille, ciuffi di canne, orti, alberi di limoni.</td><td>«poeti laureati», «Io, per me»</td></tr>
+<tr><td><b>2</b>: attesa dell'epifania</td><td>Immerso nella natura, Montale prova una serenità interiore: «tace la guerra», intesa come tormento interiore, non come guerra con le armi. È <b>epifania</b>, non panismo: Montale non si fonde con la natura come D'Annunzio. Anche «noi poveri», cioè i poeti dallo stile povero, possono provare queste sensazioni: «la nostra parte di ricchezza», l'odore dei limoni. I rami sono quasi «amici» che potrebbero rivelare il segreto.</td><td>«tace la guerra», «noi poveri»</td></tr>
+<tr><td><b>3</b>: il varco</td><td>Nel silenzio la natura sembra sul punto di rivelare l'ultimo segreto. Torna il concetto di <b>varco</b>, in una serie di immagini: «lo sbaglio di Natura», «il punto morto del mondo», «l'anello che non tiene», il filo da sbrogliare che porti a una verità. La ricerca stacca l'uomo dalla realtà al punto che la vede in modo soggettivo: un'ombra umana può sembrare una divinità.</td><td>«l'anello che non tiene»</td></tr>
+<tr><td><b>4</b>: la delusione e i limoni</td><td>Si apre con una congiunzione avversativa: <b>«Ma l'illusione manca»</b>. La rivelazione non avviene. Ritorno alla realtà: le città rumorose, l'azzurro visto solo a pezzi, il tedio dell'inverno. Il finale però è positivo. Da un portone socchiuso compaiono i <b>gialli dei limoni</b>, e il gelo del cuore si scioglie. Nessuna rivelazione, ma un momento di <b>gioia vitale</b>. I limoni sono un <b>correlativo oggettivo</b>.</td><td>«Ma l'illusione manca», «i gialli dei limoni»</td></tr>
+</table></div>
+<div class="box note"><h4>«Errore grammaticale» e «piante sconosciute»</h4><ul>
+<li>Gli appunti dicono che al v. 4 «Io, per me» c'è un «errore grammaticale». È un <b>pleonasmo</b>, una ripetizione ridondante tipica del parlato, usato <b>volutamente</b>. Il tono colloquiale lo distingue dai poeti laureati. Chiamalo «pleonasmo colloquiale», non errore.</li>
+<li>Gli appunti parlano di «piante sconosciute». Il testo dice piante dai nomi <b>poco usati</b>, rari e letterari. Non sono sconosciute: sono preziose, «da poeta laureato».</li>
+</ul></div>
+
+<h3>Spesso il male di vivere ho incontrato</h3>
+<p>È la poesia che spiega il correlativo oggettivo. Due quartine, cioè <b>due correlativi</b> per due concetti astratti.</p>
+<div class="tw"><table>
+<tr><th>Strofa</th><th>Concetto astratto</th><th>Oggetti concreti</th></tr>
+<tr><td>1</td><td>Il <b>male di vivere</b></td><td>Un <b>ruscello ostacolato</b> («strozzato») che gorgoglia; una <b>foglia</b> che si accartoccia, riarsa dal sole; un <b>cavallo</b> stramazzato a terra.</td></tr>
+<tr><td>2</td><td>L'<b>indifferenza</b>, l'atteggiamento per sopravvivere al male</td><td>La <b>statua</b> nella sonnolenza del mezzogiorno, la <b>nuvola</b> lontana nel cielo, il <b>falco</b> che vola alto lontano dalla terra.</td></tr>
+</table></div>
+<div class="box rule"><h4>Perché l'indifferenza è «divina»</h4><p>Montale chiama l'indifferenza <b>divina</b> perché la divinità è lontana dai mali del mondo. Statua, nuvola e falco hanno questo in comune: sono <b>immobili o lontani</b>, quindi indifferenti al male di vivere. L'unico «bene» che il poeta ha conosciuto è questo distacco.</p></div>
+
+<h3>Non chiederci la parola</h3>
+<p>È il componimento che <b>distingue Montale da Ungaretti</b>. Ha 3 strofe.</p>
+<ul>
+<li><b>Strofa 1</b>: la parola poetica <b>non può dare risposte</b> e non può mettere ordine nel caos interiore. Una parola così sarebbe luminosa come un <b>croco</b> (un fiore giallo) in mezzo a un prato polveroso. Ungaretti credeva in quella parola-luce; Montale dice che non può darla.</li>
+</ul>
+<div class="box deep"><h4>Le strofe 2 e 3, che negli appunti mancano</h4>
+<ul>
+<li><b>Strofa 2</b>: Montale guarda con ironia l'uomo «sicuro», in pace con sé e con gli altri, che non si cura della propria ombra stampata dal sole su un muro scalcinato. È l'uomo senza dubbi, che non si interroga.</li>
+<li><b>Strofa 3</b>: «Non domandarci la formula» che apra mondi. Il poeta può offrire solo qualche sillaba «storta e secca come un ramo». La chiusa è famosa: oggi possiamo dire solo <b>«ciò che non siamo, ciò che non vogliamo»</b>.</li>
+</ul><p>È la poetica in negativo di Montale.</p></div>
+
+<h2 id="occasioni">Le occasioni (1939)</h2>
+<ul>
+<li>Contiene le sue caratteristiche principali: il <b>correlativo oggettivo</b> e la figura della <b>donna</b>.</li>
+<li>È una <b>donna salvifica</b>, che porta alla salvezza, come la Beatrice di Dante.</li>
+<li>Montale la chiama <b>Clizia</b>. Nel mito greco Clizia era la ninfa innamorata del Sole (Apollo), trasformata in <b>girasole</b>, il fiore che si volta sempre verso il sole.</li>
+<li>Clizia e il Sole rappresentano quindi l'<b>energia vitale</b>. Ma Apollo è anche il dio della poesia: Clizia rappresenta anche il valore della <b>cultura</b>.</li>
+<li>Nella realtà è <b>Irma Brandeis</b>, studiosa americana di origini ebraiche di cui Montale era innamorato. È colpita dalla <b>persecuzione razziale</b> e deve lasciare l'Italia.</li>
+</ul>
+<h3>Non recidere, forbice, quel volto</h3>
+<p>Breve poesia della sezione dei «Mottetti». I macrotemi sono tre:</p>
+<ol>
+<li><b>La donna</b>, il cui volto ha valore salvifico.</li>
+<li><b>La memoria</b>: l'angoscia per una memoria che non riesce a conservare l'immagine della donna amata. Per Montale la memoria distorce e cancella.</li>
+<li><b>Il tempo</b>, rappresentato dalla <b>forbice</b> che taglia.</li>
+</ol>
+<p><b>Il correlativo oggettivo</b>: oggetti concreti spiegano come il tempo faccia svanire la memoria. La forbice; un colpo che taglia la cima di un'acacia; il <b>guscio di cicala</b> ormai vuoto che l'albero scrolla nel fango di novembre. La cicala era simbolo dell'estate e della felicità: ora resta solo il guscio.</p>
+<div class="box note"><h4>L'«accetta»</h4><p>Gli appunti elencano tra gli oggetti «un'accetta (ascia)». Nel testo non è nominata: c'è un <b>colpo</b> netto che «svetta», cioè taglia la cima dell'acacia. È la stessa idea del taglio, ma all'analisi del testo cita ciò che c'è scritto.</p></div>
+
+<h2 id="bufera">La bufera e altro (1956)</h2>
+<p>La raccolta riprende la <b>tragedia della guerra</b>: la «bufera» è lo sconvolgimento della guerra. C'è anche una nuova figura femminile, «<b>Volpe</b>», un'anti-Beatrice: una donna terrena, legata all'eros. Gli appunti non la trattano.</p>
+<h3>Il sogno del prigioniero</h3>
+<p>L'ambientazione, mai detta esplicitamente, è una <b>cella</b>. Il prigioniero vede solo il pezzetto di mondo concesso dalle sbarre, e anche il tempo sembra annullarsi.</p>
+<div class="tw"><table>
+<tr><th>Immagine</th><th>Significato</th></tr>
+<tr><td>«storni» sui «battifredi»</td><td>Stormi di uccelli e, per analogia, squadriglie di aerei da guerra. I battifredi sono torri di guardia in legno. Lo stile è aspro, con suoni duri come «zigzag», «crac», «sfrigolio».</td></tr>
+<tr><td>«mie sole ali»</td><td>L'unica fuga, immaginaria: guardare fuori dalle inferriate.</td></tr>
+<tr><td>Lo sfrigolio dalle cucine, i «girarrosti»</td><td>Rumori che il prigioniero cataloga. Rimandano all'inferno dantesco e agli strumenti di tortura. Inizia la <b>metafora culinaria</b>: i prigionieri come carne da macello.</td></tr>
+<tr><td>«la purga»</td><td>Le purghe staliniane in URSS, i Gulag. La condanna è una condizione permanente.</td></tr>
+<tr><td>«sterminio d'oche»</td><td>I prigionieri macellati come oche per il palato dei potenti.</td></tr>
+<tr><td>Menzogna, tradimento, delazione</td><td>Le pratiche di chi spera di salvarsi passando dalla parte degli oppressori.</td></tr>
+<tr><td>Il «pâté» per gli «Iddii pestilenziali»</td><td>Culmine della metafora culinaria. I tiranni sono divinità maligne che divorano i sudditi e diffondono la peste.</td></tr>
+<tr><td>La tarma schiacciata</td><td>La prigionia annulla le forze e quasi l'identità umana.</td></tr>
+<tr><td>Il «bruciaticcio» dai «forni»</td><td>I buccellati sono dolci lucchesi, ma il rimando è ai <b>forni crematori</b> dei campi di sterminio nazisti.</td></tr>
+<tr><td>«ho suscitato iridi»</td><td>Per salvarsi il prigioniero immagina arcobaleni sulle ragnatele. «Iride» è spesso un segnale di <b>Clizia</b> e della <b>poesia</b>, che deve riaffermare i valori negati dalla storia.</td></tr>
+<tr><td>Il secolo che dura un minuto</td><td>Nella prigionia senza fine ogni istante sembra durare un secolo.</td></tr>
+</table></div>
+<div class="box rule"><h4>Il finale: la speranza</h4><p>Resta la speranza, viva solo nel <b>sogno</b>, che la donna-angelo possa ancora salvare. È Clizia, ripresa dall'immagine dantesca e stilnovistica. Ma la sua funzione è <b>laica</b>: non porta a Dio, è una via di fuga dall'incubo della storia contemporanea. È coerente con la poetica delle «occasioni»: solo raramente, per un attimo, l'uomo intravede la verità. <b>Dante</b> è il modello della <i>Bufera</i>.</p></div>
+
+<h2 id="satura">Satura (1971)</h2>
+<ul>
+<li>Dopo <i>La bufera</i> Montale smette per anni di scrivere poesia, poi pubblica <i>Satura</i>.</li>
+<li><b>Polemica</b> contro la <b>società dei consumi</b>, che rende le persone omologate, tutte uguali, e contro i <b>mass media</b>, che diffondono mode culturali ridotte a luoghi comuni. Gli appunti parlano qui di <b>pessimismo storico</b>.</li>
+<li><b>La figura femminile</b> è <b>Mosca</b>, soprannome della moglie Drusilla Tanzi, che vedeva poco. Rappresenta la <b>sicurezza della quotidianità</b>, l'unico modo per sopravvivere.</li>
+</ul>
+<h3>Xenia 1</h3>
+<ul>
+<li><b>Xenia</b> è una parola greca: i doni offerti agli ospiti. È un componimento dedicato alla moglie.</li>
+<li><b>Forma</b>: 1 strofa di 9 versi.</li>
+<li><b>Primi versi</b>: descrive la moglie, già morta quando scrive. L'immagine è offuscata.</li>
+<li><b>L'apparizione</b>: la donna gli compare accanto mentre lui legge il <b>Deuteroisaia</b>, una parte del libro biblico di Isaia.</li>
+<li><b>Gli occhiali</b>: quando appare non ha gli <b>occhiali</b>, che sono il suo talismano e un <b>correlativo oggettivo</b>.</li>
+</ul>
+<div class="box deep"><h4>Come continua (gli appunti si interrompono qui)</h4><p>Senza occhiali lei non può vederlo. E lui, senza quel luccichio delle lenti, non riesce a riconoscerla nella foschia. Gli occhiali, oggetto quotidiano e umile, erano il segno di riconoscimento tra i due. La loro assenza dice la distanza definitiva della morte.</p></div>
+
+<h2 id="analogie">Analogie</h2>
+<div class="box ana"><h4>Il correlativo oggettivo come un film senza voce fuori campo</h4><p>Il regista non ti dice «il personaggio è solo»: inquadra una tazza sola sul tavolo, una sedia vuota. Capisci da solo.</p><p><b>Dove l'analogia non regge</b>: nel film l'oggetto accompagna una storia. In Montale l'oggetto <b>è</b> il concetto, e spesso non c'è nessuna storia intorno.</p></div>
+<div class="box ana"><h4>Il varco come un bug in un videogioco</h4><p>Un muro che dovrebbe essere solido, e invece ti lascia passare: «l'anello che non tiene», «lo sbaglio di Natura». Montale cerca quel punto in cui la realtà ha una falla e mostra cosa c'è dietro.</p><p><b>Dove l'analogia non regge</b>: nel gioco, trovato il bug, ci passi davvero. Montale quasi mai.</p></div>
+
+<h2 id="ragionamento">Come costruire una risposta argomentata</h2>
+<div class="box ex"><h4>Domanda: «Ungaretti e Montale: quale funzione ha la parola poetica?»</h4>
+<p><b>Ungaretti.</b> La parola è una <b>formula magica</b>, i poeti sono sacerdoti della parola. Per un attimo la poesia raggiunge la pienezza dell'essere: è illuminazione, come in <i>Mattina</i>.</p>
+<p><b>Montale.</b> Nega questa possibilità. In <i>Non chiederci la parola</i> la parola non può squadrare l'animo informe né dare risposte, e può dire solo «ciò che non siamo, ciò che non vogliamo». Il senso, se c'è, passa attraverso gli <b>oggetti</b> (correlativo oggettivo), e si rivela solo raramente, nelle «occasioni» o in un varco.</p>
+<p><b>In comune.</b> La ricerca del senso dell'esistenza e il rifiuto dell'ornamento (Montale contro i poeti laureati).</p>
+<p><b>Differenza di fondo.</b> Fiducia nella parola per Ungaretti, sfiducia per Montale.</p></div>
+
+<h2 id="errori">Errori comuni e trabocchetti</h2>
+<div class="box warn"><ul>
+<li><b>«Montale è un ermetico.»</b> Per gli appunti non appartiene a nessuna corrente.</li>
+<li><b>Memoria in Montale = memoria in Leopardi.</b> No: per Montale il ricordo offusca, valore negativo.</li>
+<li><b>Panismo nei <i>Limoni</i>.</b> No: epifania attesa (e mancata). Il panismo è di D'Annunzio, da cui Montale prende le distanze.</li>
+<li><b>«Indifferenza = cinismo».</b> È un distacco <b>stoico</b>, «divino», per sopravvivere al male.</li>
+<li><b>Clizia</b> = Irma Brandeis (donna salvifica). <b>Mosca</b> = Drusilla Tanzi, la moglie. <b>Volpe</b> = anti-Beatrice. Non confonderle.</li>
+<li><b>«Io, per me» errore grammaticale</b>: è un pleonasmo voluto.</li>
+</ul></div>
+
+<h2 id="riepilogo">Riepilogo</h2>
+<ul class="recap">
+<li>Montale (Genova 1896 – Milano 1981): antifascista, nessuna corrente, «poeta degli oggetti».</li>
+<li>Male di vivere. Correlativo oggettivo (astratto → oggetti).</li>
+<li><i>Ossi di seppia</i> (1925): esistenza prosciugata e stile spoglio. Sole crudele, memoria negativa, varco, indifferenza stoica.</li>
+<li><i>I limoni</i>: contro i poeti laureati, epifania attesa, «l'anello che non tiene», «Ma l'illusione manca», i gialli dei limoni. <i>Spesso il male di vivere</i>: rivo, foglia, cavallo / statua, nuvola, falco. <i>Non chiederci la parola</i>: poetica in negativo.</li>
+<li><i>Le occasioni</i> (1939): Clizia donna salvifica. <i>Non recidere, forbice</i>: memoria e tempo.</li>
+<li><i>La bufera</i> (1956): la guerra. <i>Il sogno del prigioniero</i>: metafora culinaria, purghe e lager, speranza nella donna-angelo.</li>
+<li><i>Satura</i> (1971): contro consumismo e mass media. Mosca, <i>Xenia 1</i>, gli occhiali.</li>
+</ul>
+
+<h2 id="esercizi">Esercizi di verifica</h2>
+<div class="scored">
+<div class="ex-block qu mcq" data-ans="1"><span class="lvl">Livello 1 · crocetta</span><p class="q">Che cos'è il correlativo oggettivo?</p><div class="opts"><button type="button" class="opt">Un tipo di rima tra due versi lontani</button><button type="button" class="opt">La tecnica di esprimere un concetto astratto attraverso oggetti concreti</button><button type="button" class="opt">La descrizione oggettiva e scientifica della natura</button><button type="button" class="opt">Il rapporto tra il titolo e il testo di una poesia</button></div><div class="why" hidden><span class="verdict"></span>Esempio: il male di vivere mostrato come ruscello strozzato, foglia riarsa, cavallo stramazzato.</div><button type="button" class="retry" hidden>Riprova</button></div>
+<div class="ex-block qu vf" data-ans="1"><span class="lvl">Livello 1 · vero o falso</span><p class="q">Per Montale, come per Leopardi, il ricordo ha un valore positivo perché restituisce il passato.</p><div class="opts"><button type="button" class="opt">Vero</button><button type="button" class="opt">Falso</button></div><div class="why" hidden><span class="verdict"></span>Per Montale la memoria offusca il passato: ha valore negativo.</div><button type="button" class="retry" hidden>Riprova</button></div>
+<div class="classify"><h4>Spesso il male di vivere ho incontrato: quale concetto?</h4><p class="small muted">Per ogni elemento scegli la categoria giusta.</p><div class="cl-item qu" data-ans="0"><p class="q">Il ruscello strozzato che gorgoglia</p><div class="opts"><button type="button" class="opt">Male di vivere</button><button type="button" class="opt">Indifferenza</button></div><div class="why" hidden><span class="verdict"></span>Il flusso della vita ostacolato.</div><button type="button" class="retry" hidden>Riprova</button></div><div class="cl-item qu" data-ans="1"><p class="q">La statua nella sonnolenza del mezzogiorno</p><div class="opts"><button type="button" class="opt">Male di vivere</button><button type="button" class="opt">Indifferenza</button></div><div class="why" hidden><span class="verdict"></span>Immobile, insensibile al male.</div><button type="button" class="retry" hidden>Riprova</button></div><div class="cl-item qu" data-ans="0"><p class="q">La foglia riarsa che si accartoccia</p><div class="opts"><button type="button" class="opt">Male di vivere</button><button type="button" class="opt">Indifferenza</button></div><div class="why" hidden><span class="verdict"></span>L'aridità che prosciuga.</div><button type="button" class="retry" hidden>Riprova</button></div><div class="cl-item qu" data-ans="1"><p class="q">Il falco alto nel cielo</p><div class="opts"><button type="button" class="opt">Male di vivere</button><button type="button" class="opt">Indifferenza</button></div><div class="why" hidden><span class="verdict"></span>Lontano dalla terra e dal suo dolore.</div><button type="button" class="retry" hidden>Riprova</button></div><div class="cl-item qu" data-ans="0"><p class="q">Il cavallo stramazzato</p><div class="opts"><button type="button" class="opt">Male di vivere</button><button type="button" class="opt">Indifferenza</button></div><div class="why" hidden><span class="verdict"></span>La caduta, la fatica di vivere.</div><button type="button" class="retry" hidden>Riprova</button></div><div class="cl-item qu" data-ans="1"><p class="q">La nuvola</p><div class="opts"><button type="button" class="opt">Male di vivere</button><button type="button" class="opt">Indifferenza</button></div><div class="why" hidden><span class="verdict"></span>Lontana nel cielo.</div><button type="button" class="retry" hidden>Riprova</button></div></div>
+<div class="ex-block qu mcq" data-ans="1"><span class="lvl">Livello 2 · crocetta</span><p class="q">Perché la donna delle <i>Occasioni</i> si chiama Clizia?</p><div class="opts"><button type="button" class="opt">Era il vero nome della donna amata da Montale</button><button type="button" class="opt">Nel mito è la ninfa innamorata del Sole (Apollo), trasformata in girasole: rappresenta energia vitale e, poiché Apollo è dio della poesia, la cultura</button><button type="button" class="opt">È il nome della moglie di Montale</button><button type="button" class="opt">È un personaggio della Divina Commedia</button></div><div class="why" hidden><span class="verdict"></span>La donna reale è Irma Brandeis. Clizia è un senhal, come Silvia per Leopardi.</div><button type="button" class="retry" hidden>Riprova</button></div>
+<div class="ex-block"><span class="lvl">Livello 3 · analisi del testo</span>
+<p class="q"><b>Nei <i>Limoni</i>, spiega che cosa si attende il poeta nelle strofe 2-3, perché la rivelazione non avviene e che cosa resta nel finale.</b></p>
+<details class="sol"><summary><span class="lab">Mostra risposta modello</span></summary><div class="solbody">
+<p><b>Strofe 2-3: l'attesa.</b> Immerso in una natura semplice, il poeta prova una serenità interiore: «tace la guerra», il tormento interiore. Attende un'<b>epifania</b>: che la natura riveli il suo segreto. Si presenta il <b>varco</b>, cioè «lo sbaglio di Natura», «il punto morto del mondo», «l'anello che non tiene», il filo che porterebbe «nel mezzo di una verità». È epifania, non panismo: Montale non si fonde con la natura come D'Annunzio.</p>
+<p><b>Strofa 4: la delusione.</b> «Ma l'illusione manca»: il tempo riporta il poeta nelle città rumorose e nel tedio dell'inverno, e la rivelazione non avviene.</p>
+<p><b>Il finale.</b> Da un portone socchiuso compaiono i gialli dei limoni. Il gelo del cuore si scioglie e torna per un attimo la gioia provata in estate. I limoni sono un <b>correlativo oggettivo</b>: non danno la verità, ma una scintilla di vita.</p>
+</div></details>
+</div>
+<div class="ex-block"><span class="lvl">Livello 4 · collegamento</span>
+<p class="q"><b>Confronta la funzione della donna in Montale (Clizia) con Beatrice e con la Silvia di Leopardi.</b></p>
+<details class="sol"><summary><span class="lab">Mostra risposta modello</span></summary><div class="solbody">
+<p><b>Beatrice.</b> Per Dante è la donna-angelo che conduce a Dio: salvezza religiosa.</p>
+<p><b>Clizia.</b> Nelle <i>Occasioni</i> e nella <i>Bufera</i> è anche lei una donna salvifica, ma in senso <b>laico</b>. Rappresenta l'energia vitale e la cultura: la poesia, legata ad Apollo. È una via di fuga dall'incubo della storia, come nel finale del <i>Sogno del prigioniero</i>, dove sopravvive come speranza nel sogno.</p>
+<p><b>Silvia.</b> Anche lei nasconde una donna reale dietro un senhal (Teresa Fattorini), ma non salva nessuno. Muore giovane, e con lei muore la speranza del poeta. Nell'ultima strofa di <i>A Silvia</i> la speranza indica «la fredda morte».</p>
+<p><b>In sintesi.</b> Dante: salvezza religiosa. Montale: salvezza laica e intermittente. Leopardi: nessuna salvezza, solo l'arido vero.</p>
+</div></details>
+</div>
+<div class="scorebar"></div>
+</div>
+
+<h2 id="collegamenti">Collegamenti</h2>
+<ul>
+<li><b>← Leopardi</b>: la memoria (positiva contro negativa), il male di vivere come erede dell'arido vero, il Gabinetto Vieusseux.</li>
+<li><b>← D'Annunzio</b>: i «poeti laureati» e il panismo contro l'epifania.</li>
+<li><b>← Pascoli</b>: le cose umili caricate di senso.</li>
+<li><b>← Svevo</b>: Montale lancia il «caso Svevo» nel 1925.</li>
+<li><b>← Ungaretti</b>: la parola che illumina contro la parola che non può rispondere.</li>
+<li><b>← Pirandello</b>: l'epifania (il fischio del treno, i limoni).</li>
+</ul>
+
+    <nav class="pager" aria-label="Lezioni"><a class="prev" href="lezione-12.html"><small>← Precedente</small>Ungaretti</a><a class="next" href="index.html"><small>Successiva →</small>Indice generale</a></nav>
+  </main>
+</div>
+<script>(function(){
+  var root=document.documentElement;
+  function getS(k){try{return localStorage.getItem(k)}catch(e){return null}}
+  function setS(k,v){try{localStorage.setItem(k,v)}catch(e){}}
+
+  /* tema */
+  var saved=getS('it-lezioni-theme');
+  if(saved==='dark'||saved==='light'){root.setAttribute('data-theme',saved)}
+  var tb=document.getElementById('themeBtn');
+  function curTheme(){
+    var t=root.getAttribute('data-theme');
+    if(t) return t;
+    return (window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches)?'dark':'light';
+  }
+  function label(){if(tb){tb.textContent=curTheme()==='dark'?'☀ Chiaro':'☾ Scuro'}}
+  if(tb){tb.addEventListener('click',function(){var n=curTheme()==='dark'?'light':'dark';root.setAttribute('data-theme',n);setS('it-lezioni-theme',n);label()});label()}
+
+  /* indice a scomparsa su telefono */
+  var tocBtn=document.getElementById('tocBtn'),toc=document.getElementById('toc');
+  if(tocBtn&&toc){
+    tocBtn.addEventListener('click',function(){var o=toc.classList.toggle('open');tocBtn.setAttribute('aria-expanded',o?'true':'false')});
+    toc.addEventListener('click',function(e){if(e.target.closest('a')){toc.classList.remove('open');tocBtn.setAttribute('aria-expanded','false')}});
+  }
+
+  /* evidenzia la sezione corrente */
+  var links=toc?Array.prototype.slice.call(toc.querySelectorAll('ol a')):[];
+  if(links.length&&'IntersectionObserver' in window){
+    var map={};links.forEach(function(a){map[a.getAttribute('href').slice(1)]=a});
+    var obs=new IntersectionObserver(function(es){
+      es.forEach(function(en){
+        if(en.isIntersecting){links.forEach(function(a){a.classList.remove('active')});var a=map[en.target.id];if(a)a.classList.add('active')}
+      });
+    },{rootMargin:'-70px 0px -70% 0px'});
+    document.querySelectorAll('main h2[id]').forEach(function(h){obs.observe(h)});
+  }
+
+  /* domande: scelta multipla, vero/falso, classificazione */
+  function updateScore(box){
+    if(!box) return;
+    var bar=box.querySelector('.scorebar'); if(!bar) return;
+    var all=box.querySelectorAll('.qu').length;
+    var done=box.querySelectorAll('.qu.done').length;
+    var ok=box.querySelectorAll('.qu.right').length;
+    bar.textContent=done?('Corrette: '+ok+' su '+done+' · '+all+' domande'):(all+' domande · rispondi per il punteggio');
+  }
+  document.querySelectorAll('.qu').forEach(function(q){
+    var ans=parseInt(q.getAttribute('data-ans'),10);
+    var btns=Array.prototype.slice.call(q.querySelectorAll('.opt'));
+    var why=q.querySelector('.why');
+    var verdict=why?why.querySelector('.verdict'):null;
+    var retry=q.querySelector('.retry');
+    btns.forEach(function(b,i){
+      b.addEventListener('click',function(){
+        if(q.classList.contains('done')) return;
+        q.classList.add('done');
+        btns.forEach(function(x,j){x.disabled=true;if(j===ans)x.classList.add('ok')});
+        if(i===ans){q.classList.add('right');if(verdict)verdict.textContent='Giusto. '}
+        else{b.classList.add('ko');q.classList.add('wrong');if(verdict)verdict.textContent='Sbagliato. '}
+        if(why) why.hidden=false;
+        if(retry) retry.hidden=false;
+        updateScore(q.closest('.scored'));
+      });
+    });
+    if(retry){retry.addEventListener('click',function(){
+      q.classList.remove('done','right','wrong');
+      btns.forEach(function(x){x.disabled=false;x.classList.remove('ok','ko')});
+      if(why) why.hidden=true; retry.hidden=true;
+      updateScore(q.closest('.scored'));
+    })}
+  });
+  document.querySelectorAll('.scored').forEach(updateScore);
+
+  /* versi annotati */
+  function toggleVerse(v,force){
+    var n=v.nextElementSibling;
+    if(!n||!n.classList.contains('vnote')) return;
+    var open=(typeof force==='boolean')?force:n.hidden;
+    n.hidden=!open; v.classList.toggle('open',open); v.setAttribute('aria-expanded',open?'true':'false');
+  }
+  document.querySelectorAll('.v.has-note').forEach(function(v){
+    v.addEventListener('click',function(){toggleVerse(v)});
+    v.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();toggleVerse(v)}});
+  });
+  document.querySelectorAll('.poem .allnotes').forEach(function(b){
+    b.addEventListener('click',function(){
+      var p=b.closest('.poem');var open=b.getAttribute('data-open')!=='1';
+      p.querySelectorAll('.v.has-note').forEach(function(v){toggleVerse(v,open)});
+      b.setAttribute('data-open',open?'1':'0');b.textContent=open?'Nascondi tutte le note':'Mostra tutte le note';
+    });
+  });
+
+  /* filtro cronologia */
+  document.querySelectorAll('[data-tl]').forEach(function(wrap){
+    var chips=wrap.querySelectorAll('.chip');var items=wrap.querySelectorAll('.tl li');
+    chips.forEach(function(c){c.addEventListener('click',function(){
+      chips.forEach(function(x){x.classList.remove('on');x.setAttribute('aria-pressed','false')});
+      c.classList.add('on');c.setAttribute('aria-pressed','true');
+      var f=c.getAttribute('data-f');
+      items.forEach(function(li){li.hidden=!(f==='all'||li.getAttribute('data-who')===f)});
+    })});
+  });
+
+  /* ricerca nel glossario */
+  var gs=document.getElementById('glossSearch');
+  if(gs){gs.addEventListener('input',function(){
+    var t=gs.value.trim().toLowerCase();
+    document.querySelectorAll('dl.gloss>div').forEach(function(d){d.hidden=t&&d.textContent.toLowerCase().indexOf(t)<0});
+  })}
+})();
+</script>
+</body>
+</html>

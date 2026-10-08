@@ -1,0 +1,568 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Leopardi I · Italiano</title>
+<style>:root{
+  --bg:#fbf9f4; --surface:#ffffff; --surface2:#f3efe6; --text:#1f1d1a; --muted:#5d584f; --line:#e2dccf;
+  --accent:#8c1d2f; --accent-soft:#f6e6e8; --focus:#2457a6;
+  --def:#2457a6; --def-bg:#ebf1fb;
+  --rule:#6a3d9e; --rule-bg:#f2ecfa;
+  --ex:#1d7149; --ex-bg:#e7f4ec;
+  --warn:#8f5300; --warn-bg:#fcf1dc;
+  --deep:#0d6871; --deep-bg:#e3f2f3;
+  --note:#b42318; --note-bg:#fdebe8;
+  --ana:#4f4f86; --ana-bg:#ececf6;
+  --ok:#1d7149; --ok-bg:#e2f3e9; --ko:#b42318; --ko-bg:#fbe5e2;
+  --radius:12px;
+  --serif:"Iowan Old Style","Palatino Linotype",Palatino,"Book Antiqua",Georgia,serif;
+  --sans:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#131418; --surface:#1b1d23; --surface2:#23262e; --text:#ecebe6; --muted:#aaa59c; --line:#32353e;
+    --accent:#f2a7b1; --accent-soft:#3a2329; --focus:#8ab4f8;
+    --def:#8ab4f8; --def-bg:#18253a;
+    --rule:#c7a6f2; --rule-bg:#271e37;
+    --ex:#7fd4a6; --ex-bg:#152a20;
+    --warn:#f5c26b; --warn-bg:#2d2414;
+    --deep:#79d0d8; --deep-bg:#132a2d;
+    --note:#ff9b8f; --note-bg:#331a18;
+    --ana:#b4b4ee; --ana-bg:#22223a;
+    --ok:#7fd4a6; --ok-bg:#15301f; --ko:#ff9b8f; --ko-bg:#3a1b18;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#131418; --surface:#1b1d23; --surface2:#23262e; --text:#ecebe6; --muted:#aaa59c; --line:#32353e;
+  --accent:#f2a7b1; --accent-soft:#3a2329; --focus:#8ab4f8;
+  --def:#8ab4f8; --def-bg:#18253a;
+  --rule:#c7a6f2; --rule-bg:#271e37;
+  --ex:#7fd4a6; --ex-bg:#152a20;
+  --warn:#f5c26b; --warn-bg:#2d2414;
+  --deep:#79d0d8; --deep-bg:#132a2d;
+  --note:#ff9b8f; --note-bg:#331a18;
+  --ana:#b4b4ee; --ana-bg:#22223a;
+  --ok:#7fd4a6; --ok-bg:#15301f; --ko:#ff9b8f; --ko-bg:#3a1b18;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth;scroll-padding-top:72px}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--sans);font-size:18px;line-height:1.7}
+a{color:var(--accent);text-underline-offset:3px}
+a:focus-visible,button:focus-visible,summary:focus-visible,.v.has-note:focus-visible,input:focus-visible{outline:3px solid var(--focus);outline-offset:2px;border-radius:6px}
+img{max-width:100%}
+
+/* header */
+.top{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:10px;padding:10px 16px;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.top .home{font-family:var(--serif);font-weight:700;font-size:1.05rem;color:var(--text);text-decoration:none;white-space:nowrap}
+.top .home span{color:var(--accent)}
+.top .lnum{color:var(--muted);font-size:.85rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.top .sp{flex:1}
+.top button{font:inherit;font-size:.9rem;background:var(--surface);color:var(--text);border:1px solid var(--line);border-radius:999px;padding:6px 12px;cursor:pointer;min-height:38px}
+.top button:hover{border-color:var(--accent)}
+#tocBtn{display:none}
+
+/* layout */
+.layout{display:grid;grid-template-columns:270px minmax(0,1fr);gap:40px;max-width:1180px;margin:0 auto;padding:0 24px}
+.toc{position:sticky;top:64px;align-self:start;max-height:calc(100vh - 80px);overflow:auto;padding:24px 0 24px}
+.toc .tt{font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:0 0 8px}
+.toc ol{list-style:none;margin:0;padding:0;border-left:2px solid var(--line)}
+.toc li a{display:block;padding:5px 12px;margin-left:-2px;border-left:2px solid transparent;color:var(--muted);text-decoration:none;font-size:.93rem;line-height:1.35}
+.toc li a:hover{color:var(--text)}
+.toc li a.active{color:var(--accent);border-left-color:var(--accent);font-weight:600}
+.toc .tnav{margin-top:20px;display:flex;flex-direction:column;gap:6px;font-size:.88rem}
+.toc .tnav a{text-decoration:none}
+main{min-width:0;max-width:780px;padding:28px 0 80px}
+
+/* type */
+h1,h2,h3,h4{font-family:var(--serif);line-height:1.25;text-wrap:balance}
+h1{font-size:2.3rem;margin:.2em 0 .25em}
+.kicker{font-size:.8rem;letter-spacing:.09em;text-transform:uppercase;color:var(--accent);font-weight:700;margin:0}
+.sub{color:var(--muted);font-size:1.08rem;margin:0 0 1.2em}
+h2{font-size:1.6rem;margin:2.2em 0 .6em;padding-top:.6em;border-top:1px solid var(--line)}
+h3{font-size:1.25rem;margin:1.7em 0 .5em}
+h4{font-size:1.05rem;margin:0 0 .4em}
+p{margin:.7em 0}
+ul,ol{padding-left:1.3em}
+li{margin:.25em 0}
+strong{font-weight:650}
+.muted{color:var(--muted)}
+.small{font-size:.9rem}
+blockquote{margin:1em 0;padding:.6em 1em;border-left:3px solid var(--accent);background:var(--surface2);border-radius:0 8px 8px 0;font-family:var(--serif);font-size:1.05rem}
+blockquote cite{display:block;font-size:.85rem;color:var(--muted);font-style:normal;margin-top:.3em;font-family:var(--sans)}
+code,kbd{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.9em;background:var(--surface2);padding:1px 5px;border-radius:5px}
+hr{border:0;border-top:1px solid var(--line);margin:2em 0}
+
+/* boxes */
+.box{position:relative;margin:1.2em 0;padding:14px 16px 12px;border-radius:var(--radius);border:1px solid var(--line);border-left:5px solid var(--c);background:var(--b)}
+.box::before{content:attr(data-k);display:inline-block;font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;font-weight:700;color:var(--c);margin-bottom:4px}
+.box>:first-child{margin-top:0}
+.box>:last-child{margin-bottom:0}
+.box h4{color:var(--text)}
+.box.def{--c:var(--def);--b:var(--def-bg)}
+.box.rule{--c:var(--rule);--b:var(--rule-bg)}
+.box.ex{--c:var(--ex);--b:var(--ex-bg)}
+.box.warn{--c:var(--warn);--b:var(--warn-bg)}
+.box.deep{--c:var(--deep);--b:var(--deep-bg)}
+.box.note{--c:var(--note);--b:var(--note-bg)}
+.box.ana{--c:var(--ana);--b:var(--ana-bg)}
+.box.def::before{content:"Definizione"}
+.box.rule::before{content:"Concetto chiave"}
+.box.ex::before{content:"Esempio svolto"}
+.box.warn::before{content:"Attenzione"}
+.box.deep::before{content:"Approfondimento (non negli appunti)"}
+.box.note::before{content:"Nota sul materiale"}
+.box.ana::before{content:"Analogia"}
+
+/* tables */
+.tw{overflow-x:auto;margin:1em 0;border:1px solid var(--line);border-radius:var(--radius)}
+table{border-collapse:collapse;width:100%;font-size:.95rem;min-width:520px}
+th,td{padding:9px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+th{background:var(--surface2);font-weight:650}
+tr:last-child td{border-bottom:0}
+
+/* chains / steps */
+.chain{list-style:none;padding:0;margin:1em 0;counter-reset:c}
+.chain li{position:relative;padding:10px 14px 10px 46px;margin:0 0 10px;background:var(--surface);border:1px solid var(--line);border-radius:10px}
+.chain li::before{counter-increment:c;content:counter(c);position:absolute;left:12px;top:10px;width:24px;height:24px;border-radius:50%;background:var(--accent);color:var(--bg);font-size:.8rem;font-weight:700;display:grid;place-items:center}
+.chain li:not(:last-child)::after{content:"↓";position:absolute;left:18px;bottom:-17px;color:var(--muted);font-size:.85rem}
+.kv{display:grid;grid-template-columns:max-content 1fr;gap:6px 14px;margin:.8em 0}
+.kv dt{font-weight:650}
+.kv dd{margin:0}
+@media (max-width:560px){.kv{grid-template-columns:1fr}.kv dd{margin-bottom:6px}}
+
+/* poem */
+.poem{margin:1.3em 0;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:14px 14px 14px 6px}
+.poem .ph{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 12px;padding:0 4px 8px 10px;border-bottom:1px solid var(--line);margin-bottom:8px}
+.poem .ph b{font-family:var(--serif);font-size:1.12rem}
+.poem .ph span{color:var(--muted);font-size:.85rem}
+.poem .ph button{margin-left:auto;font:inherit;font-size:.82rem;background:var(--surface2);color:var(--text);border:1px solid var(--line);border-radius:999px;padding:4px 10px;cursor:pointer;min-height:34px}
+.poem .hint{font-size:.82rem;color:var(--muted);padding:0 10px 6px}
+.v{display:grid;grid-template-columns:2.4em 1fr;font-family:var(--serif);font-size:1.08rem;line-height:1.55;padding:1px 4px;border-radius:6px}
+.v .n{color:var(--muted);font-family:var(--sans);font-size:.72rem;text-align:right;padding-right:10px;padding-top:.35em;user-select:none}
+.v.has-note{cursor:pointer}
+.v.has-note .t{text-decoration:underline dotted var(--accent);text-underline-offset:4px;text-decoration-thickness:1.5px}
+.v.has-note:hover{background:var(--accent-soft)}
+.v.open{background:var(--accent-soft)}
+.vnote{margin:4px 4px 8px 2.4em;padding:8px 12px;font-size:.93rem;line-height:1.55;background:var(--surface2);border-left:3px solid var(--accent);border-radius:0 8px 8px 0}
+.vgap{height:.9em}
+
+/* interactive questions */
+.ex-block{margin:1.2em 0;padding:14px 16px;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius)}
+.ex-block .lvl{display:inline-block;font-size:.7rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:1px 8px;margin-bottom:6px}
+.qu .q{font-weight:600;margin:.2em 0 .6em}
+.opts{display:flex;flex-direction:column;gap:8px}
+.vf .opts{flex-direction:row}
+.vf .opts .opt{flex:1;text-align:center}
+.opt{font:inherit;font-size:.97rem;text-align:left;background:var(--surface2);color:var(--text);border:1px solid var(--line);border-radius:10px;padding:10px 14px;cursor:pointer;min-height:46px;line-height:1.4}
+.opt:hover:not(:disabled){border-color:var(--accent)}
+.opt:disabled{cursor:default;opacity:.92}
+.opt.ok{background:var(--ok-bg);border-color:var(--ok);color:var(--text)}
+.opt.ok::after{content:"  ✓";color:var(--ok);font-weight:700}
+.opt.ko{background:var(--ko-bg);border-color:var(--ko)}
+.opt.ko::after{content:"  ✗";color:var(--ko);font-weight:700}
+.why{margin-top:10px;padding:10px 12px;border-radius:8px;background:var(--surface2);font-size:.95rem}
+.why .verdict{font-weight:700}
+.qu.right .verdict{color:var(--ok)}
+.qu.wrong .verdict{color:var(--ko)}
+.retry{font:inherit;font-size:.82rem;margin-top:8px;background:none;border:0;color:var(--accent);cursor:pointer;padding:4px 0;text-decoration:underline}
+.scorebar{position:sticky;bottom:10px;z-index:5;margin:1em auto;width:max-content;max-width:100%;padding:6px 14px;border-radius:999px;background:var(--surface);border:1px solid var(--line);box-shadow:0 4px 18px rgba(0,0,0,.12);font-size:.85rem;text-align:center}
+
+/* classify */
+.classify{margin:1.2em 0;padding:14px 16px;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius)}
+.cl-item{padding:10px 0;border-top:1px dashed var(--line)}
+.cl-item:first-of-type{border-top:0}
+.cl-item .q{font-weight:500}
+.cl-item .opts{flex-direction:row;flex-wrap:wrap}
+.cl-item .opt{flex:1 1 140px;text-align:center;font-size:.9rem;padding:8px 10px;min-height:42px}
+
+/* solutions */
+details.sol{margin:.8em 0 .2em}
+details.sol summary{display:inline-flex;align-items:center;gap:6px;cursor:pointer;list-style:none;font-weight:600;font-size:.92rem;color:var(--accent);background:var(--accent-soft);border-radius:999px;padding:7px 14px;min-height:40px}
+details.sol summary::-webkit-details-marker{display:none}
+details.sol summary::before{content:"▸"}
+details.sol[open] summary::before{content:"▾"}
+details.sol[open] summary .lab::after{content:" (nascondi)";font-weight:400}
+details.sol .solbody{margin-top:10px;padding:12px 14px;border:1px solid var(--line);border-radius:10px;background:var(--surface2)}
+details.sol .solbody>:first-child{margin-top:0}
+details.sol .solbody>:last-child{margin-bottom:0}
+
+/* pager */
+.pager{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:3em}
+.pager a{display:block;padding:12px 14px;border:1px solid var(--line);border-radius:var(--radius);background:var(--surface);text-decoration:none;color:var(--text);min-height:64px}
+.pager a small{display:block;color:var(--muted);font-size:.78rem;text-transform:uppercase;letter-spacing:.06em}
+.pager a.next{text-align:right;grid-column:2}
+.pager a:hover{border-color:var(--accent)}
+
+/* summary list */
+.recap{list-style:none;padding:0}
+.recap li{padding:8px 0 8px 28px;position:relative;border-bottom:1px solid var(--line)}
+.recap li::before{content:"✦";position:absolute;left:4px;color:var(--accent)}
+
+/* index page */
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px;margin:1em 0}
+.card{display:block;padding:14px 16px;border:1px solid var(--line);border-radius:var(--radius);background:var(--surface);text-decoration:none;color:var(--text)}
+.card:hover{border-color:var(--accent)}
+.card .cn{font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);font-weight:700}
+.card .ct{font-family:var(--serif);font-size:1.15rem;font-weight:700;line-height:1.25;margin:2px 0 4px}
+.card .cs{font-size:.88rem;color:var(--muted);line-height:1.45}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:.8em 0}
+.chip{font:inherit;font-size:.85rem;background:var(--surface);color:var(--text);border:1px solid var(--line);border-radius:999px;padding:5px 12px;cursor:pointer;min-height:36px}
+.chip.on{background:var(--accent);color:var(--bg);border-color:var(--accent)}
+.tl{list-style:none;padding:0;margin:1em 0;border-left:2px solid var(--line)}
+.tl li{position:relative;padding:6px 0 10px 18px}
+.tl li::before{content:"";position:absolute;left:-7px;top:14px;width:12px;height:12px;border-radius:50%;background:var(--bg);border:2px solid var(--accent)}
+.tl .y{font-weight:700;font-variant-numeric:tabular-nums;margin-right:8px}
+.tl .who{font-size:.75rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-left:6px}
+.tl li[hidden]{display:none}
+.flow{display:flex;flex-direction:column;align-items:stretch;gap:0;margin:1.2em 0}
+.flow .node{padding:12px 14px;border:1px solid var(--line);border-radius:var(--radius);background:var(--surface)}
+.flow .node b{font-family:var(--serif);font-size:1.05rem}
+.flow .node .meta{display:block;color:var(--muted);font-size:.85rem}
+.flow .arrow{align-self:center;color:var(--muted);font-size:.85rem;padding:4px 0;text-align:center}
+.flow .row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media (max-width:560px){.flow .row{grid-template-columns:1fr}}
+details.theme{border:1px solid var(--line);border-radius:var(--radius);background:var(--surface);margin:.6em 0;padding:0 14px}
+details.theme summary{cursor:pointer;padding:12px 0;font-weight:650;font-family:var(--serif);font-size:1.05rem}
+details.theme[open]{padding-bottom:10px}
+.gloss-search{width:100%;font:inherit;padding:10px 14px;border-radius:10px;border:1px solid var(--line);background:var(--surface);color:var(--text);margin:.6em 0}
+dl.gloss{margin:0}
+dl.gloss>div{padding:8px 0;border-bottom:1px solid var(--line)}
+dl.gloss dt{font-weight:700}
+dl.gloss dd{margin:2px 0 0}
+dl.gloss>div[hidden]{display:none}
+
+/* responsive */
+@media (max-width:1000px){
+  .layout{grid-template-columns:minmax(0,1fr);padding:0 16px;gap:0}
+  #tocBtn{display:inline-block}
+  .toc{display:none;position:fixed;top:59px;left:0;right:0;max-height:calc(100vh - 59px);background:var(--bg);border-bottom:1px solid var(--line);padding:16px 20px 20px;z-index:15;box-shadow:0 10px 30px rgba(0,0,0,.15)}
+  .toc.open{display:block}
+  main{padding-top:16px}
+}
+@media (max-width:560px){
+  body{font-size:17px}
+  h1{font-size:1.85rem}
+  h2{font-size:1.4rem}
+  .top{padding:8px 12px}
+  .top .lnum{display:none}
+  .pager{grid-template-columns:1fr}
+  .pager a.next{grid-column:1}
+  .v{grid-template-columns:2em 1fr;font-size:1.02rem}
+  .vnote{margin-left:1.4em}
+  .vf .opts{flex-direction:column}
+}
+@media print{.top,.toc,.pager,.scorebar{display:none}.layout{display:block}details.sol{display:block}}
+</style>
+</head>
+<body>
+<header class="top">
+  <a class="home" href="index.html">Italiano<span>·</span>Lezioni</a>
+  <span class="lnum">Lezione 1 · Leopardi I</span>
+  <span class="sp"></span>
+  <button type="button" id="tocBtn" aria-controls="toc" aria-expanded="false">☰ Sezioni</button>
+  <button type="button" id="themeBtn">Tema</button>
+</header>
+<div class="layout">
+  <nav class="toc" id="toc" aria-label="Sezioni della pagina">
+    <p class="tt">In questa pagina</p>
+    <ol><li><a href="#intuizione">Intuizione</a></li><li><a href="#vita">La vita: le tappe che contano</a></li><li><a href="#formazione">Formazione e conversioni</a></li><li><a href="#piacere">La teoria del piacere e la poetica del vago</a></li><li><a href="#pessimismo">Il pessimismo storico (prima fase)</a></li><li><a href="#infinito">L'infinito (1819)</a></li><li><a href="#analogie">Analogie per fissare i concetti</a></li><li><a href="#ragionamento">Come costruire una risposta argomentata</a></li><li><a href="#errori">Errori comuni e trabocchetti</a></li><li><a href="#riepilogo">Riepilogo</a></li><li><a href="#esercizi">Esercizi di verifica</a></li><li><a href="#collegamenti">Collegamenti</a></li></ol>
+    <div class="tnav"><a href="index.html">⌂ Indice generale</a><a href="lezione-02.html">Leopardi II →</a></div>
+  </nav>
+  <main>
+    <p class="kicker">Lezione 1 di 13</p>
+    <h1>Leopardi I</h1>
+    <p class="sub">Vita, poetica del vago, pessimismo storico, L'infinito</p>
+    <div class="box note"><h4>Come leggere questa lezione</h4><p>La fonte sono solo i tuoi appunti. Dove aggiungo qualcosa che negli appunti non c'è, lo trovi in un riquadro <b>Approfondimento</b>. Dove gli appunti sbagliano, trovi una <b>Nota sul materiale</b> con la versione da usare all'esame.</p></div>
+
+<h2 id="intuizione">Intuizione</h2>
+<p>Leopardi parte da una domanda semplice: <b>perché non siamo mai davvero felici?</b> La sua risposta è che desideriamo un piacere infinito, ma tutto quello che otteniamo è finito e passa. Quindi resta sempre un vuoto.</p>
+<p>Nella prima fase del suo pensiero esiste un rimedio parziale: la <b>natura</b> ci regala immagini vaghe e indefinite, che fanno <em>immaginare</em> l'infinito. <em>L'infinito</em> (1819) è la messa in scena perfetta di questo meccanismo: una siepe nasconde l'orizzonte, e proprio per questo la mente si spinge oltre.</p>
+
+<h2 id="vita">La vita: le tappe che contano</h2>
+<p>All'esame la biografia serve solo se la colleghi al pensiero. Per ogni tappa ti indico perché conta.</p>
+<div class="tw"><table>
+<tr><th>Anno</th><th>Fatto</th><th>Perché conta</th></tr>
+<tr><td>1798</td><td>Nasce a Recanati (Marche). Il padre è il conte Monaldo, nobile decaduto, colto, classicista e <b>reazionario</b>. La madre è rigidissima.</td><td>Ambiente chiuso, arcadico e bigotto: da qui il bisogno di fuga e di libertà.</td></tr>
+<tr><td>1808–1815 circa</td><td>Sette anni di <b>«studio matto e disperatissimo»</b> nella biblioteca paterna. Il padre lo tratta da bambino prodigio.</td><td>Cultura enorme, ma anche salute rovinata e isolamento.</td></tr>
+<tr><td>1816</td><td>Lettera ai compilatori della <i>Biblioteca italiana</i> contro Madame de Staël. <b>Conversione letteraria</b> «dall'erudizione al bello».</td><td>Mostra il Leopardi giovane classicista; poi la svolta verso la poesia.</td></tr>
+<tr><td>1817</td><td>Inizia la corrispondenza con <b>Pietro Giordani</b>.</td><td>Primo riconoscimento letterario e prima finestra sul mondo.</td></tr>
+<tr><td>1819</td><td>Tentativo di fuga fallito. Scrive <b><i>L'infinito</i></b>.</td><td>Anno di crisi e insieme del capolavoro del primo Leopardi.</td></tr>
+<tr><td>1822–23</td><td>A Roma dallo zio. Grande delusione. Torna a Recanati.</td><td>Il mondo «fuori» non è meglio: la delusione alimenta la riflessione.</td></tr>
+<tr><td>1824–27</td><td>Compone le <b><i>Operette morali</i></b> (stampate nel 1827).</td><td>Lunga pausa dalla poesia per la prosa filosofica.</td></tr>
+<tr><td>1825</td><td>Lavoro per l'editore <b>Stella</b>: si mantiene e va a Milano.</td><td>Prima indipendenza economica.</td></tr>
+<tr><td>1827</td><td>Firenze, Gabinetto <b>Vieusseux</b>: scontro con i liberali cattolici e romantici.</td><td>Lui non crede nel progresso, loro sì: nessun dialogo possibile.</td></tr>
+<tr><td>1827–28</td><td>Pisa: la salute migliora, torna a scrivere poesia (<i>A Silvia</i>, 1828).</td><td>Nascono i <b>Grandi Idilli</b> (lezione 2).</td></tr>
+<tr><td>1830</td><td>Di nuovo Firenze. Ama, non ricambiato, <b>Fanny</b> Targioni Tozzetti. Amicizia con Antonio <b>Ranieri</b>.</td><td>Da qui il <b>ciclo di Aspasia</b> e <i>A se stesso</i> (lezione 3).</td></tr>
+<tr><td>1833</td><td>Napoli con Ranieri. Edizione dei <i>Canti</i> presso l'editore Starita (1835).</td><td>Ultima fase: <i>La ginestra</i> (1836).</td></tr>
+<tr><td><b>1837</b></td><td>Muore a Napoli, a 38 anni.</td><td></td></tr>
+</table></div>
+
+<div class="box note"><h4>Anno di morte sbagliato negli appunti</h4><p>Gli appunti dicono «a 38 anni muore nel 1836 a Napoli». <b>Leopardi muore il 14 giugno 1837.</b> I 38 anni sono giusti, l'anno no. All'esame scrivi <b>1837</b>.</p></div>
+<div class="box note"><h4>Altre piccole correzioni</h4>
+<ul>
+<li><b>«Reazionario»</b>: gli appunti lo definiscono «volontà di una rivoluzione volta a tornare a una disposizione passata». Correggi così: un reazionario si oppone ai cambiamenti politici e vuole <em>restaurare</em> l'ordine precedente, cioè il potere di nobiltà e Chiesa. «Rivoluzione» è la parola sbagliata.</li>
+<li><b>Lettera alla <i>Biblioteca italiana</i></b>: è del luglio 1816. Leopardi aveva appena compiuto 18 anni, quindi «a 17 anni» è un'approssimazione. Basta dire «a 18 anni».</li>
+<li><b>Operette morali</b>: le pensa già nel 1820, ma le scrive quasi tutte nel 1824. Gli appunti dicono «1823», che è l'anno del ritorno a Recanati.</li>
+<li><b>Pisa</b>: ci arriva nel novembre 1827, non nel 1828. <i>A Silvia</i> è dell'aprile 1828.</li>
+<li><b>Grafia</b>: il gabinetto letterario di Firenze si chiama <b>Vieusseux</b>, non «Viesseux».</li>
+</ul></div>
+
+<h2 id="formazione">Formazione e conversioni</h2>
+<h3>Il giovane classicista (1816)</h3>
+<p>Madame de Staël aveva invitato gli italiani a tradurre gli stranieri e a svecchiare la loro letteratura. Leopardi risponde da <b>conservatore</b>: la tradizione classica italiana è insuperabile e non ha bisogno di modelli moderni.</p>
+<p>Perché ti serve: all'esame può capitare una domanda sul rapporto tra Leopardi e Romanticismo. Il punto di partenza è questo. Leopardi nasce classicista, e anche quando cambia idea su molte cose non diventerà mai un romantico «ottimista».</p>
+<h3>La conversione letteraria: «dall'erudizione al bello» (1816)</h3>
+<p>Fino a quel momento aveva fatto filologia, cioè traduzioni, commenti ed erudizione. Ora si accorge che quello studio non produce <b>bellezza</b>. Passa quindi alla poesia: l'idillio <i>Le rimembranze</i> (1816) è l'esempio che citano gli appunti.</p>
+<div class="box deep"><h4>La seconda conversione: «dal bello al vero» (1819)</h4><p>I manuali parlano di una seconda svolta, la <b>conversione filosofica</b> del 1819: dalla poesia del bello alla riflessione sul «vero», cioè sulla condizione umana. Coincide con l'anno della crisi, della fuga fallita e dell'<i>Infinito</i>. Gli appunti non la nominano. Se te la chiedono, la sequenza è: <b>erudizione → bello (1816) → vero (1819)</b>.</p></div>
+
+<h2 id="piacere">La teoria del piacere e la poetica del vago</h2>
+<p>Questo è il cuore teorico. Seguilo un passaggio alla volta: ogni passaggio regge il successivo.</p>
+<ol class="chain">
+<li><b>L'uomo desidera la felicità</b>, cioè un piacere. Non un piacere qualsiasi: lo vuole <b>infinito</b>, per intensità e per durata.</li>
+<li>Ma ogni piacere reale è <b>finito</b>: finisce, o comunque non basta.</li>
+<li>Quindi tra desiderio (infinito) e realtà (finita) resta sempre una distanza. L'uomo è <b>esistenzialmente infelice e inappagato</b>.</li>
+<li>Rimedio: se l'infinito non si può <em>avere</em>, si può <b>immaginare</b>. Ciò che è <b>vago e indefinito</b> (un suono lontano, un orizzonte nascosto, un ricordo sfumato) lascia spazio all'immaginazione, che lo «allarga» fino all'infinito.</li>
+<li>Chi ci offre queste sensazioni indefinite? La <b>natura</b>, che in questa fase è una <b>madre benigna</b>: ci «inganna» a fin di bene con immagini e illusioni.</li>
+</ol>
+<div class="box rule"><h4>La formula da ricordare</h4><p><b>Desiderio infinito + piaceri finiti = infelicità.</b> Il rimedio è l'<b>indefinito</b>, che attraverso l'immaginazione rimanda all'<b>infinito</b>.</p></div>
+<div class="box deep"><h4>Dove lo scrive Leopardi</h4><p>La teoria del piacere è esposta nello <b>Zibaldone</b>, l'enorme diario di pensieri che Leopardi tiene tra il 1817 e il 1832; la parte decisiva risale al 1820. Lì elenca anche le parole «poetiche» perché vaghe, come <i>lontano</i>, <i>antico</i>, <i>notte</i>, <i>infinito</i>. Gli appunti citano lo Zibaldone solo a proposito delle <i>Operette</i>.</p></div>
+
+<h2 id="pessimismo">Il pessimismo storico (prima fase)</h2>
+<p>Gli appunti costruiscono questa fase su <b>due coppie di opposti</b>.</p>
+<div class="tw"><table>
+<tr><th>Opposizione</th><th>Polo positivo</th><th>Polo negativo</th></tr>
+<tr><td><b>Natura ↔ Ragione</b></td><td>La natura è madre benigna: dà immagini e illusioni che fanno immaginare l'infinito.</td><td>La ragione smaschera le illusioni e ci fa scoprire limitati.</td></tr>
+<tr><td><b>Antichi ↔ Moderni</b></td><td>Greci e Romani vivevano a contatto con la natura, quindi erano più illusi e più felici. Cercavano risposte nell'immaginazione, non nella scienza.</td><td>I moderni vivono staccati dalla natura e guidati dalla ragione, quindi sono infelici.</td></tr>
+</table></div>
+<p><b>Perché si chiama «storico»?</b> Perché l'infelicità ha una <em>causa nella storia</em>: è il cammino della civiltà (ragione, scienza, progresso) che ci ha allontanati dalla natura. È un errore umano, non un destino. Per questo gli appunti dicono che «il mondo che abbiamo creato è stato un errore»: abbiamo scambiato il piacere effimero per il vero piacere.</p>
+<p><b>L'atteggiamento</b> di questa fase è il <b>titanismo</b>: il poeta, come un titano, si ribella e combatte contro la condizione umana.</p>
+<div class="box note"><h4>Una frase ambigua negli appunti</h4><p>Nella sintesi finale gli appunti scrivono: «la causa del male è l'allontanarsi dalla natura ==> il progresso e il titanismo». Detta così sembra che il titanismo sia una <em>causa</em> del male, e non lo è. La lettura corretta:</p><ul><li><b>Causa del male</b>: progresso e ragione.</li><li><b>Reazione del poeta</b>: titanismo.</li></ul><p>L'opera di riferimento resta <i>L'infinito</i>.</p></div>
+<div class="box warn"><h4>«Pessimista» è un'etichetta che Leopardi rifiutava</h4><p>Gli appunti lo ricordano: per lui non era pessimismo, era mancanza di fiducia nell'<b>ottimismo dei contemporanei</b>, che credevano di vivere nel «migliore dei mondi possibili». Leopardi rovescia la formula: il <b>peggiore</b> dei mondi possibili. All'esame, citare questa sfumatura fa la differenza.</p></div>
+
+<h2 id="infinito">L'infinito (1819)</h2>
+<dl class="kv">
+<dt>Raccolta</dt><dd><i>Canti</i>, nel gruppo degli <b>Idilli</b> (il primo titolo pensato)</dd>
+<dt>Metro</dt><dd><b>15 endecasillabi sciolti</b>, cioè senza rima. Ricorda un sonetto ma lo supera di un verso e rinuncia a rime e strofe: la forma segue il contenuto, non uno schema fisso.</dd>
+<dt>Tecnica chiave</dt><dd><b>Enjambement</b> forti. Il periodo scavalca la fine del verso, il discorso diventa un flusso unico e il lettore è spinto «oltre», proprio verso l'infinito.</dd>
+<dt>Tema</dt><dd>L'immaginazione costruisce l'infinito a partire da un limite (la siepe) e da un suono (il vento).</dd>
+</dl>
+
+<div class="poem"><div class="ph"><b>L'infinito</b><span>Giacomo Leopardi, 1819 · testo integrale</span><button type="button" class="allnotes">Mostra tutte le note</button></div><div class="hint">Tocca i versi sottolineati per leggere il commento.</div><div class="v has-note" tabindex="0" role="button" aria-expanded="false"><span class="n">1</span><span class="t">Sempre caro mi fu quest'ermo colle,</span></div><div class="vnote" hidden><b>«Sempre caro»</b>: l'affetto per il luogo è abituale, non nasce oggi. <b>«ermo»</b> = solitario. <b>«quest'»</b>: primo dimostrativo di vicinanza, siamo nella <b>realtà</b>. Gli appunti collegano l'attacco a Ugo Foscolo, classicista pre-romantico.</div><div class="v has-note" tabindex="0" role="button" aria-expanded="false"><span class="n">2</span><span class="t">e questa siepe, che da tanta parte</span></div><div class="vnote" hidden>La <b>siepe</b> è il limite fisico, ancora «questa»: realtà.</div><div class="v has-note" tabindex="0" role="button" aria-expanded="false"><span class="n">3</span><span class="t">dell'ultimo orizzonte il guardo esclude.</span></div><div class="vnote" hidden>La siepe <b>taglia la vista</b> (il «guardo»). È il paradosso centrale: il limite non spegne l'esperienza, la innesca. Fino a qui (vv. 1-3) siamo nel mondo reale.</div><div class="v has-note" tabindex="0" role="button" aria-expanded="false"><span class="n">4</span><span class="t">Ma sedendo e mirando, interminati</span></div><div class="vnote" hidden><b>«Ma»</b>: svolta verso l'immaginazione. <b>«sedendo e mirando»</b>: gerundi assoluti, senza un tempo preciso, che danno indefinitezza. <b>«interminati»</b>: aggettivo dal sapore scientifico, che rivela l'interesse di Leopardi per la prosa scientifica. Enjambement forte con «spazi».</div><div class="v has-note" tabindex="0" role="button" aria-expanded="false"><span class="n">5</span><span class="t">spazi di là da quella, e sovrumani</span></div><div class="vnote" hidden><b>«quella»</b>: ora la siepe è lontana. Il dimostrativo di lontananza segna il passaggio all'<b>immaginario</b>. <b>«sovrumani / silenzi»</b>: altro enjambement.</div><div class="v has-note" tabindex="0" role="button" aria-expanded="false"><span class="n">6</span><span class="t">silenzi, e profondissima quiete</span></div><div class="vnote" hidden>Accumulo di spazi, silenzi, quiete, col superlativo: l'infinito spaziale costruito dall'immaginazione.</div><div class="v has-note" tabindex="0" role="button" aria-expanded="false"><span class="n">7</span><span class="t">io nel pensier mi fingo; ove per poco</span></div><div class="vnote" hidden><b>«mi fingo»</b> = mi raffiguro, creo con la mente (dal latino <i>fingere</i>, plasmare). È tutto un prodotto del pensiero.</div><div class="v has-note" tabindex="0" role="button" aria-expanded="false"><span class="n">8</span><span class="t">il cor non si spaura. E come il vento</span></div><div class="vnote" hidden><b>«per poco il cor non si spaura»</b>: l'infinito immaginato è così intenso che quasi fa paura. Poi la svolta a metà verso: <b>«E come il vento»</b> apre la seconda parte, quella <b>uditiva</b>. «spaura. E» si legge in una sola sillaba (<b>sinalefe</b>): la seconda parte è agganciata alla prima senza stacco.</div><div class="v has-note" tabindex="0" role="button" aria-expanded="false"><span class="n">9</span><span class="t">odo stormir tra queste piante, io quello</span></div><div class="vnote" hidden>Il fruscio del vento tra le piante (<b>«queste»</b>: realtà) viene confrontato con <b>«quello»</b> (immaginario) <b>infinito silenzio</b>.</div><div class="v has-note" tabindex="0" role="button" aria-expanded="false"><span class="n">10</span><span class="t">infinito silenzio a questa voce</span></div><div class="vnote" hidden>Il suono reale e presente («questa voce») misura, per contrasto, il silenzio infinito.</div><div class="v has-note" tabindex="0" role="button" aria-expanded="false"><span class="n">11</span><span class="t">vo comparando: e mi sovvien l'eterno,</span></div><div class="vnote" hidden>Dal confronto nasce l'<b>infinito temporale</b>: «mi sovvien» = mi viene in mente <b>l'eterno</b>.</div><div class="v has-note" tabindex="0" role="button" aria-expanded="false"><span class="n">12</span><span class="t">e le morte stagioni, e la presente</span></div><div class="vnote" hidden><b>«le morte stagioni»</b> = le epoche passate, che il pensiero mette accanto al presente.</div><div class="v has-note" tabindex="0" role="button" aria-expanded="false"><span class="n">13</span><span class="t">e viva, e il suon di lei. Così tra questa</span></div><div class="vnote" hidden>Polisindeto (e… e… e…) che allarga lo sguardo. <b>«questa / immensità»</b>: l'infinito immaginato ora è detto «questo», cioè <b>vicino</b>. Il poeta ci è dentro.</div><div class="v has-note" tabindex="0" role="button" aria-expanded="false"><span class="n">14</span><span class="t">immensità s'annega il pensier mio:</span></div><div class="vnote" hidden><b>«s'annega»</b>: il pensiero, che prima costruiva l'infinito, ora ne è sommerso.</div><div class="v has-note" tabindex="0" role="button" aria-expanded="false"><span class="n">15</span><span class="t">e il naufragar m'è dolce in questo mare.</span></div><div class="vnote" hidden>Metafora finale del <b>naufragio</b>. Prima l'infinito faceva quasi paura (v. 8), ora perdersi è <b>dolce</b>. Vedi le due interpretazioni sotto.</div></div>
+
+<h3>La struttura: realtà ↔ immaginario</h3>
+<p>Il testo procede per <b>passaggi continui tra realtà e immaginazione</b>, segnalati dai dimostrativi:</p>
+<ul>
+<li><b>questo / questa</b> (colle, siepe, piante, voce) = ciò che è vicino e reale;</li>
+<li><b>quello / quella</b> (di là da quella, quello infinito silenzio) = ciò che è lontano, cioè costruito dall'immaginazione.</li>
+</ul>
+<p>Le parti sono due, entrambe con lo stesso schema:</p>
+<ol>
+<li><b>Visiva</b> (vv. 1–8): siepe → spazi infiniti → quasi paura.</li>
+<li><b>Uditiva</b> (vv. 8–15): vento → silenzio infinito ed eternità → naufragio dolce.</li>
+</ol>
+<div class="box deep"><h4>Un dettaglio che fa colpo all'esame</h4><p>Negli ultimi versi i dimostrativi si invertono: l'infinito, che prima era «quello», diventa «<b>questa</b> immensità» e «<b>questo</b> mare». Il confine tra reale e immaginario è caduto. Non è negli appunti, ma conferma la loro lettura: alla fine il poeta è <em>dentro</em> l'infinito.</p></div>
+
+<h3>«Il naufragar m'è dolce»: due interpretazioni</h3>
+<p>Gli appunti ne riportano due. Conoscile entrambe e sappi dire in cosa differiscono.</p>
+<div class="tw"><table>
+<tr><th></th><th>1. Lettura «processuale»</th><th>2. Lettura dell'annullamento dell'Io</th></tr>
+<tr><td>Prima</td><td>L'infinito fa paura perché è nuovo.</td><td>L'infinito fa paura perché l'Io, che è finito, non può contenerlo.</td></tr>
+<tr><td>Poi</td><td>Mi ci abituo e mi lascio andare.</td><td>L'Io rinuncia a se stesso. Annullandosi, annulla anche la propria infelicità.</td></tr>
+<tr><td>Chiave</td><td>Abitudine</td><td>Perdita dei confini del soggetto e ricongiungimento all'infinito</td></tr>
+</table></div>
+
+<h3>Il titolo «Idilli» e la sua evoluzione</h3>
+<p><i>L'infinito</i> appartiene ai <i>Canti</i>, la raccolta di tutta la poesia leopardiana. Il primo titolo pensato per questo gruppo era <b>Idilli</b>. Nella tradizione «idillio» significa un ambiente pastorale idealizzato e rarefatto. Leopardi tiene una forte soggettività (l'io lirico coincide con l'autore) ma abbandona l'ambientazione pastorale.</p>
+<p>Inizialmente voleva riempire le poesie dei «suoni» che la natura benigna dona agli uomini. Col tempo però emerge l'<b>«arido vero»</b>, cioè la dura condizione umana. È il ponte verso la lezione 2.</p>
+
+<h2 id="analogie">Analogie per fissare i concetti</h2>
+<div class="box ana"><h4>La teoria del piacere come una sete</h4><p>Immagina una sete che nessun bicchiere può spegnere. Ogni bicchiere (un piacere) dà sollievo per un attimo, poi finisce e la sete resta. Non è colpa del bicchiere: è la sete a essere «troppo grande».</p><p><b>Dove l'analogia non regge</b>: la sete si spegne bevendo abbastanza. Il desiderio leopardiano invece è infinito per natura e non si spegne mai.</p></div>
+<div class="box ana"><h4>La siepe come il sipario chiuso</h4><p>Un sipario chiuso, con i rumori del palco dietro, ti fa immaginare uno spettacolo più ricco di quello che vedresti a sipario aperto. Funziona come un libro rispetto al film: meno vedi, più immagini.</p><p><b>Dove l'analogia non regge</b>: dietro il sipario c'è davvero qualcosa. Dietro la siepe di Leopardi conta solo ciò che la mente crea, e il punto d'arrivo non è «vedere di più» ma <b>perdersi</b>.</p></div>
+
+<h2 id="ragionamento">Come costruire una risposta argomentata</h2>
+<p>Per le domande aperte usa sempre questo schema in 4 mosse:</p>
+<ol>
+<li><b>Tesi</b> in una frase: rispondi subito alla domanda.</li>
+<li><b>Concetto</b>: il pezzo di pensiero dell'autore che la regge (qui, la teoria del piacere).</li>
+<li><b>Prova testuale</b>: due o tre elementi precisi del testo, con verso o parola.</li>
+<li><b>Collegamento</b>: fase del pensiero, altre opere, altri autori.</li>
+</ol>
+<div class="box ex"><h4>Domanda: «Perché la siepe è importante nell'Infinito?»</h4>
+<p><b>1. Tesi.</b> La siepe è un limite che, proprio perché nasconde l'orizzonte, mette in moto l'immaginazione e permette al poeta di «fingersi» l'infinito.</p>
+<p><b>2. Concetto.</b> Per la teoria del piacere l'uomo desidera l'infinito ma possiede solo cose finite. L'unico accesso è l'indefinito, che l'immaginazione dilata.</p>
+<p><b>3. Prova testuale.</b></p><ul><li>«il guardo esclude» (v. 3): la siepe toglie la vista.</li><li>«Ma» (v. 4) segna la svolta.</li><li>«quella» (v. 5): la siepe ora è lontana, siamo nell'immaginario.</li><li>«io nel pensier mi fingo» (v. 7): l'infinito è prodotto dalla mente.</li></ul>
+<p><b>4. Collegamento.</b> È la poetica del vago e dell'indefinito della prima fase (pessimismo storico), quando la natura è ancora benigna. Nei Grandi Idilli la stessa poetica resta, ma è usata «con consapevolezza».</p></div>
+
+<h2 id="errori">Errori comuni e trabocchetti</h2>
+<div class="box warn"><ul>
+<li><b>«L'infinito è un sonetto.»</b> No: sono <b>15</b> endecasillabi sciolti. Ricorda un sonetto, ma non lo è.</li>
+<li><b>«Leopardi descrive un paesaggio infinito che vede.»</b> No: lo vede <em>finito</em> (siepe) e lo <em>immagina</em> infinito («mi fingo»).</li>
+<li><b>Confondere le due fasi.</b> Nel pessimismo <b>storico</b> la natura è <b>benigna</b> e la colpa è della civiltà e della ragione. Nel pessimismo <b>cosmico</b> (lezione 2) la natura è <b>maligna</b>.</li>
+<li><b>Gli antichi erano felici?</b> Più felici, non felici. In questa fase la differenza sta nel fatto che erano più vicini alla natura, quindi più capaci di illudersi.</li>
+<li><b>Data di morte</b>: 1837, non 1836 (errore degli appunti).</li>
+<li><b>«interminati spazi»</b>: negli appunti c'è scritto «intreccianti spazi», ma è un errore di trascrizione. Il testo dice «<b>interminati / spazi</b>», con enjambement tra aggettivo e nome.</li>
+</ul></div>
+
+<h2 id="riepilogo">Riepilogo</h2>
+<ul class="recap">
+<li>Leopardi (Recanati 1798 – Napoli 1837): formazione classicista, ambiente familiare chiuso, desiderio di fuga.</li>
+<li>1816: conversione «dall'erudizione al bello». Lettera contro Madame de Staël.</li>
+<li>Teoria del piacere: desiderio infinito, piaceri finiti, infelicità. Il rimedio è il vago e l'indefinito.</li>
+<li>Pessimismo storico: natura benigna, colpa della civiltà e della ragione, antichi più felici. Atteggiamento: titanismo.</li>
+<li><i>L'infinito</i> (1819): 15 endecasillabi sciolti con enjambement. Siepe, immaginazione, infinito spaziale. Vento, eterno, infinito temporale. Naufragio dolce.</li>
+<li>Dimostrativi <b>questo/quello</b> = realtà/immaginazione.</li>
+</ul>
+
+<h2 id="esercizi">Esercizi di verifica</h2>
+<div class="scored">
+<div class="ex-block qu mcq" data-ans="1"><span class="lvl">Livello 1 · crocetta</span><p class="q">Qual è la forma metrica dell'<i>Infinito</i>?</p><div class="opts"><button type="button" class="opt">Un sonetto di 14 endecasillabi in rima</button><button type="button" class="opt">15 endecasillabi sciolti</button><button type="button" class="opt">Una canzone libera di endecasillabi e settenari</button><button type="button" class="opt">15 settenari a rima alternata</button></div><div class="why" hidden><span class="verdict"></span>15 endecasillabi senza rima. Ricorda il sonetto ma lo supera: Leopardi cerca una forma funzionale al contenuto, non uno schema fisso.</div><button type="button" class="retry" hidden>Riprova</button></div>
+<div class="ex-block qu vf" data-ans="1"><span class="lvl">Livello 1 · vero o falso</span><p class="q">Leopardi morì a Napoli nel 1836.</p><div class="opts"><button type="button" class="opt">Vero</button><button type="button" class="opt">Falso</button></div><div class="why" hidden><span class="verdict"></span>Morì il 14 giugno 1837. Gli appunti riportano 1836: è un errore.</div><button type="button" class="retry" hidden>Riprova</button></div>
+<div class="ex-block qu mcq" data-ans="2"><span class="lvl">Livello 2 · crocetta</span><p class="q">Nel pessimismo storico, perché gli antichi erano più felici dei moderni?</p><div class="opts"><button type="button" class="opt">Perché conoscevano meglio la scienza</button><button type="button" class="opt">Perché la natura era meno crudele con loro</button><button type="button" class="opt">Perché, vivendo più vicini alla natura, erano più illusi e potevano immaginare l'infinito</button><button type="button" class="opt">Perché non desideravano il piacere</button></div><div class="why" hidden><span class="verdict"></span>La natura qui è ancora benigna. Gli antichi godevano di più delle sue illusioni; i moderni, guidati dalla ragione, le hanno perse.</div><button type="button" class="retry" hidden>Riprova</button></div>
+<div class="classify"><h4>L'infinito: realtà o immaginazione?</h4><p class="small muted">Per ogni elemento scegli la categoria giusta.</p><div class="cl-item qu" data-ans="0"><p class="q">«quest'ermo colle» (v. 1)</p><div class="opts"><button type="button" class="opt">Realtà</button><button type="button" class="opt">Immaginazione</button></div><div class="why" hidden><span class="verdict"></span>Dimostrativo di vicinanza: il colle è reale e presente.</div><button type="button" class="retry" hidden>Riprova</button></div><div class="cl-item qu" data-ans="1"><p class="q">«di là da quella» (v. 5)</p><div class="opts"><button type="button" class="opt">Realtà</button><button type="button" class="opt">Immaginazione</button></div><div class="why" hidden><span class="verdict"></span>«quella» allontana la siepe: siamo negli spazi costruiti dalla mente.</div><button type="button" class="retry" hidden>Riprova</button></div><div class="cl-item qu" data-ans="0"><p class="q">«queste piante» (v. 9)</p><div class="opts"><button type="button" class="opt">Realtà</button><button type="button" class="opt">Immaginazione</button></div><div class="why" hidden><span class="verdict"></span>Il vento tra le piante è un suono reale che il poeta ode.</div><button type="button" class="retry" hidden>Riprova</button></div><div class="cl-item qu" data-ans="1"><p class="q">«quello / infinito silenzio» (vv. 9-10)</p><div class="opts"><button type="button" class="opt">Realtà</button><button type="button" class="opt">Immaginazione</button></div><div class="why" hidden><span class="verdict"></span>Il silenzio infinito è immaginato, e «quello» lo segnala.</div><button type="button" class="retry" hidden>Riprova</button></div><div class="cl-item qu" data-ans="0"><p class="q">«questa voce» (v. 10)</p><div class="opts"><button type="button" class="opt">Realtà</button><button type="button" class="opt">Immaginazione</button></div><div class="why" hidden><span class="verdict"></span>La «voce» del vento, reale, serve da termine di paragone.</div><button type="button" class="retry" hidden>Riprova</button></div></div>
+<div class="ex-block"><span class="lvl">Livello 3 · domanda aperta</span>
+<p class="q"><b>Spiega la teoria del piacere di Leopardi e il ruolo che la natura ha nella prima fase del suo pensiero.</b> (8-10 righe)</p>
+<details class="sol"><summary><span class="lab">Mostra risposta modello</span></summary><div class="solbody">
+<p>Secondo Leopardi l'uomo desidera per natura un piacere <b>infinito</b>, per intensità e durata, ma nella realtà incontra solo piaceri <b>finiti</b>, che passano o non bastano. Da questo scarto nasce un'infelicità esistenziale: l'uomo resta sempre inappagato.</p>
+<p>Nella prima fase del suo pensiero, il <b>pessimismo storico</b>, la natura è una <b>madre benigna</b>. Offre all'uomo immagini <b>vaghe e indefinite</b> che stimolano l'immaginazione e gli permettono almeno di fingersi l'infinito, come accade nell'<i>Infinito</i> con la siepe e il vento.</p>
+<p>L'infelicità dei moderni ha quindi una causa storica: la civiltà e la ragione li hanno allontanati dalla natura e dalle sue illusioni. Per questo gli antichi, più vicini alla natura, erano più felici.</p>
+</div></details>
+</div>
+<div class="ex-block"><span class="lvl">Livello 4 · analisi del testo</span>
+<p class="q"><b>Nell'<i>Infinito</i>, il poeta all'inizio quasi ha paura (v. 8), alla fine trova il naufragio «dolce» (v. 15). Spiega questo cambiamento proponendo due interpretazioni e indicando gli elementi testuali che le sostengono.</b></p>
+<details class="sol"><summary><span class="lab">Mostra risposta modello</span></summary><div class="solbody">
+<p><b>Il punto di partenza.</b> La paura nasce dall'intensità dell'infinito immaginato: «ove per poco / il cor non si spaura» (vv. 7-8).</p>
+<p><b>Prima interpretazione: processuale.</b> Il poeta, prima spaventato dalla novità dell'esperienza, vi si abitua e alla fine si abbandona. Lo conferma il ritmo stesso del testo: gli enjambement e il polisindeto («e le morte stagioni, e la presente / e viva, e il suon di lei») trascinano il lettore in un movimento sempre più fluido.</p>
+<p><b>Seconda interpretazione: l'annullamento dell'Io.</b> L'Io, finito, non può contenere l'infinito e per questo all'inizio ne ha paura. Alla fine rinuncia a se stesso: il «pensier mio» «s'annega» (v. 14). Annullandosi, annulla anche la propria infelicità e si ricongiunge all'infinito.</p>
+<p><b>Un elemento a sostegno di entrambe.</b> L'infinito, prima indicato come lontano («quello infinito silenzio»), diventa «questa immensità» e «questo mare»: il poeta ora ci è dentro.</p>
+</div></details>
+</div>
+<div class="scorebar"></div>
+</div>
+
+<h2 id="collegamenti">Collegamenti</h2>
+<ul>
+<li><b>→ Lezione 2</b>: la natura da benigna diventa <b>maligna</b> (pessimismo cosmico). La poetica del vago resta, ma ora Leopardi sa che sono illusioni e le usa per scopi estetici.</li>
+<li><b>→ Lezione 3</b>: nelle <i>Operette morali</i> (<i>Dialogo della Natura e di un Islandese</i>) avviene il passaggio decisivo alla natura matrigna.</li>
+<li><b>→ Montale (lezione 13)</b>: anche lui cerca un «varco» oltre il limite della realtà. Ma per Montale la memoria ha valore <b>negativo</b>, per Leopardi invece il ricordo può dare piacere (lo vedrai in <i>A Silvia</i>).</li>
+<li><b>→ Ungaretti (lezione 12)</b>: «M'illumino / d'immenso» è un altro incontro tra finito e infinito, risolto in un lampo invece che in un naufragio.</li>
+</ul>
+
+    <nav class="pager" aria-label="Lezioni"><a class="prev" href="index.html"><small>← Precedente</small>Indice generale</a><a class="next" href="lezione-02.html"><small>Successiva →</small>Leopardi II</a></nav>
+  </main>
+</div>
+<script>(function(){
+  var root=document.documentElement;
+  function getS(k){try{return localStorage.getItem(k)}catch(e){return null}}
+  function setS(k,v){try{localStorage.setItem(k,v)}catch(e){}}
+
+  /* tema */
+  var saved=getS('it-lezioni-theme');
+  if(saved==='dark'||saved==='light'){root.setAttribute('data-theme',saved)}
+  var tb=document.getElementById('themeBtn');
+  function curTheme(){
+    var t=root.getAttribute('data-theme');
+    if(t) return t;
+    return (window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches)?'dark':'light';
+  }
+  function label(){if(tb){tb.textContent=curTheme()==='dark'?'☀ Chiaro':'☾ Scuro'}}
+  if(tb){tb.addEventListener('click',function(){var n=curTheme()==='dark'?'light':'dark';root.setAttribute('data-theme',n);setS('it-lezioni-theme',n);label()});label()}
+
+  /* indice a scomparsa su telefono */
+  var tocBtn=document.getElementById('tocBtn'),toc=document.getElementById('toc');
+  if(tocBtn&&toc){
+    tocBtn.addEventListener('click',function(){var o=toc.classList.toggle('open');tocBtn.setAttribute('aria-expanded',o?'true':'false')});
+    toc.addEventListener('click',function(e){if(e.target.closest('a')){toc.classList.remove('open');tocBtn.setAttribute('aria-expanded','false')}});
+  }
+
+  /* evidenzia la sezione corrente */
+  var links=toc?Array.prototype.slice.call(toc.querySelectorAll('ol a')):[];
+  if(links.length&&'IntersectionObserver' in window){
+    var map={};links.forEach(function(a){map[a.getAttribute('href').slice(1)]=a});
+    var obs=new IntersectionObserver(function(es){
+      es.forEach(function(en){
+        if(en.isIntersecting){links.forEach(function(a){a.classList.remove('active')});var a=map[en.target.id];if(a)a.classList.add('active')}
+      });
+    },{rootMargin:'-70px 0px -70% 0px'});
+    document.querySelectorAll('main h2[id]').forEach(function(h){obs.observe(h)});
+  }
+
+  /* domande: scelta multipla, vero/falso, classificazione */
+  function updateScore(box){
+    if(!box) return;
+    var bar=box.querySelector('.scorebar'); if(!bar) return;
+    var all=box.querySelectorAll('.qu').length;
+    var done=box.querySelectorAll('.qu.done').length;
+    var ok=box.querySelectorAll('.qu.right').length;
+    bar.textContent=done?('Corrette: '+ok+' su '+done+' · '+all+' domande'):(all+' domande · rispondi per il punteggio');
+  }
+  document.querySelectorAll('.qu').forEach(function(q){
+    var ans=parseInt(q.getAttribute('data-ans'),10);
+    var btns=Array.prototype.slice.call(q.querySelectorAll('.opt'));
+    var why=q.querySelector('.why');
+    var verdict=why?why.querySelector('.verdict'):null;
+    var retry=q.querySelector('.retry');
+    btns.forEach(function(b,i){
+      b.addEventListener('click',function(){
+        if(q.classList.contains('done')) return;
+        q.classList.add('done');
+        btns.forEach(function(x,j){x.disabled=true;if(j===ans)x.classList.add('ok')});
+        if(i===ans){q.classList.add('right');if(verdict)verdict.textContent='Giusto. '}
+        else{b.classList.add('ko');q.classList.add('wrong');if(verdict)verdict.textContent='Sbagliato. '}
+        if(why) why.hidden=false;
+        if(retry) retry.hidden=false;
+        updateScore(q.closest('.scored'));
+      });
+    });
+    if(retry){retry.addEventListener('click',function(){
+      q.classList.remove('done','right','wrong');
+      btns.forEach(function(x){x.disabled=false;x.classList.remove('ok','ko')});
+      if(why) why.hidden=true; retry.hidden=true;
+      updateScore(q.closest('.scored'));
+    })}
+  });
+  document.querySelectorAll('.scored').forEach(updateScore);
+
+  /* versi annotati */
+  function toggleVerse(v,force){
+    var n=v.nextElementSibling;
+    if(!n||!n.classList.contains('vnote')) return;
+    var open=(typeof force==='boolean')?force:n.hidden;
+    n.hidden=!open; v.classList.toggle('open',open); v.setAttribute('aria-expanded',open?'true':'false');
+  }
+  document.querySelectorAll('.v.has-note').forEach(function(v){
+    v.addEventListener('click',function(){toggleVerse(v)});
+    v.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();toggleVerse(v)}});
+  });
+  document.querySelectorAll('.poem .allnotes').forEach(function(b){
+    b.addEventListener('click',function(){
+      var p=b.closest('.poem');var open=b.getAttribute('data-open')!=='1';
+      p.querySelectorAll('.v.has-note').forEach(function(v){toggleVerse(v,open)});
+      b.setAttribute('data-open',open?'1':'0');b.textContent=open?'Nascondi tutte le note':'Mostra tutte le note';
+    });
+  });
+
+  /* filtro cronologia */
+  document.querySelectorAll('[data-tl]').forEach(function(wrap){
+    var chips=wrap.querySelectorAll('.chip');var items=wrap.querySelectorAll('.tl li');
+    chips.forEach(function(c){c.addEventListener('click',function(){
+      chips.forEach(function(x){x.classList.remove('on');x.setAttribute('aria-pressed','false')});
+      c.classList.add('on');c.setAttribute('aria-pressed','true');
+      var f=c.getAttribute('data-f');
+      items.forEach(function(li){li.hidden=!(f==='all'||li.getAttribute('data-who')===f)});
+    })});
+  });
+
+  /* ricerca nel glossario */
+  var gs=document.getElementById('glossSearch');
+  if(gs){gs.addEventListener('input',function(){
+    var t=gs.value.trim().toLowerCase();
+    document.querySelectorAll('dl.gloss>div').forEach(function(d){d.hidden=t&&d.textContent.toLowerCase().indexOf(t)<0});
+  })}
+})();
+</script>
+</body>
+</html>

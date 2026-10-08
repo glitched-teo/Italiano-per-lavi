@@ -1,0 +1,616 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pirandello · Italiano</title>
+<style>:root{
+  --bg:#fbf9f4; --surface:#ffffff; --surface2:#f3efe6; --text:#1f1d1a; --muted:#5d584f; --line:#e2dccf;
+  --accent:#8c1d2f; --accent-soft:#f6e6e8; --focus:#2457a6;
+  --def:#2457a6; --def-bg:#ebf1fb;
+  --rule:#6a3d9e; --rule-bg:#f2ecfa;
+  --ex:#1d7149; --ex-bg:#e7f4ec;
+  --warn:#8f5300; --warn-bg:#fcf1dc;
+  --deep:#0d6871; --deep-bg:#e3f2f3;
+  --note:#b42318; --note-bg:#fdebe8;
+  --ana:#4f4f86; --ana-bg:#ececf6;
+  --ok:#1d7149; --ok-bg:#e2f3e9; --ko:#b42318; --ko-bg:#fbe5e2;
+  --radius:12px;
+  --serif:"Iowan Old Style","Palatino Linotype",Palatino,"Book Antiqua",Georgia,serif;
+  --sans:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#131418; --surface:#1b1d23; --surface2:#23262e; --text:#ecebe6; --muted:#aaa59c; --line:#32353e;
+    --accent:#f2a7b1; --accent-soft:#3a2329; --focus:#8ab4f8;
+    --def:#8ab4f8; --def-bg:#18253a;
+    --rule:#c7a6f2; --rule-bg:#271e37;
+    --ex:#7fd4a6; --ex-bg:#152a20;
+    --warn:#f5c26b; --warn-bg:#2d2414;
+    --deep:#79d0d8; --deep-bg:#132a2d;
+    --note:#ff9b8f; --note-bg:#331a18;
+    --ana:#b4b4ee; --ana-bg:#22223a;
+    --ok:#7fd4a6; --ok-bg:#15301f; --ko:#ff9b8f; --ko-bg:#3a1b18;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#131418; --surface:#1b1d23; --surface2:#23262e; --text:#ecebe6; --muted:#aaa59c; --line:#32353e;
+  --accent:#f2a7b1; --accent-soft:#3a2329; --focus:#8ab4f8;
+  --def:#8ab4f8; --def-bg:#18253a;
+  --rule:#c7a6f2; --rule-bg:#271e37;
+  --ex:#7fd4a6; --ex-bg:#152a20;
+  --warn:#f5c26b; --warn-bg:#2d2414;
+  --deep:#79d0d8; --deep-bg:#132a2d;
+  --note:#ff9b8f; --note-bg:#331a18;
+  --ana:#b4b4ee; --ana-bg:#22223a;
+  --ok:#7fd4a6; --ok-bg:#15301f; --ko:#ff9b8f; --ko-bg:#3a1b18;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth;scroll-padding-top:72px}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--sans);font-size:18px;line-height:1.7}
+a{color:var(--accent);text-underline-offset:3px}
+a:focus-visible,button:focus-visible,summary:focus-visible,.v.has-note:focus-visible,input:focus-visible{outline:3px solid var(--focus);outline-offset:2px;border-radius:6px}
+img{max-width:100%}
+
+/* header */
+.top{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:10px;padding:10px 16px;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.top .home{font-family:var(--serif);font-weight:700;font-size:1.05rem;color:var(--text);text-decoration:none;white-space:nowrap}
+.top .home span{color:var(--accent)}
+.top .lnum{color:var(--muted);font-size:.85rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.top .sp{flex:1}
+.top button{font:inherit;font-size:.9rem;background:var(--surface);color:var(--text);border:1px solid var(--line);border-radius:999px;padding:6px 12px;cursor:pointer;min-height:38px}
+.top button:hover{border-color:var(--accent)}
+#tocBtn{display:none}
+
+/* layout */
+.layout{display:grid;grid-template-columns:270px minmax(0,1fr);gap:40px;max-width:1180px;margin:0 auto;padding:0 24px}
+.toc{position:sticky;top:64px;align-self:start;max-height:calc(100vh - 80px);overflow:auto;padding:24px 0 24px}
+.toc .tt{font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:0 0 8px}
+.toc ol{list-style:none;margin:0;padding:0;border-left:2px solid var(--line)}
+.toc li a{display:block;padding:5px 12px;margin-left:-2px;border-left:2px solid transparent;color:var(--muted);text-decoration:none;font-size:.93rem;line-height:1.35}
+.toc li a:hover{color:var(--text)}
+.toc li a.active{color:var(--accent);border-left-color:var(--accent);font-weight:600}
+.toc .tnav{margin-top:20px;display:flex;flex-direction:column;gap:6px;font-size:.88rem}
+.toc .tnav a{text-decoration:none}
+main{min-width:0;max-width:780px;padding:28px 0 80px}
+
+/* type */
+h1,h2,h3,h4{font-family:var(--serif);line-height:1.25;text-wrap:balance}
+h1{font-size:2.3rem;margin:.2em 0 .25em}
+.kicker{font-size:.8rem;letter-spacing:.09em;text-transform:uppercase;color:var(--accent);font-weight:700;margin:0}
+.sub{color:var(--muted);font-size:1.08rem;margin:0 0 1.2em}
+h2{font-size:1.6rem;margin:2.2em 0 .6em;padding-top:.6em;border-top:1px solid var(--line)}
+h3{font-size:1.25rem;margin:1.7em 0 .5em}
+h4{font-size:1.05rem;margin:0 0 .4em}
+p{margin:.7em 0}
+ul,ol{padding-left:1.3em}
+li{margin:.25em 0}
+strong{font-weight:650}
+.muted{color:var(--muted)}
+.small{font-size:.9rem}
+blockquote{margin:1em 0;padding:.6em 1em;border-left:3px solid var(--accent);background:var(--surface2);border-radius:0 8px 8px 0;font-family:var(--serif);font-size:1.05rem}
+blockquote cite{display:block;font-size:.85rem;color:var(--muted);font-style:normal;margin-top:.3em;font-family:var(--sans)}
+code,kbd{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.9em;background:var(--surface2);padding:1px 5px;border-radius:5px}
+hr{border:0;border-top:1px solid var(--line);margin:2em 0}
+
+/* boxes */
+.box{position:relative;margin:1.2em 0;padding:14px 16px 12px;border-radius:var(--radius);border:1px solid var(--line);border-left:5px solid var(--c);background:var(--b)}
+.box::before{content:attr(data-k);display:inline-block;font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;font-weight:700;color:var(--c);margin-bottom:4px}
+.box>:first-child{margin-top:0}
+.box>:last-child{margin-bottom:0}
+.box h4{color:var(--text)}
+.box.def{--c:var(--def);--b:var(--def-bg)}
+.box.rule{--c:var(--rule);--b:var(--rule-bg)}
+.box.ex{--c:var(--ex);--b:var(--ex-bg)}
+.box.warn{--c:var(--warn);--b:var(--warn-bg)}
+.box.deep{--c:var(--deep);--b:var(--deep-bg)}
+.box.note{--c:var(--note);--b:var(--note-bg)}
+.box.ana{--c:var(--ana);--b:var(--ana-bg)}
+.box.def::before{content:"Definizione"}
+.box.rule::before{content:"Concetto chiave"}
+.box.ex::before{content:"Esempio svolto"}
+.box.warn::before{content:"Attenzione"}
+.box.deep::before{content:"Approfondimento (non negli appunti)"}
+.box.note::before{content:"Nota sul materiale"}
+.box.ana::before{content:"Analogia"}
+
+/* tables */
+.tw{overflow-x:auto;margin:1em 0;border:1px solid var(--line);border-radius:var(--radius)}
+table{border-collapse:collapse;width:100%;font-size:.95rem;min-width:520px}
+th,td{padding:9px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+th{background:var(--surface2);font-weight:650}
+tr:last-child td{border-bottom:0}
+
+/* chains / steps */
+.chain{list-style:none;padding:0;margin:1em 0;counter-reset:c}
+.chain li{position:relative;padding:10px 14px 10px 46px;margin:0 0 10px;background:var(--surface);border:1px solid var(--line);border-radius:10px}
+.chain li::before{counter-increment:c;content:counter(c);position:absolute;left:12px;top:10px;width:24px;height:24px;border-radius:50%;background:var(--accent);color:var(--bg);font-size:.8rem;font-weight:700;display:grid;place-items:center}
+.chain li:not(:last-child)::after{content:"↓";position:absolute;left:18px;bottom:-17px;color:var(--muted);font-size:.85rem}
+.kv{display:grid;grid-template-columns:max-content 1fr;gap:6px 14px;margin:.8em 0}
+.kv dt{font-weight:650}
+.kv dd{margin:0}
+@media (max-width:560px){.kv{grid-template-columns:1fr}.kv dd{margin-bottom:6px}}
+
+/* poem */
+.poem{margin:1.3em 0;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:14px 14px 14px 6px}
+.poem .ph{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 12px;padding:0 4px 8px 10px;border-bottom:1px solid var(--line);margin-bottom:8px}
+.poem .ph b{font-family:var(--serif);font-size:1.12rem}
+.poem .ph span{color:var(--muted);font-size:.85rem}
+.poem .ph button{margin-left:auto;font:inherit;font-size:.82rem;background:var(--surface2);color:var(--text);border:1px solid var(--line);border-radius:999px;padding:4px 10px;cursor:pointer;min-height:34px}
+.poem .hint{font-size:.82rem;color:var(--muted);padding:0 10px 6px}
+.v{display:grid;grid-template-columns:2.4em 1fr;font-family:var(--serif);font-size:1.08rem;line-height:1.55;padding:1px 4px;border-radius:6px}
+.v .n{color:var(--muted);font-family:var(--sans);font-size:.72rem;text-align:right;padding-right:10px;padding-top:.35em;user-select:none}
+.v.has-note{cursor:pointer}
+.v.has-note .t{text-decoration:underline dotted var(--accent);text-underline-offset:4px;text-decoration-thickness:1.5px}
+.v.has-note:hover{background:var(--accent-soft)}
+.v.open{background:var(--accent-soft)}
+.vnote{margin:4px 4px 8px 2.4em;padding:8px 12px;font-size:.93rem;line-height:1.55;background:var(--surface2);border-left:3px solid var(--accent);border-radius:0 8px 8px 0}
+.vgap{height:.9em}
+
+/* interactive questions */
+.ex-block{margin:1.2em 0;padding:14px 16px;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius)}
+.ex-block .lvl{display:inline-block;font-size:.7rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:1px 8px;margin-bottom:6px}
+.qu .q{font-weight:600;margin:.2em 0 .6em}
+.opts{display:flex;flex-direction:column;gap:8px}
+.vf .opts{flex-direction:row}
+.vf .opts .opt{flex:1;text-align:center}
+.opt{font:inherit;font-size:.97rem;text-align:left;background:var(--surface2);color:var(--text);border:1px solid var(--line);border-radius:10px;padding:10px 14px;cursor:pointer;min-height:46px;line-height:1.4}
+.opt:hover:not(:disabled){border-color:var(--accent)}
+.opt:disabled{cursor:default;opacity:.92}
+.opt.ok{background:var(--ok-bg);border-color:var(--ok);color:var(--text)}
+.opt.ok::after{content:"  ✓";color:var(--ok);font-weight:700}
+.opt.ko{background:var(--ko-bg);border-color:var(--ko)}
+.opt.ko::after{content:"  ✗";color:var(--ko);font-weight:700}
+.why{margin-top:10px;padding:10px 12px;border-radius:8px;background:var(--surface2);font-size:.95rem}
+.why .verdict{font-weight:700}
+.qu.right .verdict{color:var(--ok)}
+.qu.wrong .verdict{color:var(--ko)}
+.retry{font:inherit;font-size:.82rem;margin-top:8px;background:none;border:0;color:var(--accent);cursor:pointer;padding:4px 0;text-decoration:underline}
+.scorebar{position:sticky;bottom:10px;z-index:5;margin:1em auto;width:max-content;max-width:100%;padding:6px 14px;border-radius:999px;background:var(--surface);border:1px solid var(--line);box-shadow:0 4px 18px rgba(0,0,0,.12);font-size:.85rem;text-align:center}
+
+/* classify */
+.classify{margin:1.2em 0;padding:14px 16px;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius)}
+.cl-item{padding:10px 0;border-top:1px dashed var(--line)}
+.cl-item:first-of-type{border-top:0}
+.cl-item .q{font-weight:500}
+.cl-item .opts{flex-direction:row;flex-wrap:wrap}
+.cl-item .opt{flex:1 1 140px;text-align:center;font-size:.9rem;padding:8px 10px;min-height:42px}
+
+/* solutions */
+details.sol{margin:.8em 0 .2em}
+details.sol summary{display:inline-flex;align-items:center;gap:6px;cursor:pointer;list-style:none;font-weight:600;font-size:.92rem;color:var(--accent);background:var(--accent-soft);border-radius:999px;padding:7px 14px;min-height:40px}
+details.sol summary::-webkit-details-marker{display:none}
+details.sol summary::before{content:"▸"}
+details.sol[open] summary::before{content:"▾"}
+details.sol[open] summary .lab::after{content:" (nascondi)";font-weight:400}
+details.sol .solbody{margin-top:10px;padding:12px 14px;border:1px solid var(--line);border-radius:10px;background:var(--surface2)}
+details.sol .solbody>:first-child{margin-top:0}
+details.sol .solbody>:last-child{margin-bottom:0}
+
+/* pager */
+.pager{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:3em}
+.pager a{display:block;padding:12px 14px;border:1px solid var(--line);border-radius:var(--radius);background:var(--surface);text-decoration:none;color:var(--text);min-height:64px}
+.pager a small{display:block;color:var(--muted);font-size:.78rem;text-transform:uppercase;letter-spacing:.06em}
+.pager a.next{text-align:right;grid-column:2}
+.pager a:hover{border-color:var(--accent)}
+
+/* summary list */
+.recap{list-style:none;padding:0}
+.recap li{padding:8px 0 8px 28px;position:relative;border-bottom:1px solid var(--line)}
+.recap li::before{content:"✦";position:absolute;left:4px;color:var(--accent)}
+
+/* index page */
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px;margin:1em 0}
+.card{display:block;padding:14px 16px;border:1px solid var(--line);border-radius:var(--radius);background:var(--surface);text-decoration:none;color:var(--text)}
+.card:hover{border-color:var(--accent)}
+.card .cn{font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);font-weight:700}
+.card .ct{font-family:var(--serif);font-size:1.15rem;font-weight:700;line-height:1.25;margin:2px 0 4px}
+.card .cs{font-size:.88rem;color:var(--muted);line-height:1.45}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:.8em 0}
+.chip{font:inherit;font-size:.85rem;background:var(--surface);color:var(--text);border:1px solid var(--line);border-radius:999px;padding:5px 12px;cursor:pointer;min-height:36px}
+.chip.on{background:var(--accent);color:var(--bg);border-color:var(--accent)}
+.tl{list-style:none;padding:0;margin:1em 0;border-left:2px solid var(--line)}
+.tl li{position:relative;padding:6px 0 10px 18px}
+.tl li::before{content:"";position:absolute;left:-7px;top:14px;width:12px;height:12px;border-radius:50%;background:var(--bg);border:2px solid var(--accent)}
+.tl .y{font-weight:700;font-variant-numeric:tabular-nums;margin-right:8px}
+.tl .who{font-size:.75rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-left:6px}
+.tl li[hidden]{display:none}
+.flow{display:flex;flex-direction:column;align-items:stretch;gap:0;margin:1.2em 0}
+.flow .node{padding:12px 14px;border:1px solid var(--line);border-radius:var(--radius);background:var(--surface)}
+.flow .node b{font-family:var(--serif);font-size:1.05rem}
+.flow .node .meta{display:block;color:var(--muted);font-size:.85rem}
+.flow .arrow{align-self:center;color:var(--muted);font-size:.85rem;padding:4px 0;text-align:center}
+.flow .row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media (max-width:560px){.flow .row{grid-template-columns:1fr}}
+details.theme{border:1px solid var(--line);border-radius:var(--radius);background:var(--surface);margin:.6em 0;padding:0 14px}
+details.theme summary{cursor:pointer;padding:12px 0;font-weight:650;font-family:var(--serif);font-size:1.05rem}
+details.theme[open]{padding-bottom:10px}
+.gloss-search{width:100%;font:inherit;padding:10px 14px;border-radius:10px;border:1px solid var(--line);background:var(--surface);color:var(--text);margin:.6em 0}
+dl.gloss{margin:0}
+dl.gloss>div{padding:8px 0;border-bottom:1px solid var(--line)}
+dl.gloss dt{font-weight:700}
+dl.gloss dd{margin:2px 0 0}
+dl.gloss>div[hidden]{display:none}
+
+/* responsive */
+@media (max-width:1000px){
+  .layout{grid-template-columns:minmax(0,1fr);padding:0 16px;gap:0}
+  #tocBtn{display:inline-block}
+  .toc{display:none;position:fixed;top:59px;left:0;right:0;max-height:calc(100vh - 59px);background:var(--bg);border-bottom:1px solid var(--line);padding:16px 20px 20px;z-index:15;box-shadow:0 10px 30px rgba(0,0,0,.15)}
+  .toc.open{display:block}
+  main{padding-top:16px}
+}
+@media (max-width:560px){
+  body{font-size:17px}
+  h1{font-size:1.85rem}
+  h2{font-size:1.4rem}
+  .top{padding:8px 12px}
+  .top .lnum{display:none}
+  .pager{grid-template-columns:1fr}
+  .pager a.next{grid-column:1}
+  .v{grid-template-columns:2em 1fr;font-size:1.02rem}
+  .vnote{margin-left:1.4em}
+  .vf .opts{flex-direction:column}
+}
+@media print{.top,.toc,.pager,.scorebar{display:none}.layout{display:block}details.sol{display:block}}
+</style>
+</head>
+<body>
+<header class="top">
+  <a class="home" href="index.html">Italiano<span>·</span>Lezioni</a>
+  <span class="lnum">Lezione 10 · Pirandello</span>
+  <span class="sp"></span>
+  <button type="button" id="tocBtn" aria-controls="toc" aria-expanded="false">☰ Sezioni</button>
+  <button type="button" id="themeBtn">Tema</button>
+</header>
+<div class="layout">
+  <nav class="toc" id="toc" aria-label="Sezioni della pagina">
+    <p class="tt">In questa pagina</p>
+    <ol><li><a href="#intuizione">Intuizione</a></li><li><a href="#vita">Vita: i fatti che diventano opere</a></li><li><a href="#filosofia">La filosofia: dalla realtà molteplice alla maschera</a></li><li><a href="#umorismo">L'umorismo (1908)</a></li><li><a href="#novelle">Le novelle: Novelle per un anno</a></li><li><a href="#romanzi">I romanzi</a></li><li><a href="#teatro">Il teatro</a></li><li><a href="#analogie">Analogie</a></li><li><a href="#ragionamento">Come costruire una risposta argomentata</a></li><li><a href="#errori">Errori comuni e trabocchetti</a></li><li><a href="#riepilogo">Riepilogo</a></li><li><a href="#esercizi">Esercizi di verifica</a></li><li><a href="#collegamenti">Collegamenti</a></li></ol>
+    <div class="tnav"><a href="index.html">⌂ Indice generale</a><a href="lezione-09.html">← Svevo</a><a href="lezione-11.html">Ermetismo e Quasimodo →</a></div>
+  </nav>
+  <main>
+    <p class="kicker">Lezione 10 di 13</p>
+    <h1>Pirandello</h1>
+    <p class="sub">Maschera, umorismo, novelle, romanzi, teatro</p>
+    <div class="box note"><h4>Perimetro d'esame</h4><p>Argomento successivo alla riga «Fine Cosa da Studiare per Interrogazione» degli appunti: verifica se è in programma.</p></div>
+
+<h2 id="intuizione">Intuizione</h2>
+<p>Pirandello guarda la vita come un flusso continuo che cambia sempre. Noi però, per vivere in società, ci fissiamo in una <b>forma</b>: una <b>maschera</b> che la famiglia, il lavoro e gli altri ci impongono. Ognuno ci vede in modo diverso, quindi siamo «uno, nessuno e centomila».</p>
+<p>Chi si toglie la maschera viene preso per <b>pazzo</b>. Le uniche vie d'uscita sono l'arte, la fuga e la contemplazione da lontano. E davanti a tutto questo Pirandello non piange e non ride: sorride amaro. È l'<b>umorismo</b>.</p>
+
+<h2 id="vita">Vita: i fatti che diventano opere</h2>
+<div class="tw"><table>
+<tr><th>Anno</th><th>Fatto</th><th>Che cosa genera</th></tr>
+<tr><td>1867</td><td>Nasce vicino ad Agrigento. Il padre aveva combattuto con Garibaldi e gestisce miniere di zolfo (zolfare); da giovane Pirandello ci lavora a volte con lui.</td><td>Le zolfare di <i>Ciaula scopre la luna</i></td></tr>
+<tr><td>Anni '80-'90</td><td>Studia a Roma e a <b>Bonn</b>, in Germania, poi si stabilisce a Roma. Salotti letterari, riviste, poi il <i>Corriere della Sera</i>.</td><td></td></tr>
+<tr><td><b>1903</b></td><td>Una <b>frana</b> (allagamento) nella miniera del padre provoca il <b>tracollo economico</b> della famiglia. La moglie entra in crisi nervosa.</td><td>Abbassamento sociale, abbandono degli «amici»: da qui il <b>concetto di maschera</b></td></tr>
+<tr><td><b>1919</b></td><td>La <b>moglie</b>, Antonietta Portulano, viene internata in una casa di cura per malattie mentali.</td><td>La follia come tema ricorrente</td></tr>
+<tr><td>1921-22</td><td><i>Sei personaggi in cerca d'autore</i>, poi messo in scena a New York e Parigi.</td><td>Fama internazionale</td></tr>
+<tr><td>1924</td><td>Prende la <b>tessera del partito fascista</b>.</td><td>Vedi sotto</td></tr>
+<tr><td>1934</td><td><b>Premio Nobel</b> per la letteratura.</td><td></td></tr>
+<tr><td>1936</td><td>Muore.</td><td></td></tr>
+</table></div>
+<div class="box note"><h4>Errore negli appunti: fu internata la moglie, non la madre</h4><p>Gli appunti scrivono: «Nel 1919 la sua famiglia ha un tracollo economico… + la madre viene internata». I fatti sono due e vanno separati:</p><ul><li>il <b>tracollo economico</b> è del <b>1903</b> (la frana nella miniera, dove era investita anche la dote della moglie);</li><li>nel <b>1919</b> viene internata la <b>moglie</b>, Antonietta Portulano, malata di nervi da anni.</li></ul><p>Le conseguenze che gli appunti traggono restano valide: la malattia mentale come tema, e l'abbandono degli amici come origine dell'idea di maschera.</p></div>
+<div class="box deep"><h4>«Figlio del Caos»</h4><p>La località dove nacque, vicino a Girgenti (oggi Agrigento), si chiamava <b>Caos</b>. Pirandello giocava su questo: «sono figlio del Caos». Si collega bene al «caos che regna nella realtà» di cui parlano gli appunti.</p></div>
+<p><b>Collocazione</b>: gli appunti lo definiscono una <b>via di mezzo tra Decadentismo e Futurismo</b>. Il suo coetaneo D'Annunzio (anche lui scrisse per il teatro, ma senza successo) è lontanissimo per generi, stile e modelli.</p>
+
+<h2 id="filosofia">La filosofia: dalla realtà molteplice alla maschera</h2>
+<ol class="chain">
+<li><b>La realtà è molteplice e disgregata.</b> Molte discipline del tempo, Svevo compreso, la vedono così. Dietro la «forma» c'è altro. È l'immagine dell'<b>iceberg</b> di Freud: la parte emersa è la coscienza, quella sommersa l'inconscio.</li>
+<li><b>Contro il progresso tecnologico</b>, che isola gli individui. Esempio: la catena di montaggio.</li>
+<li><b>Come la realtà, anche la personalità è molteplice.</b> Abbiamo più personalità per adattarci ad ambienti diversi. È il <b>concetto di maschera</b>.</li>
+<li><b>Il prezzo della maschera</b>: quando l'io la crea, il suo <b>divenire si blocca</b>, perché si fissa su una sola personalità.</li>
+<li><b>La maschera non la scegliamo del tutto noi</b>: ce la impone anche la società, attraverso due trappole. La <b>famiglia</b>, con le sue aspettative, e il <b>lavoro</b>, che impone un comportamento.</li>
+</ol>
+<div class="box def"><h4>Vita e forma</h4><p><b>Vita</b>: ciò che siamo davvero, un flusso continuo, in movimento. <b>Forma</b>: la maschera che ci intrappola e blocca quel flusso. Gli appunti formulano questa coppia nel capitolo sul teatro, ma è la chiave di tutta l'opera.</p></div>
+<h3>Si può togliere la maschera?</h3>
+<div class="tw"><table>
+<tr><th>Via</th><th>Che cosa comporta</th><th>Esempio</th></tr>
+<tr><td>Togliersi la maschera e basta</td><td>Si viene <b>emarginati</b> e considerati folli</td><td>Belluca in <i>Il treno ha fischiato</i></td></tr>
+<tr><td><b>L'arte</b></td><td>Rivela le convenzioni sociali e la molteplicità del reale, e permette di rappresentarsi <b>senza essere presi per pazzi</b></td><td>Il teatro di Pirandello</td></tr>
+<tr><td><b>Diventare eremita</b></td><td>Rifiutare la società e isolarsi</td><td>Vitangelo Moscarda in <i>Uno, nessuno e centomila</i></td></tr>
+<tr><td><b>Filosofia del lontano</b></td><td>Contemplare da lontanissimo la vita degli altri, con una prospettiva straniata su ciò che si considera normale. Si guarda l'oggetto per ciò che è, non per ciò che «si dice» che sia.</td><td>L'«eroe straniato», specchio di Pirandello stesso</td></tr>
+</table></div>
+<p>L'eroe straniato riflette la condizione di Pirandello: rifiuta il ruolo politico che altri intellettuali perseguono e, nel suo pessimismo radicale, si riserva un ruolo <b>contemplativo</b>, da lucida coscienza critica.</p>
+<h3>Relativismo conoscitivo e incomunicabilità</h3>
+<ul>
+<li>Se il mondo è un continuo divenire molteplice, <b>non esiste una realtà oggettiva</b>: esiste la realtà di chi la vive o la guarda. È il <b>relativismo conoscitivo</b>.</li>
+<li><b>Il parallelo con il cubismo</b>: rappresentare sulla stessa tela più punti di vista dello stesso oggetto. L'arte del Novecento è un'arte <b>disarmonica</b>: un mondo frammentato, senza un punto di vista privilegiato.</li>
+<li><b>L'uomo è solo</b> per due ragioni. Mostra solo la sua maschera, e non sa comunicare: è l'<b>incomunicabilità</b>.</li>
+</ul>
+<h3>Caos, paradosso, «furore argomentativo»</h3>
+<ul>
+<li><b>Caos</b>: nella realtà regna il caso. Le trame nascono da piccoli avvenimenti insignificanti, come il fischio di un treno o un naso un po' storto.</li>
+<li><b>Paradosso</b>: le trame sono paradossali.</li>
+<li><b>Furore argomentativo</b>: non scrive solo per intrattenere, ma per trasmettere un messaggio (frammentazione della realtà, maschere). Qui c'è un contatto con Verga.</li>
+</ul>
+<h3>Pirandello e il fascismo</h3>
+<p>Nel <b>1924</b> prende la tessera del partito fascista, credendo che Mussolini potesse riordinare la società. Come si concilia con le sue idee? Probabilmente sperava, avvicinandosi al partito, di realizzare il sogno di un <b>Teatro di Stato</b>, che rimase irrealizzato.</p>
+<div class="box deep"><h4>Una data che pesa</h4><p>Pirandello chiese la tessera nel settembre 1924, pochi mesi dopo l'omicidio di Giacomo Matteotti, quando molti intellettuali prendevano invece le distanze. Collegalo a D'Annunzio, che proprio con Matteotti si allontana da Mussolini.</p></div>
+
+<h2 id="umorismo">L'umorismo (1908)</h2>
+<p>Pirandello lo spiega confrontandolo con la <b>comicità</b>. Entrambi portano al sorriso, ma per strade diverse.</p>
+<div class="tw"><table>
+<tr><th></th><th>Comicità</th><th>Umorismo</th></tr>
+<tr><td>Meccanismo</td><td><b>Avvertimento del contrario</b>: noto che qualcosa è il contrario di come dovrebbe essere</td><td><b>Sentimento del contrario</b>: rifletto sul perché è così</td></tr>
+<tr><td>Effetto</td><td>Risata immediata e diretta</td><td><b>«Riso amaro»</b>: dietro c'è un dramma</td></tr>
+<tr><td>L'esempio</td><td>Una vecchia signora truccata e vestita da ragazzina fa ridere</td><td>Perché è conciata così? Forse, pur non volendolo, crede di doverlo fare per piacere al marito più giovane. Il riso si incrina.</td></tr>
+</table></div>
+<p>Il pubblico, davanti a un'immagine ridicola, di solito ride subito invece di riflettere. Pirandello ci chiede di fare il passo in più. Il fatto stesso che serva questo passo significa che prima c'erano <b>certezze</b> che ora sono crollate.</p>
+
+<h2 id="novelle">Le novelle: Novelle per un anno</h2>
+<ul>
+<li>Dovevano essere <b>365</b>, una al giorno, ma ne scrive meno. Il numero ha valore letterario: il <i>Canzoniere</i> di Petrarca, esclusa la canzone finale alla Vergine, conta 365 poesie.</li>
+<li><b>Senza cornice</b>: nessuna storia le lega, a differenza del <i>Decameron</i> di Boccaccio, legato dalla peste del 1348.</li>
+<li>Si dividono in <b>siciliane</b> (la sua terra d'origine) e <b>piccolo-borghesi</b> (protagonisti di quella classe).</li>
+</ul>
+<h3>Ciaula scopre la luna (siciliana, 1907)</h3>
+<p><b>Ciaula</b> è un ragazzo minatore, «ritardato» (con funzioni cognitive ridotte), che ha paura del buio della notte. Una sera deve lavorare più a lungo. Uscendo dalla miniera di notte vede la <b>luna</b> come se fosse la prima volta, e piange per lo stupore.</p>
+<div class="tw"><table>
+<tr><th>Concetto</th><th>Come si vede</th></tr>
+<tr><td><b>Panismo</b></td><td>Ciaula si sente in fusione con la natura e prova un'estasi.</td></tr>
+<tr><td><b>Nascita e rinascita</b></td><td>Uscire dai cunicoli è come uscire dal ventre della madre terra. Ciaula è come in uno stato «pre-natale», un bambino.</td></tr>
+<tr><td><b>Teofania</b></td><td>La luna è un'apparizione quasi divina.</td></tr>
+</table></div>
+<div class="box rule"><h4>Ciaula ≠ Rosso Malpelo</h4><p>Entrambi sono <b>minatori</b> ed <b>emarginati</b>, ma hanno scopi opposti. Malpelo è il portavoce della lotta dei vinti di Verga. Ciaula serve a Pirandello per raccontare un'<b>esperienza di estasi</b>.</p></div>
+<h3>Il treno ha fischiato (piccolo-borghese, 1914)</h3>
+<ol class="chain">
+<li><b>Belluca</b>, impiegato contabile, è oppresso dal lavoro e da una famiglia numerosa e bisognosa. È la maschera: la vita come trappola.</li>
+<li>Una notte sente in lontananza il <b>fischio di un treno</b>. Si «risveglia»: ricorda che fuori esiste il mondo.</li>
+<li>Il giorno dopo si <b>ribella</b> al capoufficio, risponde e parla del treno. Viene portato in <b>manicomio</b>.</li>
+<li>La novella si apre con i commenti di chi lo crede pazzo. Il <b>vicino di casa</b>, che conosce la sua vita, invece non si stupisce.</li>
+<li>Belluca torna alla sua vita di prima, chiedendo solo qualche momento di «evasione» con l'immaginazione, ogni tanto.</li>
+</ol>
+<div class="box note"><h4>«Picchia il capo»?</h4><p>Gli appunti dicono che «picchia il capo». Nel testo Belluca <b>si ribella e inveisce</b> contro il capoufficio, gridando del treno che ha fischiato. Non c'è un'aggressione fisica. All'esame scrivi «si ribella al capoufficio».</p></div>
+<div class="box rule"><h4>I temi</h4><ul><li><b>Uscita dalla maschera</b>: Belluca è considerato pazzo, poi rientra parzialmente nella maschera.</li><li><b>Epifania</b>: un fatto banale, il fischio, si carica di un significato profondo e provoca un cambiamento inaspettato.</li><li>I protagonisti delle novelle sono <b>inetti</b>, scontenti, paralizzati.</li></ul></div>
+
+<h2 id="romanzi">I romanzi</h2>
+<h3>Il fu Mattia Pascal (1904)</h3>
+<p>È un romanzo in <b>prima persona</b> che lascia il verismo e la narrativa ottocentesca: basta descrizioni inutili. È un <b>romanzo a tesi</b>: la libertà assoluta è solo un miraggio.</p>
+<ol class="chain">
+<li>Mattia è un <b>bibliotecario</b> scontento della sua vita: è la maschera.</li>
+<li>Vince moltissimo al casinò. Tornando legge sul giornale di essere <b>morto</b>: moglie e suocera hanno identificato come suo un cadavere trovato nel fiume. Pirandello aveva letto sul <i>Corriere</i> la notizia di un uomo creduto morto.</li>
+<li>Si crea una nuova vita come <b>Adriano Meis</b>. Ma è una nuova maschera, e quindi una nuova trappola.</li>
+<li>A Roma si innamora di <b>Adriana</b>, figlia del suo padrone di casa. Senza documenti non può sposarla, né esistere davvero.</li>
+<li><b>Finge il suicidio</b> e butta via anche questa maschera.</li>
+<li>Torna a casa, ma ormai è «<b>il fu Mattia Pascal</b>». La moglie si è risposata con un suo amico e ha una figlia.</li>
+<li>Il romanzo finisce con lui che porta i <b>fiori sulla propria tomba</b>.</li>
+</ol>
+<div class="box note"><h4>Una parola da correggere</h4><p>Gli appunti chiamano Anselmo Paleari, padre di Adriana, l'«affittuario». L'affittuario è chi prende in affitto. Paleari invece <b>affitta</b> la camera a Mattia: è il <b>padrone di casa</b>.</p></div>
+<div class="box deep"><h4>Il dettaglio che dimostra la tesi</h4><p>A Roma un altro inquilino ruba ad Adriano una grossa somma. Lui <b>non può denunciarlo</b>, perché legalmente non esiste. È il momento in cui capisce che la «libertà» fuori da ogni forma è impossibile.</p></div>
+<h3>Uno, nessuno e centomila (1926)</h3>
+<p>È l'ultimo romanzo, anch'esso in prima persona e a tesi: non si può abbattere il pregiudizio, perché la realtà è sempre filtrata dagli occhi di chi guarda.</p>
+<ol class="chain">
+<li>La moglie gli fa notare che ha il <b>naso storto</b>. Vitangelo Moscarda capisce che gli altri lo vedono in modi diversi da come si vede lui. È <b>uno</b> per sé, <b>centomila</b> per gli altri, quindi <b>nessuno</b>.</li>
+<li>Decide di uscire da tutte le maschere. Il primo gesto è liberarsi della <b>banca</b> ereditata.</li>
+<li>Distrugge una dopo l'altra le certezze che gli altri avevano su di lui. Viene considerato folle.</li>
+<li>Finisce in un <b>ospizio</b>. Per gli altri è infelice, ma lui è <b>felice</b>: vive da eremita, fuori dalle regole delle maschere.</li>
+</ol>
+<div class="box note"><h4>Una sfumatura</h4><p>Gli appunti dicono che «viene rinchiuso in un ospizio». Nel romanzo Moscarda dona i suoi beni per fondare un ospizio di mendicità, dove va a vivere. È più una scelta che una reclusione, ed è coerente con la sua felicità finale.</p></div>
+
+<h2 id="teatro">Il teatro</h2>
+<p>Il teatro accompagna Pirandello per tutta la vita. Gli appunti parlano di <b>4 fasi</b> ma ne elencano tre.</p>
+<div class="tw"><table>
+<tr><th>Fase</th><th>Caratteri</th></tr>
+<tr><td>1. Teatro siciliano</td><td>Opere in dialetto siciliano, ambientate in Sicilia, in un contesto regionale e naturalistico.</td></tr>
+<tr><td>2. Teatro del «grottesco»</td><td>Il dramma pirandelliano, che innova il dramma borghese (tabella sotto).</td></tr>
+<tr><td>3. Teatro nel teatro (metateatro)</td><td>Rompe la quarta parete: <i>Sei personaggi in cerca d'autore</i>.</td></tr>
+<tr><td>4. Teatro dei miti</td><td>Manca negli appunti (vedi Approfondimento).</td></tr>
+</table></div>
+<div class="box deep"><h4>La quarta fase</h4><p>I manuali indicano come ultima fase il <b>teatro dei miti</b>, con temi universali come la religione, la società e l'arte. L'opera più nota è <i>I giganti della montagna</i>, rimasta incompiuta.</p></div>
+<div class="tw"><table>
+<tr><th></th><th>Dramma borghese</th><th>Dramma pirandelliano</th></tr>
+<tr><td>Temi</td><td>Vita borghese, conflitti interiori</td><td>Vita borghese, ma con elementi oltre il «normale»</td></tr>
+<tr><td>Intrecci</td><td>Verosimili</td><td>Verosimili, perché partono dalla vita borghese, ma <b>deformati</b></td></tr>
+<tr><td>Personaggi</td><td>Unitari, a tutto tondo, con identità chiare</td><td><b>Contraddittori</b>, a causa delle maschere</td></tr>
+<tr><td>Tono</td><td><b>Serio</b>, rispecchia la vita</td><td><b>Grottesco</b>: fusione di serio e ridicolo, tragico e comico</td></tr>
+<tr><td>Linguaggio</td><td>Realistico</td><td>Confuso: i personaggi si interrogano</td></tr>
+<tr><td>Ideologia</td><td>Diffonde i valori borghesi come modello</td><td><b>Critica</b> la vita borghese: non è più una certezza né un modello</td></tr>
+</table></div>
+<div class="box note"><h4>Refuso nella tabella degli appunti</h4><p>Alla voce «tono» del dramma borghese gli appunti scrivono «vita non seria». Il dramma borghese ha un tono <b>serio</b>: è proprio il contrasto con il grottesco pirandelliano.</p></div>
+<div class="box def"><h4>Quarta parete</h4><p>La parete immaginaria che separa il pubblico dalla scena. Il teatro tradizionale finge che non esista: gli attori recitano come se nessuno li guardasse. Il metateatro la «rompe» e mostra la finzione come finzione.</p></div>
+<h3>Sei personaggi in cerca d'autore (1921)</h3>
+<ul>
+<li>Il palcoscenico è spoglio, come durante una prova: una compagnia sta provando uno spettacolo.</li>
+<li>Arrivano <b>sei personaggi</b> rifiutati dal loro autore, che non ha voluto scrivere il loro dramma. Chiedono al capocomico di rappresentarlo.</li>
+<li>Il loro dramma familiare è «impossibile» da mettere in scena. Tra loro c'è un conflitto continuo, e gli attori non riescono a rappresentarli come loro si sentono.</li>
+<li>Non c'è una vera conclusione: tutto si dissolve nella confusione tra finzione e realtà.</li>
+</ul>
+<div class="box note"><h4>I sei personaggi, nomi esatti</h4><p>Gli appunti li elencano come «i genitori (2), figlia, sorellastra, bambina, giovinetti». I sei sono: il <b>Padre</b>, la <b>Madre</b>, la <b>Figliastra</b>, il <b>Figlio</b>, il <b>Giovinetto</b> e la <b>Bambina</b>.</p><p>Gli appunti dicono anche che «non c'è la fine dell'opera». Il dramma si chiude con la morte della Bambina e del Giovinetto e con il capocomico che non distingue più finzione e realtà. È una fine senza scioglimento, più che un'opera senza fine.</p></div>
+<div class="box deep"><h4>La prima</h4><p>Alla prima, a Roma nel 1921, lo spettacolo fu un fiasco clamoroso: il pubblico gridava «Manicomio!». Poi il successo arrivò a Milano e nel mondo.</p></div>
+<div class="box rule"><h4>I tre temi pirandelliani che l'opera racchiude</h4><ol>
+<li><b>Impossibilità di comunicare</b>: ognuno ha una visione soggettiva e non si riconosce in quella che hanno gli altri. Nasce dal relativismo conoscitivo.</li>
+<li><b>Verità ↔ finzione</b>: paradossalmente il teatro, senza maschere, è «vero», mentre il mondo, pieno di maschere, è fittizio.</li>
+<li><b>Vita ↔ forma</b>: la vita è movimento continuo, la forma è la maschera che ci intrappola.</li>
+</ol></div>
+
+<h2 id="analogie">Analogie</h2>
+<div class="box ana"><h4>La maschera come i profili social</h4><p>Hai un profilo per il lavoro, uno per gli amici, uno per la famiglia. In ognuno sei «te», ma un te diverso. Col tempo il profilo ti incastra: devi comportarti come gli altri si aspettano.</p><p><b>Dove l'analogia non regge</b>: i profili li gestisci tu e li puoi cancellare. Per Pirandello la maschera è imposta anche dagli altri, e chi la toglie viene preso per pazzo.</p></div>
+<div class="box ana"><h4>Il relativismo come una foto di gruppo</h4><p>Ognuno guarda per prima la propria faccia e giudica la foto da come è venuto lui. Stessa foto, dieci giudizi diversi, e nessuno è «quello vero».</p></div>
+
+<h2 id="ragionamento">Come costruire una risposta argomentata</h2>
+<div class="box ex"><h4>Domanda: «Spiega il concetto di maschera con un esempio tratto da un romanzo e da una novella.»</h4>
+<p><b>Definizione.</b> La realtà è molteplice, e anche la personalità lo è. Per adattarci alla società assumiamo una maschera, imposta soprattutto da famiglia e lavoro, che blocca il flusso della vita in una forma.</p>
+<p><b>Romanzo.</b> Mattia Pascal, bibliotecario infelice, coglie l'occasione della sua finta morte per liberarsi. Ma come Adriano Meis indossa una nuova maschera, ancora più vuota: senza identità legale non può sposarsi né denunciare un furto. La libertà assoluta è un miraggio.</p>
+<p><b>Novella.</b> Belluca, schiacciato da lavoro e famiglia, sente il fischio del treno e si ribella. Esce dalla maschera, ed è considerato pazzo e portato in manicomio.</p>
+<p><b>Conclusione.</b> Uscire dalla maschera porta all'emarginazione. Restano l'arte, l'eremitaggio (Moscarda) e la filosofia del lontano.</p></div>
+
+<h2 id="errori">Errori comuni e trabocchetti</h2>
+<div class="box warn"><ul>
+<li><b>Comicità = umorismo.</b> No: avvertimento contro sentimento del contrario, risata contro «riso amaro».</li>
+<li><b>«Nel 1919 internano la madre.»</b> La moglie. E il tracollo è del 1903.</li>
+<li><b>«La maschera la scegliamo noi.»</b> Solo in parte: la impongono anche famiglia e lavoro.</li>
+<li><b>«Mattia Pascal trova la libertà.»</b> No: è un romanzo a tesi sull'impossibilità della libertà assoluta.</li>
+<li><b>Ciaula = Malpelo.</b> Situazione simile, scopo opposto: estasi contro lotta dei vinti.</li>
+<li><b>Nel metateatro i sei sono «attori».</b> Sono <b>personaggi</b>, contrapposti agli attori della compagnia.</li>
+</ul></div>
+
+<h2 id="riepilogo">Riepilogo</h2>
+<ul class="recap">
+<li>Pirandello (1867-1936): zolfare, Bonn, tracollo del 1903, moglie internata nel 1919, tessera fascista nel 1924, Nobel nel 1934.</li>
+<li>Realtà molteplice, maschera, vita ↔ forma. Famiglia e lavoro come trappole. Uscite: follia, arte, eremitaggio, filosofia del lontano.</li>
+<li>Relativismo conoscitivo e incomunicabilità. Caos, paradosso, furore argomentativo.</li>
+<li>Umorismo: sentimento del contrario, riso amaro (la vecchia imbellettata).</li>
+<li>Novelle: <i>Ciaula</i> (panismo, rinascita, teofania), <i>Il treno ha fischiato</i> (epifania, maschera).</li>
+<li>Romanzi: <i>Il fu Mattia Pascal</i> (libertà impossibile), <i>Uno, nessuno e centomila</i> (pregiudizio, eremita felice).</li>
+<li>Teatro: siciliano, grottesco, metateatro (<i>Sei personaggi</i>), miti.</li>
+</ul>
+
+<h2 id="esercizi">Esercizi di verifica</h2>
+<div class="scored">
+<div class="ex-block qu mcq" data-ans="1"><span class="lvl">Livello 1 · crocetta</span><p class="q">Che cosa distingue l'umorismo dalla comicità secondo Pirandello?</p><div class="opts"><button type="button" class="opt">L'umorismo fa ridere di più</button><button type="button" class="opt">La comicità nasce dall'avvertimento del contrario, l'umorismo dal sentimento del contrario, che porta a riflettere e produce un riso amaro</button><button type="button" class="opt">La comicità è scritta, l'umorismo è recitato</button><button type="button" class="opt">L'umorismo riguarda solo i personaggi siciliani</button></div><div class="why" hidden><span class="verdict"></span>L'esempio è la vecchia signora imbellettata: si ride (comicità), poi ci si chiede perché lo faccia (umorismo).</div><button type="button" class="retry" hidden>Riprova</button></div>
+<div class="ex-block qu vf" data-ans="1"><span class="lvl">Livello 1 · vero o falso</span><p class="q">Nel 1919 Pirandello fece internare la madre in un ospedale psichiatrico.</p><div class="opts"><button type="button" class="opt">Vero</button><button type="button" class="opt">Falso</button></div><div class="why" hidden><span class="verdict"></span>Fu internata la moglie, Antonietta Portulano. Gli appunti su questo punto sbagliano.</div><button type="button" class="retry" hidden>Riprova</button></div>
+<div class="classify"><h4>Che genere di opera è?</h4><p class="small muted">Per ogni elemento scegli la categoria giusta.</p><div class="cl-item qu" data-ans="0"><p class="q"><i>Il treno ha fischiato</i></p><div class="opts"><button type="button" class="opt">Novella</button><button type="button" class="opt">Romanzo</button><button type="button" class="opt">Teatro</button></div><div class="why" hidden><span class="verdict"></span>Dalle <i>Novelle per un anno</i>, filone piccolo-borghese.</div><button type="button" class="retry" hidden>Riprova</button></div><div class="cl-item qu" data-ans="1"><p class="q"><i>Uno, nessuno e centomila</i></p><div class="opts"><button type="button" class="opt">Novella</button><button type="button" class="opt">Romanzo</button><button type="button" class="opt">Teatro</button></div><div class="why" hidden><span class="verdict"></span>L'ultimo romanzo, 1926.</div><button type="button" class="retry" hidden>Riprova</button></div><div class="cl-item qu" data-ans="2"><p class="q"><i>Sei personaggi in cerca d'autore</i></p><div class="opts"><button type="button" class="opt">Novella</button><button type="button" class="opt">Romanzo</button><button type="button" class="opt">Teatro</button></div><div class="why" hidden><span class="verdict"></span>Il metateatro, 1921.</div><button type="button" class="retry" hidden>Riprova</button></div><div class="cl-item qu" data-ans="0"><p class="q"><i>Ciaula scopre la luna</i></p><div class="opts"><button type="button" class="opt">Novella</button><button type="button" class="opt">Romanzo</button><button type="button" class="opt">Teatro</button></div><div class="why" hidden><span class="verdict"></span>Filone siciliano.</div><button type="button" class="retry" hidden>Riprova</button></div><div class="cl-item qu" data-ans="1"><p class="q"><i>Il fu Mattia Pascal</i></p><div class="opts"><button type="button" class="opt">Novella</button><button type="button" class="opt">Romanzo</button><button type="button" class="opt">Teatro</button></div><div class="why" hidden><span class="verdict"></span>1904, romanzo a tesi.</div><button type="button" class="retry" hidden>Riprova</button></div></div>
+<div class="ex-block qu mcq" data-ans="2"><span class="lvl">Livello 2 · crocetta</span><p class="q">In <i>Uno, nessuno e centomila</i>, che cosa fa scattare la crisi di Vitangelo Moscarda?</p><div class="opts"><button type="button" class="opt">Il fischio di un treno</button><button type="button" class="opt">La notizia della propria morte sul giornale</button><button type="button" class="opt">La moglie che gli fa notare che ha il naso storto</button><button type="button" class="opt">Il fallimento della banca</button></div><div class="why" hidden><span class="verdict"></span>Un dettaglio insignificante (il caos) gli rivela che gli altri lo vedono diversamente da come si vede lui.</div><button type="button" class="retry" hidden>Riprova</button></div>
+<div class="ex-block"><span class="lvl">Livello 3 · analisi</span>
+<p class="q"><b>Perché il fischio del treno, in <i>Il treno ha fischiato</i>, è un'epifania? Che cosa rivela a Belluca e con quali conseguenze?</b></p>
+<details class="sol"><summary><span class="lab">Mostra risposta modello</span></summary><div class="solbody">
+<p><b>Perché è un'epifania.</b> Un evento banale si carica all'improvviso di un significato profondo. Il fischio di un treno lontano, sentito di notte, ricorda a Belluca che oltre la sua vita soffocante esiste un mondo intero, con città e paesi lontani.</p>
+<p><b>Che cosa rivela.</b> La sua <b>maschera</b>: anni da contabile sottomesso e da capofamiglia schiacciato da una famiglia bisognosa.</p>
+<p><b>Le conseguenze.</b> Belluca esce dalla maschera e si ribella al capoufficio. Proprio per questo è considerato pazzo e portato in manicomio: chi toglie la maschera viene emarginato. Solo il vicino di casa capisce che la sua reazione è naturale. Alla fine Belluca rientra in parte nella maschera, chiedendo di potersi concedere ogni tanto un'evasione con la fantasia.</p>
+</div></details>
+</div>
+<div class="ex-block"><span class="lvl">Livello 4 · domanda aperta</span>
+<p class="q"><b>In che senso <i>Sei personaggi in cerca d'autore</i> è «teatro nel teatro» e quali temi pirandelliani contiene?</b></p>
+<details class="sol"><summary><span class="lab">Mostra risposta modello</span></summary><div class="solbody">
+<p><b>Perché è teatro nel teatro.</b> Sulla scena c'è una compagnia che sta provando, e arrivano sei personaggi rifiutati dal loro autore che chiedono di essere rappresentati. Il teatro mette in scena se stesso, i suoi meccanismi e i suoi limiti, e rompe la quarta parete. Per Pirandello il teatro non riesce a rappresentare ciò che l'autore ha concepito: gli attori non sanno rendere i personaggi come loro si sentono.</p>
+<p><b>I temi.</b></p>
+<ol>
+<li><b>Incomunicabilità</b>: ognuno ha la propria versione dei fatti e non si riconosce in quella degli altri. È il relativismo conoscitivo.</li>
+<li><b>Verità ↔ finzione</b>: i personaggi, senza maschere, sono più «veri» delle persone reali.</li>
+<li><b>Vita ↔ forma</b>.</li>
+</ol>
+<p><b>Il finale.</b> Non scioglie il dramma: tutto si dissolve nella confusione tra realtà e finzione.</p>
+</div></details>
+</div>
+<div class="scorebar"></div>
+</div>
+
+<h2 id="collegamenti">Collegamenti</h2>
+<ul>
+<li><b>← Verga</b>: <i>Ciaula</i> ↔ <i>Rosso Malpelo</i>. Il «furore argomentativo» come contatto.</li>
+<li><b>← Svevo</b>: realtà soggettiva, narratore inaffidabile, inetto.</li>
+<li><b>← Leopardi e Pascoli</b>: la luna come teofania (<i>Canto notturno</i>, <i>L'assiuolo</i>, <i>Ciaula</i>).</li>
+<li><b>← D'Annunzio</b>: coetanei lontanissimi per stile e generi. Entrambi in rapporto ambiguo con il fascismo.</li>
+<li><b>→ Montale</b>: l'epifania (i limoni) e il «varco».</li>
+</ul>
+
+    <nav class="pager" aria-label="Lezioni"><a class="prev" href="lezione-09.html"><small>← Precedente</small>Svevo</a><a class="next" href="lezione-11.html"><small>Successiva →</small>Ermetismo e Quasimodo</a></nav>
+  </main>
+</div>
+<script>(function(){
+  var root=document.documentElement;
+  function getS(k){try{return localStorage.getItem(k)}catch(e){return null}}
+  function setS(k,v){try{localStorage.setItem(k,v)}catch(e){}}
+
+  /* tema */
+  var saved=getS('it-lezioni-theme');
+  if(saved==='dark'||saved==='light'){root.setAttribute('data-theme',saved)}
+  var tb=document.getElementById('themeBtn');
+  function curTheme(){
+    var t=root.getAttribute('data-theme');
+    if(t) return t;
+    return (window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches)?'dark':'light';
+  }
+  function label(){if(tb){tb.textContent=curTheme()==='dark'?'☀ Chiaro':'☾ Scuro'}}
+  if(tb){tb.addEventListener('click',function(){var n=curTheme()==='dark'?'light':'dark';root.setAttribute('data-theme',n);setS('it-lezioni-theme',n);label()});label()}
+
+  /* indice a scomparsa su telefono */
+  var tocBtn=document.getElementById('tocBtn'),toc=document.getElementById('toc');
+  if(tocBtn&&toc){
+    tocBtn.addEventListener('click',function(){var o=toc.classList.toggle('open');tocBtn.setAttribute('aria-expanded',o?'true':'false')});
+    toc.addEventListener('click',function(e){if(e.target.closest('a')){toc.classList.remove('open');tocBtn.setAttribute('aria-expanded','false')}});
+  }
+
+  /* evidenzia la sezione corrente */
+  var links=toc?Array.prototype.slice.call(toc.querySelectorAll('ol a')):[];
+  if(links.length&&'IntersectionObserver' in window){
+    var map={};links.forEach(function(a){map[a.getAttribute('href').slice(1)]=a});
+    var obs=new IntersectionObserver(function(es){
+      es.forEach(function(en){
+        if(en.isIntersecting){links.forEach(function(a){a.classList.remove('active')});var a=map[en.target.id];if(a)a.classList.add('active')}
+      });
+    },{rootMargin:'-70px 0px -70% 0px'});
+    document.querySelectorAll('main h2[id]').forEach(function(h){obs.observe(h)});
+  }
+
+  /* domande: scelta multipla, vero/falso, classificazione */
+  function updateScore(box){
+    if(!box) return;
+    var bar=box.querySelector('.scorebar'); if(!bar) return;
+    var all=box.querySelectorAll('.qu').length;
+    var done=box.querySelectorAll('.qu.done').length;
+    var ok=box.querySelectorAll('.qu.right').length;
+    bar.textContent=done?('Corrette: '+ok+' su '+done+' · '+all+' domande'):(all+' domande · rispondi per il punteggio');
+  }
+  document.querySelectorAll('.qu').forEach(function(q){
+    var ans=parseInt(q.getAttribute('data-ans'),10);
+    var btns=Array.prototype.slice.call(q.querySelectorAll('.opt'));
+    var why=q.querySelector('.why');
+    var verdict=why?why.querySelector('.verdict'):null;
+    var retry=q.querySelector('.retry');
+    btns.forEach(function(b,i){
+      b.addEventListener('click',function(){
+        if(q.classList.contains('done')) return;
+        q.classList.add('done');
+        btns.forEach(function(x,j){x.disabled=true;if(j===ans)x.classList.add('ok')});
+        if(i===ans){q.classList.add('right');if(verdict)verdict.textContent='Giusto. '}
+        else{b.classList.add('ko');q.classList.add('wrong');if(verdict)verdict.textContent='Sbagliato. '}
+        if(why) why.hidden=false;
+        if(retry) retry.hidden=false;
+        updateScore(q.closest('.scored'));
+      });
+    });
+    if(retry){retry.addEventListener('click',function(){
+      q.classList.remove('done','right','wrong');
+      btns.forEach(function(x){x.disabled=false;x.classList.remove('ok','ko')});
+      if(why) why.hidden=true; retry.hidden=true;
+      updateScore(q.closest('.scored'));
+    })}
+  });
+  document.querySelectorAll('.scored').forEach(updateScore);
+
+  /* versi annotati */
+  function toggleVerse(v,force){
+    var n=v.nextElementSibling;
+    if(!n||!n.classList.contains('vnote')) return;
+    var open=(typeof force==='boolean')?force:n.hidden;
+    n.hidden=!open; v.classList.toggle('open',open); v.setAttribute('aria-expanded',open?'true':'false');
+  }
+  document.querySelectorAll('.v.has-note').forEach(function(v){
+    v.addEventListener('click',function(){toggleVerse(v)});
+    v.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();toggleVerse(v)}});
+  });
+  document.querySelectorAll('.poem .allnotes').forEach(function(b){
+    b.addEventListener('click',function(){
+      var p=b.closest('.poem');var open=b.getAttribute('data-open')!=='1';
+      p.querySelectorAll('.v.has-note').forEach(function(v){toggleVerse(v,open)});
+      b.setAttribute('data-open',open?'1':'0');b.textContent=open?'Nascondi tutte le note':'Mostra tutte le note';
+    });
+  });
+
+  /* filtro cronologia */
+  document.querySelectorAll('[data-tl]').forEach(function(wrap){
+    var chips=wrap.querySelectorAll('.chip');var items=wrap.querySelectorAll('.tl li');
+    chips.forEach(function(c){c.addEventListener('click',function(){
+      chips.forEach(function(x){x.classList.remove('on');x.setAttribute('aria-pressed','false')});
+      c.classList.add('on');c.setAttribute('aria-pressed','true');
+      var f=c.getAttribute('data-f');
+      items.forEach(function(li){li.hidden=!(f==='all'||li.getAttribute('data-who')===f)});
+    })});
+  });
+
+  /* ricerca nel glossario */
+  var gs=document.getElementById('glossSearch');
+  if(gs){gs.addEventListener('input',function(){
+    var t=gs.value.trim().toLowerCase();
+    document.querySelectorAll('dl.gloss>div').forEach(function(d){d.hidden=t&&d.textContent.toLowerCase().indexOf(t)<0});
+  })}
+})();
+</script>
+</body>
+</html>
